@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.zkzl.framework.redis.config.ZkzlRedisAutoConfiguration,\
+  com.zkzl.framework.redis.config.ZkzlCacheAutoConfiguration

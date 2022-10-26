@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.zkzl.framework.security.config.ZkzlSecurityAutoConfiguration,\
+  com.zkzl.framework.security.config.ZkzlWebSecurityConfigurerAdapter

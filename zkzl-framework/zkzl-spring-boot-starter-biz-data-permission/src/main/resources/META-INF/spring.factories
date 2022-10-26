@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.zkzl.framework.datapermission.config.ZkzlDataPermissionAutoConfiguration,\
+  com.zkzl.framework.datapermission.config.ZkzlDeptDataPermissionAutoConfiguration

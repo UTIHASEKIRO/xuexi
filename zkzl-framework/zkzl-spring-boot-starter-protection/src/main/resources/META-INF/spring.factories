@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.zkzl.framework.idempotent.config.ZkzlIdempotentConfiguration,\
+  com.zkzl.framework.lock4j.config.ZkzlLock4jConfiguration

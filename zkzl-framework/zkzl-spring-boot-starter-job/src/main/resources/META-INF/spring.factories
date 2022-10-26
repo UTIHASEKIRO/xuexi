@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.zkzl.framework.quartz.config.ZkzlQuartzAutoConfiguration,\
+  com.zkzl.framework.quartz.config.ZkzlAsyncAutoConfiguration

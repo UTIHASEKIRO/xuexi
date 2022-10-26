@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.zkzl.framework.tracer.config.ZkzlTracerAutoConfiguration,\
+  com.zkzl.framework.tracer.config.ZkzlMetricsAutoConfiguration

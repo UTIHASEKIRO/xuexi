@@ -1,0 +1,8 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.zkzl.framework.rabbitmq.ConsumerReceiver,\
+  com.zkzl.framework.rabbitmq.config.DirectConfig,\
+  com.zkzl.framework.rabbitmq.config.FanoutConfig,\
+  com.zkzl.framework.rabbitmq.config.HelloWorldConfig,\
+  com.zkzl.framework.rabbitmq.config.TopicConfig,\
+  com.zkzl.framework.rabbitmq.config.WorkConfig
+

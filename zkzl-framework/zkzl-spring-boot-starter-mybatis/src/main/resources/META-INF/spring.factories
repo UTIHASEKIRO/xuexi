@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.zkzl.framework.datasource.config.ZkzlDataSourceAutoConfiguration,\
+  com.zkzl.framework.datasource.config.ShardingDataSourceConfig,\
+  com.zkzl.framework.mybatis.config.ZkzlMybatisAutoConfiguration
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.zkzl.framework.mybatis.config.IdTypeEnvironmentPostProcessor

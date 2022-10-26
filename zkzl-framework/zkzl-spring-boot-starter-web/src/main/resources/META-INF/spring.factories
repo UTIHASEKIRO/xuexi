@@ -1,0 +1,5 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.zkzl.framework.apilog.config.ZkzlApiLogAutoConfiguration,\
+  com.zkzl.framework.jackson.config.ZkzlJacksonAutoConfiguration,\
+  com.zkzl.framework.swagger.config.ZkzlSwaggerAutoConfiguration,\
+  com.zkzl.framework.web.config.ZkzlWebAutoConfiguration
