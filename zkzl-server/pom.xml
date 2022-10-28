@@ -63,11 +63,11 @@
 <!--            <version>${revision}</version>-->
 <!--        </dependency>-->
         <!-- 工作流 -->
-        <dependency>
-            <groupId>top.code.zkzl</groupId>
-            <artifactId>zkzl-module-bpm-biz</artifactId>
-            <version>${revision}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>top.code.zkzl</groupId>-->
+<!--            <artifactId>zkzl-module-bpm-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>top.code.zkzl</groupId>
