@@ -22,6 +22,7 @@
         <module>zkzl-module-visualization</module>
         <module>zkzl-module-test</module>
         <module>zkzl-module-minio</module>
+        <module>zkzl-module-pro</module>
     </modules>
 
     <name>${project.artifactId}</name>

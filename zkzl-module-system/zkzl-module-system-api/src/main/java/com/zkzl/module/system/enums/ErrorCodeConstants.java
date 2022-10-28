@@ -142,4 +142,21 @@ public interface ErrorCodeConstants {
     ErrorCode OAUTH2_CODE_NOT_EXISTS = new ErrorCode(1002022000, "code 不存在");
     ErrorCode OAUTH2_CODE_EXPIRE = new ErrorCode(1002022000, "code 已过期");
 
+    // ========== 业务PRO模块 1002023000 =========
+    ErrorCode ORDER_NOT_EXISTS = new ErrorCode(1002023000, "订单 不存在");
+    ErrorCode EVIDENCE_NOT_EXISTS = new ErrorCode(1002023001, "佐证 不存在");
+    ErrorCode CUSTOMER_MANAGE_NOT_EXISTS = new ErrorCode(1002023002, "跟进客户 不存在");
+    ErrorCode CUS_USER_NOT_EXISTS = new ErrorCode(1002023003, "客户 不存在");
+    ErrorCode ORDER_GOODS_NOT_EXISTS = new ErrorCode(1002023004, "订单货物 不存在");
+    ErrorCode ORDER_SUMMARY_NOT_EXISTS = new ErrorCode(1002023005, "订单汇总 不存在");
+    ErrorCode PRICE_INQURY_NOT_EXISTS = new ErrorCode(1002023006, "询价单 不存在");
+    ErrorCode PRICE_INQURY_CHILD_NOT_EXISTS = new ErrorCode(1002023007, "子询价单 不存在");
+    ErrorCode CUREMENT_SUMMARY_NOT_EXISTS = new ErrorCode(1002023008, "采购汇总单 不存在");
+    ErrorCode PRODUCT_NOT_EXISTS = new ErrorCode(1002023009, "商品 不存在");
+    ErrorCode PRODUCT_FINAL_PARAMETERS_NOT_EXISTS = new ErrorCode(1002023010, "固定参数 不存在");
+    ErrorCode PRODUCT_PARAMETERS_NOT_EXISTS = new ErrorCode(1002023011, "产品参数 不存在");
+    ErrorCode PRODUCT_PIC_NOT_EXISTS = new ErrorCode(1002023012, "产品图片 不存在");
+    ErrorCode PRODUCT_TYPE_NOT_EXISTS = new ErrorCode(1002023013, "产品类别 不存在");
+    ErrorCode PURCHASE_HISTORY_NOT_EXISTS = new ErrorCode(1002023014, "供应记录 不存在");
+    ErrorCode SUPPLY_INFO_NOT_EXISTS = new ErrorCode(1002023015, "供货商信息 不存在");
 }
