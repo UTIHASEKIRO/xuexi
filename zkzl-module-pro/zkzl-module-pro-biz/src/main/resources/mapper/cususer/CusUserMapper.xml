@@ -18,5 +18,11 @@
                  left join system_users su on sur.user_id = su.id
                  left join pro_cus_user pcu on su.id = pcu.user_id
         where sr.name = "客户角色"
+        <if test="pageVO.companyName != null and pageVO.companyName != ''">
+            and pcu.company_name like concat('%',#{pageVO.companyName},'%')
+        </if>
+        <if test="pageVO.status != null">
+            and su.status = #{pageVO.status}
+        </if>
     </select>
 </mapper>
