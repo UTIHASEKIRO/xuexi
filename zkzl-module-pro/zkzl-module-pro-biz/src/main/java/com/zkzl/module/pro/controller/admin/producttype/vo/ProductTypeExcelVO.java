@@ -2,7 +2,6 @@ package com.zkzl.module.pro.controller.admin.producttype.vo;
 
 import lombok.*;
 import java.util.*;
-import io.swagger.annotations.*;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 
@@ -18,13 +17,16 @@ public class ProductTypeExcelVO {
     private Long id;
 
     @ExcelProperty("父id")
-    private String parentTypeId;
+    private Long parentId;
 
-    @ExcelProperty("类别id")
+    @ExcelProperty("类别业务id")
     private String typeId;
 
-    @ExcelProperty("类别名称")
-    private String typeName;
+    @ExcelProperty("类别名称-中文")
+    private String typeNameCn;
+
+    @ExcelProperty("类别名称-英文")
+    private String typeNameEn;
 
     @ExcelProperty("排序")
     private Integer sort;

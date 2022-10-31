@@ -1,6 +1,8 @@
 package com.zkzl.module.pro.dal.dataobject.evidence;
 
 import lombok.*;
+
+import java.io.Serializable;
 import java.util.*;
 import com.baomidou.mybatisplus.annotation.*;
 import com.zkzl.framework.mybatis.core.dataobject.BaseDO;
@@ -13,12 +15,12 @@ import com.zkzl.framework.mybatis.core.dataobject.BaseDO;
 @TableName("pro_evidence")
 @KeySequence("pro_evidence_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EvidenceDO extends BaseDO {
+public class EvidenceDO implements Serializable {
 
     /**
      * id

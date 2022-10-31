@@ -15,13 +15,16 @@ import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DA
 public class ProductTypePageReqVO extends PageParam {
 
     @ApiModelProperty(value = "父id")
-    private String parentTypeId;
+    private Long parentId;
 
-    @ApiModelProperty(value = "类别id")
+    @ApiModelProperty(value = "类别业务id")
     private String typeId;
 
-    @ApiModelProperty(value = "类别名称")
-    private String typeName;
+    @ApiModelProperty(value = "类别名称-中文")
+    private String typeNameCn;
+
+    @ApiModelProperty(value = "类别名称-英文")
+    private String typeNameEn;
 
     @ApiModelProperty(value = "排序")
     private Integer sort;

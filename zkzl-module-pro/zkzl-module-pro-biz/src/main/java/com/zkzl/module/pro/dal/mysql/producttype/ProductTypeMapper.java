@@ -19,9 +19,10 @@ public interface ProductTypeMapper extends BaseMapperX<ProductTypeDO> {
 
     default PageResult<ProductTypeDO> selectPage(ProductTypePageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<ProductTypeDO>()
-                .eqIfPresent(ProductTypeDO::getParentTypeId, reqVO.getParentTypeId())
+                .eqIfPresent(ProductTypeDO::getParentId, reqVO.getParentId())
                 .eqIfPresent(ProductTypeDO::getTypeId, reqVO.getTypeId())
-                .likeIfPresent(ProductTypeDO::getTypeName, reqVO.getTypeName())
+                .eqIfPresent(ProductTypeDO::getTypeNameCn, reqVO.getTypeNameCn())
+                .eqIfPresent(ProductTypeDO::getTypeNameEn, reqVO.getTypeNameEn())
                 .eqIfPresent(ProductTypeDO::getSort, reqVO.getSort())
                 .betweenIfPresent(ProductTypeDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(ProductTypeDO::getId));
@@ -29,9 +30,10 @@ public interface ProductTypeMapper extends BaseMapperX<ProductTypeDO> {
 
     default List<ProductTypeDO> selectList(ProductTypeExportReqVO reqVO) {
         return selectList(new LambdaQueryWrapperX<ProductTypeDO>()
-                .eqIfPresent(ProductTypeDO::getParentTypeId, reqVO.getParentTypeId())
+                .eqIfPresent(ProductTypeDO::getParentId, reqVO.getParentId())
                 .eqIfPresent(ProductTypeDO::getTypeId, reqVO.getTypeId())
-                .likeIfPresent(ProductTypeDO::getTypeName, reqVO.getTypeName())
+                .eqIfPresent(ProductTypeDO::getTypeNameCn, reqVO.getTypeNameCn())
+                .eqIfPresent(ProductTypeDO::getTypeNameEn, reqVO.getTypeNameEn())
                 .eqIfPresent(ProductTypeDO::getSort, reqVO.getSort())
                 .betweenIfPresent(ProductTypeDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(ProductTypeDO::getId));

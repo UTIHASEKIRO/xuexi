@@ -28,11 +28,8 @@ public interface ProOrderMapper extends BaseMapperX<OrderDO> {
                 .eqIfPresent(OrderDO::getPrice, reqVO.getPrice())
                 .eqIfPresent(OrderDO::getDiscount, reqVO.getDiscount())
                 .eqIfPresent(OrderDO::getTotal, reqVO.getTotal())
-                .betweenIfPresent(OrderDO::getPriceDate, reqVO.getPriceDate())
-                .betweenIfPresent(OrderDO::getEffectiveDate, reqVO.getEffectiveDate())
-                .eqIfPresent(OrderDO::getExplain, reqVO.getExplain())
+                .eqIfPresent(OrderDO::getRemarks, reqVO.getRemarks())
                 .eqIfPresent(OrderDO::getStatus, reqVO.getStatus())
-                .betweenIfPresent(OrderDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(OrderDO::getId));
     }
 
@@ -47,11 +44,8 @@ public interface ProOrderMapper extends BaseMapperX<OrderDO> {
                 .eqIfPresent(OrderDO::getPrice, reqVO.getPrice())
                 .eqIfPresent(OrderDO::getDiscount, reqVO.getDiscount())
                 .eqIfPresent(OrderDO::getTotal, reqVO.getTotal())
-                .betweenIfPresent(OrderDO::getPriceDate, reqVO.getPriceDate())
-                .betweenIfPresent(OrderDO::getEffectiveDate, reqVO.getEffectiveDate())
-                .eqIfPresent(OrderDO::getExplain, reqVO.getExplain())
+                .eqIfPresent(OrderDO::getRemarks, reqVO.getRemarks())
                 .eqIfPresent(OrderDO::getStatus, reqVO.getStatus())
-                .betweenIfPresent(OrderDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(OrderDO::getId));
     }
 

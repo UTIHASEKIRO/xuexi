@@ -28,15 +28,19 @@ public class ProductTypeDO extends BaseDO {
     /**
      * 父id
      */
-    private String parentTypeId;
+    private Long parentId;
     /**
-     * 类别id
+     * 类别业务id
      */
     private String typeId;
     /**
-     * 类别名称
+     * 类别名称-中文
      */
-    private String typeName;
+    private String typeNameCn;
+    /**
+     * 类别名称-英文
+     */
+    private String typeNameEn;
     /**
      * 排序
      */

@@ -73,7 +73,7 @@ public class OrderDO extends BaseDO {
     /**
      * 说明
      */
-    private String explain;
+    private String remarks;
     /**
      * 1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成
      */

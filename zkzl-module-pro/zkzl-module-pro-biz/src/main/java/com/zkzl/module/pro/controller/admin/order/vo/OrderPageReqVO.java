@@ -52,7 +52,7 @@ public class OrderPageReqVO extends PageParam {
     private Date[] effectiveDate;
 
     @ApiModelProperty(value = "说明")
-    private String explain;
+    private String remarks;
 
     @ApiModelProperty(value = "1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成")
     private String status;

@@ -3,7 +3,6 @@ package com.zkzl.module.pro.controller.admin.producttype.vo;
 import lombok.*;
 import java.util.*;
 import io.swagger.annotations.*;
-import com.zkzl.framework.common.pojo.PageParam;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
@@ -13,13 +12,16 @@ import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DA
 public class ProductTypeExportReqVO {
 
     @ApiModelProperty(value = "父id")
-    private String parentTypeId;
+    private Long parentId;
 
-    @ApiModelProperty(value = "类别id")
+    @ApiModelProperty(value = "类别业务id")
     private String typeId;
 
-    @ApiModelProperty(value = "类别名称")
-    private String typeName;
+    @ApiModelProperty(value = "类别名称-中文")
+    private String typeNameCn;
+
+    @ApiModelProperty(value = "类别名称-英文")
+    private String typeNameEn;
 
     @ApiModelProperty(value = "排序")
     private Integer sort;
