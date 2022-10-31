@@ -3,14 +3,17 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="父id" prop="parentTypeId">
-        <el-input v-model="queryParams.parentTypeId" placeholder="请输入父id" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item label="父id" prop="parentId">
+        <el-input v-model="queryParams.parentId" placeholder="请输入父id" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="类别id" prop="typeId">
-        <el-input v-model="queryParams.typeId" placeholder="请输入类别id" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item label="类别业务id" prop="typeId">
+        <el-input v-model="queryParams.typeId" placeholder="请输入类别业务id" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="类别名称" prop="typeName">
-        <el-input v-model="queryParams.typeName" placeholder="请输入类别名称" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item label="类别名称-中文" prop="typeNameCn">
+        <el-input v-model="queryParams.typeNameCn" placeholder="请输入类别名称-中文" clearable @keyup.enter.native="handleQuery"/>
+      </el-form-item>
+      <el-form-item label="类别名称-英文" prop="typeNameEn">
+        <el-input v-model="queryParams.typeNameEn" placeholder="请输入类别名称-英文" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="排序" prop="sort">
         <el-input v-model="queryParams.sort" placeholder="请输入排序" clearable @keyup.enter.native="handleQuery"/>
@@ -41,9 +44,10 @@
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
       <el-table-column label="主键" align="center" prop="id" />
-      <el-table-column label="父id" align="center" prop="parentTypeId" />
-      <el-table-column label="类别id" align="center" prop="typeId" />
-      <el-table-column label="类别名称" align="center" prop="typeName" />
+      <el-table-column label="父id" align="center" prop="parentId" />
+      <el-table-column label="类别业务id" align="center" prop="typeId" />
+      <el-table-column label="类别名称-中文" align="center" prop="typeNameCn" />
+      <el-table-column label="类别名称-英文" align="center" prop="typeNameEn" />
       <el-table-column label="排序" align="center" prop="sort" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
@@ -66,14 +70,17 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="父id" prop="parentTypeId">
-          <el-input v-model="form.parentTypeId" placeholder="请输入父id" />
+        <el-form-item label="父id" prop="parentId">
+          <el-input v-model="form.parentId" placeholder="请输入父id" />
         </el-form-item>
-        <el-form-item label="类别id" prop="typeId">
-          <el-input v-model="form.typeId" placeholder="请输入类别id" />
+        <el-form-item label="类别业务id" prop="typeId">
+          <el-input v-model="form.typeId" placeholder="请输入类别业务id" />
         </el-form-item>
-        <el-form-item label="类别名称" prop="typeName">
-          <el-input v-model="form.typeName" placeholder="请输入类别名称" />
+        <el-form-item label="类别名称-中文" prop="typeNameCn">
+          <el-input v-model="form.typeNameCn" placeholder="请输入类别名称-中文" />
+        </el-form-item>
+        <el-form-item label="类别名称-英文" prop="typeNameEn">
+          <el-input v-model="form.typeNameEn" placeholder="请输入类别名称-英文" />
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" placeholder="请输入排序" />
@@ -114,9 +121,10 @@ export default {
       queryParams: {
         pageNo: 1,
         pageSize: 10,
-        parentTypeId: null,
+        parentId: null,
         typeId: null,
-        typeName: null,
+        typeNameCn: null,
+        typeNameEn: null,
         sort: null,
         createTime: [],
       },
@@ -150,9 +158,10 @@ export default {
     reset() {
       this.form = {
         id: undefined,
-        parentTypeId: undefined,
+        parentId: undefined,
         typeId: undefined,
-        typeName: undefined,
+        typeNameCn: undefined,
+        typeNameEn: undefined,
         sort: undefined,
       };
       this.resetForm("form");

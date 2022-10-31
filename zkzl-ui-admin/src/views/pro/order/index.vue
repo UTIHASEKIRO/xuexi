@@ -38,8 +38,8 @@
         <el-date-picker v-model="queryParams.effectiveDate" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
                         range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
       </el-form-item>
-      <el-form-item label="说明" prop="explain">
-        <el-input v-model="queryParams.explain" placeholder="请输入说明" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item label="说明" prop="remarks">
+        <el-input v-model="queryParams.remarks" placeholder="请输入说明" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成" clearable size="small">
@@ -91,7 +91,7 @@
           <span>{{ parseTime(scope.row.effectiveDate) }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="说明" align="center" prop="explain" />
+      <el-table-column label="说明" align="center" prop="remarks" />
       <el-table-column label="1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成" align="center" prop="status" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
@@ -147,8 +147,8 @@
         <el-form-item label="报价有效日期" prop="effectiveDate">
           <el-date-picker clearable v-model="form.effectiveDate" type="date" value-format="timestamp" placeholder="选择报价有效日期" />
         </el-form-item>
-        <el-form-item label="说明" prop="explain">
-          <el-input v-model="form.explain" placeholder="请输入说明" />
+        <el-form-item label="说明" prop="remarks">
+          <el-input v-model="form.remarks" placeholder="请输入说明" />
         </el-form-item>
         <el-form-item label="1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成" prop="status">
           <el-radio-group v-model="form.status">
@@ -202,7 +202,7 @@ export default {
         total: null,
         priceDate: [],
         effectiveDate: [],
-        explain: null,
+        remarks: null,
         status: null,
         createTime: [],
       },
@@ -255,7 +255,7 @@ export default {
         total: undefined,
         priceDate: undefined,
         effectiveDate: undefined,
-        explain: undefined,
+        remarks: undefined,
         status: undefined,
       };
       this.resetForm("form");
