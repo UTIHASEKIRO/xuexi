@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <doc-alert title="用户体系" url="https://doc.iocoder.cn/user-center/" />
+<!--    <doc-alert title="用户体系" url="https://doc.iocoder.cn/user-center/" />-->
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" label-width="68px">
       <el-form-item label="用户编号" prop="userId">
