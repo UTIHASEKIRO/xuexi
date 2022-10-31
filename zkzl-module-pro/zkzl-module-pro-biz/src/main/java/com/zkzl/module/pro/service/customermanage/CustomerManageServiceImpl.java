@@ -1,5 +1,8 @@
 package com.zkzl.module.pro.service.customermanage;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
+import com.zkzl.module.pro.dal.dataobject.cususer.CusUserDO;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -78,6 +81,13 @@ public class CustomerManageServiceImpl implements CustomerManageService {
     @Override
     public List<CustomerManageDO> getCustomerManageList(CustomerManageExportReqVO exportReqVO) {
         return customerManageMapper.selectList(exportReqVO);
+    }
+
+    @Override
+    public PageResult<CustomerManageDO> pageCustFollow(CustomerManagePageReqVO pageVO) {
+        IPage<CustomerManageDO> page = MyBatisUtils.buildPage(pageVO);
+        customerManageMapper.pageCustFollow(page,pageVO);
+        return new PageResult<>(page.getRecords(),page.getTotal());
     }
 
 }
