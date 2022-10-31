@@ -67,4 +67,6 @@ public interface CusUserService {
      */
     List<CusUserDO> getCusUserList(CusUserExportReqVO exportReqVO);
 
+    /*获得客户公司信息分页*/
+    PageResult<CusUserDO> pageCustomer(CusUserPageReqVO pageVO);
 }

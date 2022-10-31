@@ -1,5 +1,9 @@
 package com.zkzl.module.pro.service.cususer;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
+import com.zkzl.module.system.api.user.AdminUserApi;
+import com.zkzl.module.system.service.user.AdminUserService;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +30,9 @@ public class CusUserServiceImpl implements CusUserService {
 
     @Resource
     private CusUserMapper cusUserMapper;
+
+    @Resource
+    private AdminUserService adminUserService;
 
     @Override
     public Long createCusUser(CusUserCreateReqVO createReqVO) {
@@ -77,6 +84,13 @@ public class CusUserServiceImpl implements CusUserService {
     @Override
     public List<CusUserDO> getCusUserList(CusUserExportReqVO exportReqVO) {
         return cusUserMapper.selectList(exportReqVO);
+    }
+
+    @Override
+    public PageResult<CusUserDO> pageCustomer(CusUserPageReqVO pageVO) {
+        IPage<CusUserDO> mpPage = MyBatisUtils.buildPage(pageVO);
+        PageResult<CusUserDO> cusFromSysUser = cusUserMapper.cusFromSysUser(mpPage,pageVO);
+        return cusFromSysUser;
     }
 
 }

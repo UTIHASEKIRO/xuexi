@@ -20,4 +20,7 @@ public class CusUserPageReqVO extends PageParam {
     @ApiModelProperty(value = "联系人")
     private String contectName;
 
+
+    @ApiModelProperty(value = "状态 1禁止用户登录前端页面 0正常")
+    private Integer status;
 }

@@ -2,12 +2,15 @@ package com.zkzl.module.pro.dal.mysql.cususer;
 
 import java.util.*;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.common.pojo.PageParam;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
 import com.zkzl.module.pro.dal.dataobject.cususer.CusUserDO;
 import org.apache.ibatis.annotations.Mapper;
 import com.zkzl.module.pro.controller.admin.cususer.vo.*;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 客户公司信息 Mapper
@@ -33,4 +36,6 @@ public interface CusUserMapper extends BaseMapperX<CusUserDO> {
                 .orderByDesc(CusUserDO::getUserId));
     }
 
+    /*获取客户角色*/
+    PageResult<CusUserDO> cusFromSysUser(IPage<CusUserDO> pageParam, @Param("pageVO") CusUserPageReqVO pageVO);
 }

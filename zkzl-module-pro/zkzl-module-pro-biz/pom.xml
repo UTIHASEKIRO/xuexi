@@ -31,6 +31,12 @@
             <version>${revision}</version>
         </dependency>
 
+        <dependency>
+            <groupId>top.code.zkzl</groupId>
+            <artifactId>zkzl-module-system-biz</artifactId>
+            <version>${revision}</version>
+        </dependency>
+
         <!-- 参数校验 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

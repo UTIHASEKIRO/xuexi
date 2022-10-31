@@ -28,6 +28,7 @@ public interface ErrorCodeConstants {
 
     // ========== 角色模块 1002002000 ==========
     ErrorCode ROLE_NOT_EXISTS = new ErrorCode(1002002000, "角色不存在");
+    ErrorCode ROLE_NEED_CREATE = new ErrorCode(1002002000, "需要创建名为【{客户角色}】的角色");
     ErrorCode ROLE_NAME_DUPLICATE = new ErrorCode(1002002001, "已经存在名为【{}】的角色");
     ErrorCode ROLE_CODE_DUPLICATE = new ErrorCode(1002002002, "已经存在编码为【{}】的角色");
     ErrorCode ROLE_CAN_NOT_UPDATE_SYSTEM_TYPE_ROLE = new ErrorCode(1002002003, "不能操作类型为系统内置的角色");
