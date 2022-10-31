@@ -37,5 +37,5 @@ public interface CusUserMapper extends BaseMapperX<CusUserDO> {
     }
 
     /*获取客户角色*/
-    PageResult<CusUserDO> cusFromSysUser(IPage<CusUserDO> pageParam, @Param("pageVO") CusUserPageReqVO pageVO);
+    IPage<CusUserDO> cusFromSysUser(IPage<CusUserDO> pageParam, @Param("pageVO") CusUserPageReqVO pageVO);
 }

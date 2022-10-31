@@ -173,6 +173,7 @@ logging:
     com.zkzl.module.system.dal.mysql: debug
     com.zkzl.module.tool.dal.mysql: debug
     com.zkzl.module.member.dal.mysql: debug
+    com.zkzl.module.pro.dal.mysql: debug
 
 --- #################### 微信公众号、小程序相关配置 ####################
 wx:

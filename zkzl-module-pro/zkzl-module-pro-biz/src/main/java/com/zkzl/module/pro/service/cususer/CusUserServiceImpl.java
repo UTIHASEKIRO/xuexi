@@ -89,8 +89,9 @@ public class CusUserServiceImpl implements CusUserService {
     @Override
     public PageResult<CusUserDO> pageCustomer(CusUserPageReqVO pageVO) {
         IPage<CusUserDO> mpPage = MyBatisUtils.buildPage(pageVO);
-        PageResult<CusUserDO> cusFromSysUser = cusUserMapper.cusFromSysUser(mpPage,pageVO);
-        return cusFromSysUser;
+        cusUserMapper.cusFromSysUser(mpPage,pageVO);
+
+        return new PageResult<>(mpPage.getRecords(), mpPage.getTotal());
     }
 
 }
