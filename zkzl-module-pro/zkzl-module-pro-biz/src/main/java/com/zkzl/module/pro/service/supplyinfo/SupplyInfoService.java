@@ -3,6 +3,7 @@ package com.zkzl.module.pro.service.supplyinfo;
 import java.util.*;
 import javax.validation.*;
 import com.zkzl.module.pro.controller.admin.supplyinfo.vo.*;
+import com.zkzl.module.pro.dal.dataobject.producttype.ProductTypeDO;
 import com.zkzl.module.pro.dal.dataobject.supplyinfo.SupplyInfoDO;
 import com.zkzl.framework.common.pojo.PageResult;
 
@@ -67,4 +68,6 @@ public interface SupplyInfoService {
      */
     List<SupplyInfoDO> getSupplyInfoList(SupplyInfoExportReqVO exportReqVO);
 
+    /*获得供货商信息-产品类别*/
+    List<ProductTypeDO> getProductType();
 }

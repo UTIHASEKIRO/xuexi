@@ -1,5 +1,8 @@
 package com.zkzl.module.pro.controller.admin.supplyinfo;
 
+import com.zkzl.module.pro.controller.admin.producttype.vo.ProductTypeRespVO;
+import com.zkzl.module.pro.convert.producttype.ProductTypeConvert;
+import com.zkzl.module.pro.dal.dataobject.producttype.ProductTypeDO;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -95,6 +98,13 @@ public class SupplyInfoController {
         // 导出 Excel
         List<SupplyInfoExcelVO> datas = SupplyInfoConvert.INSTANCE.convertList02(list);
         ExcelUtils.write(response, "供货商信息.xls", "数据", SupplyInfoExcelVO.class, datas);
+    }
+
+    @GetMapping("/product-type")
+    @ApiOperation("获得供货商信息-产品类别")
+    public CommonResult<List<ProductTypeRespVO>> getProductType() {
+        List<ProductTypeDO> result = supplyInfoService.getProductType();
+        return success(ProductTypeConvert.INSTANCE.convertList(result));
     }
 
 }

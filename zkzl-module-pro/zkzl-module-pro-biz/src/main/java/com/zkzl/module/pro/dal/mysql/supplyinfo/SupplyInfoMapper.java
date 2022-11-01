@@ -5,6 +5,7 @@ import java.util.*;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
+import com.zkzl.module.pro.dal.dataobject.producttype.ProductTypeDO;
 import com.zkzl.module.pro.dal.dataobject.supplyinfo.SupplyInfoDO;
 import org.apache.ibatis.annotations.Mapper;
 import com.zkzl.module.pro.controller.admin.supplyinfo.vo.*;
@@ -26,7 +27,7 @@ public interface SupplyInfoMapper extends BaseMapperX<SupplyInfoDO> {
                 .eqIfPresent(SupplyInfoDO::getEmail, reqVO.getEmail())
                 .betweenIfPresent(SupplyInfoDO::getCreateTime, reqVO.getCreateTime())
                 .eqIfPresent(SupplyInfoDO::getProduct, reqVO.getProduct())
-                .eqIfPresent(SupplyInfoDO::getSortId, reqVO.getSortId())
+                .eqIfPresent(SupplyInfoDO::getTypeId, reqVO.getTypeId())
                 .eqIfPresent(SupplyInfoDO::getReasonPrice, reqVO.getReasonPrice())
                 .eqIfPresent(SupplyInfoDO::getReasonQuality, reqVO.getReasonQuality())
                 .eqIfPresent(SupplyInfoDO::getReasonService, reqVO.getReasonService())
@@ -42,11 +43,13 @@ public interface SupplyInfoMapper extends BaseMapperX<SupplyInfoDO> {
                 .eqIfPresent(SupplyInfoDO::getEmail, reqVO.getEmail())
                 .betweenIfPresent(SupplyInfoDO::getCreateTime, reqVO.getCreateTime())
                 .eqIfPresent(SupplyInfoDO::getProduct, reqVO.getProduct())
-                .eqIfPresent(SupplyInfoDO::getSortId, reqVO.getSortId())
+                .eqIfPresent(SupplyInfoDO::getTypeId, reqVO.getTypeId())
                 .eqIfPresent(SupplyInfoDO::getReasonPrice, reqVO.getReasonPrice())
                 .eqIfPresent(SupplyInfoDO::getReasonQuality, reqVO.getReasonQuality())
                 .eqIfPresent(SupplyInfoDO::getReasonService, reqVO.getReasonService())
                 .orderByDesc(SupplyInfoDO::getId));
     }
 
+    /*获得供货商信息-产品类别*/
+    List<ProductTypeDO> getProductType();
 }
