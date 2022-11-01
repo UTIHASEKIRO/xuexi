@@ -35,37 +35,12 @@ public class ProductFinalParametersController {
     @Resource
     private ProductFinalParametersService ductFinalParametersService;
 
-    @PostMapping("/create")
-    @ApiOperation("创建产品固定参数")
-    @PreAuthorize("@ss.hasPermission('pro:duct-final-parameters:create')")
-    public CommonResult<Long> createductFinalParameters(@Valid @RequestBody ProductFinalParametersCreateReqVO createReqVO) {
-        return success(ductFinalParametersService.createductFinalParameters(createReqVO));
-    }
-
-    @PutMapping("/update")
-    @ApiOperation("更新产品固定参数")
-    @PreAuthorize("@ss.hasPermission('pro:duct-final-parameters:update')")
-    public CommonResult<Boolean> updateductFinalParameters(@Valid @RequestBody ProductFinalParametersUpdateReqVO updateReqVO) {
-        ductFinalParametersService.updateductFinalParameters(updateReqVO);
-        return success(true);
-    }
-
-    @DeleteMapping("/delete")
-    @ApiOperation("删除产品固定参数")
-    @ApiImplicitParam(name = "id", value = "编号", required = true, dataTypeClass = Long.class)
-    @PreAuthorize("@ss.hasPermission('pro:duct-final-parameters:delete')")
-    public CommonResult<Boolean> deleteductFinalParameters(@RequestParam("id") Long id) {
-        ductFinalParametersService.deleteductFinalParameters(id);
-        return success(true);
-    }
-
-    @GetMapping("/get")
-    @ApiOperation("获得产品固定参数")
-    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
+    @GetMapping("/page")
+    @ApiOperation("产品固定参数查询")
     @PreAuthorize("@ss.hasPermission('pro:duct-final-parameters:query')")
-    public CommonResult<ProductFinalParametersRespVO> getductFinalParameters(@RequestParam("id") Long id) {
-        ProductFinalParametersDO ductFinalParameters = ductFinalParametersService.getductFinalParameters(id);
-        return success(ProductFinalParametersConvert.INSTANCE.convert(ductFinalParameters));
+    public CommonResult<PageResult<ProductFinalParametersRespVO>> getProductFinalParametersPage(@Valid ProductFinalParametersPageReqVO pageVO) {
+        PageResult<ProductFinalParametersDO> pageResult = ductFinalParametersService.getductFinalParametersPage(pageVO);
+        return success(ProductFinalParametersConvert.INSTANCE.convertPage(pageResult));
     }
 
     @GetMapping("/list")
@@ -79,22 +54,10 @@ public class ProductFinalParametersController {
 
     @GetMapping("/page")
     @ApiOperation("获得产品固定参数分页")
-    @PreAuthorize("@ss.hasPermission('pro:duct-final-parameters:query')")
+    @PreAuthorize("@ss.hasPermission('pro:duct-final-parameters:update')")
     public CommonResult<PageResult<ProductFinalParametersRespVO>> getductFinalParametersPage(@Valid ProductFinalParametersPageReqVO pageVO) {
         PageResult<ProductFinalParametersDO> pageResult = ductFinalParametersService.getductFinalParametersPage(pageVO);
         return success(ProductFinalParametersConvert.INSTANCE.convertPage(pageResult));
-    }
-
-    @GetMapping("/export-excel")
-    @ApiOperation("导出产品固定参数 Excel")
-    @PreAuthorize("@ss.hasPermission('pro:duct-final-parameters:export')")
-    @OperateLog(type = EXPORT)
-    public void exportductFinalParametersExcel(@Valid ProductFinalParametersExportReqVO exportReqVO,
-              HttpServletResponse response) throws IOException {
-        List<ProductFinalParametersDO> list = ductFinalParametersService.getductFinalParametersList(exportReqVO);
-        // 导出 Excel
-        List<ProductFinalParametersExcelVO> datas = ProductFinalParametersConvert.INSTANCE.convertList02(list);
-        ExcelUtils.write(response, "产品固定参数.xls", "数据", ProductFinalParametersExcelVO.class, datas);
     }
 
 }
