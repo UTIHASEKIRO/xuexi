@@ -34,9 +34,16 @@
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
       <el-table-column label="用户ID" align="center" prop="userId" />
-      <el-table-column label="联系地址" align="center" prop="address" />
       <el-table-column label="公司名称" align="center" prop="companyName" />
       <el-table-column label="联系人" align="center" prop="contectName" />
+      <el-table-column label="联系电话" align="center" prop="mobile" />
+      <el-table-column label="联系地址" align="center" prop="address" />
+      <el-table-column label="注册时间" align="center" prop="createTime" />
+      <el-table-column label="状态" align="center" prop="status" >
+        <template slot-scope="scope">
+          <dict-tag :type="DICT_TYPE.USER_STATUS" :value="scope.row.status"/>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
@@ -73,7 +80,7 @@
 
 <script>
 import { createCusUser, updateCusUser, deleteCusUser, getCusUser, getCusUserPage, exportCusUserExcel } from "@/api/pro/cusUser";
-
+import {DICT_TYPE, getDictDatas} from "@/utils/dict";
 export default {
   name: "CusUser",
   components: {
@@ -109,7 +116,8 @@ export default {
         address: [{ required: true, message: "联系地址不能为空", trigger: "blur" }],
         companyName: [{ required: true, message: "公司名称不能为空", trigger: "blur" }],
         contectName: [{ required: true, message: "联系人不能为空", trigger: "blur" }],
-      }
+      },
+      userStatusDict: getDictDatas(DICT_TYPE.USER_STATUS), 
     };
   },
   created() {

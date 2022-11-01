@@ -37,7 +37,7 @@ export function getCusUser(id) {
 // 获得客户公司信息分页
 export function getCusUserPage(query) {
   return request({
-    url: '/pro/cus-user/page',
+    url: '/pro/cus-user/pageCustomer',
     method: 'get',
     params: query
   })

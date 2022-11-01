@@ -56,6 +56,14 @@ export const DICT_TYPE = {
   PAY_ORDER_REFUND_STATUS: 'pay_order_refund_status', // 商户支付订单退款状态
   PAY_REFUND_ORDER_STATUS: 'pay_refund_order_status', // 退款订单状态
   PAY_REFUND_ORDER_TYPE: 'pay_refund_order_type', // 退款订单类别
+
+  // ========== PRO 模块 ==========
+  IMPORTANT_LEVEL: 'important_level', // 客户重要等级
+  CUSTOMER_INTENTION: 'customer_intention', // 客户意向
+  CUSTOMER_RESULT: 'customer_result', // 客户跟进结果
+  PRICE_INQUERY_STATUS: 'price_inqury_status', // 询价单状态
+  ORDER_STATUS: 'order_status', // 订单状态
+  USER_STATUS: 'user_status', // 订单状态
 }
 
 /**

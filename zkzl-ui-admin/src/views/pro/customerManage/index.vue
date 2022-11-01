@@ -46,18 +46,33 @@
       <el-table-column label="客户" align="center" prop="customerName" />
       <el-table-column label="联系方式" align="center" prop="mobile" />
       <el-table-column label="联系地址" align="center" prop="address" />
-      <el-table-column label="重要等级 1重要2一般3其它" align="center" prop="importantLevel" />
-      <el-table-column label="客户意向  1高2中3低" align="center" prop="customerIntention" />
-      <el-table-column label="客户需求，引号;分隔开" align="center" prop="customerDemand" />
-      <el-table-column label="客户跟进结果 1进行中2已签约3已放弃" align="center" prop="customerResult" />
-      <el-table-column label="备注" align="center" prop="remark" />
-      <el-table-column label="跟进次数" align="center" prop="followNum" />
+      <el-table-column label="重要等级" align="center" prop="importantLevel" >
+         <template slot-scope="scope">
+          <dict-tag :type="DICT_TYPE.IMPORTANT_LEVEL" :value="scope.row.importantLevel"/>
+        </template>
+        
+      </el-table-column>
+      <!-- <el-table-column label="客户意向" align="center" prop="customerIntention" >
+        <template slot-scope="scope">
+          <dict-tag :type="DICT_TYPE.CUSTOMER_INTENTION" :value="scope.row.status"/>
+        </template>
+      </el-table-column> -->
+      
       <el-table-column label="跟进销售员" align="center" prop="followUser" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <el-table-column label="客户跟进结果" align="center" prop="customerResult" >
+         <template slot-scope="scope">
+          <dict-tag :type="DICT_TYPE.CUSTOMER_RESULT" :value="scope.row.customerResult"/>
+        </template>
+      </el-table-column>
+      
+      <el-table-column label="跟进次数" align="center" prop="followNum" />
+      <el-table-column label="客户需求" align="center" prop="customerDemand" />
+      <el-table-column label="备注" align="center" prop="remark" />
+      <!-- <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
@@ -161,7 +176,9 @@ export default {
         address: [{ required: true, message: "联系地址不能为空", trigger: "blur" }],
         importantLevel: [{ required: true, message: "重要等级 1重要2一般3其它不能为空", trigger: "blur" }],
         followUser: [{ required: true, message: "跟进销售员不能为空", trigger: "blur" }],
-      }
+      },
+      importantLevelDict: getDictDatas(DICT_TYPE.IMPORTANT_LEVEL),
+      customerResultDict:getDictDatas(DICT_TYPE.CUSTOMER_RESULT),
     };
   },
   created() {
