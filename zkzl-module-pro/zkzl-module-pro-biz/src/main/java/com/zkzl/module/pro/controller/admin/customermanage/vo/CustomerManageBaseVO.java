@@ -12,9 +12,17 @@ import javax.validation.constraints.*;
 @Data
 public class CustomerManageBaseVO {
 
-    @ApiModelProperty(value = "客户id", required = true)
-    @NotNull(message = "客户id不能为空")
-    private Long userId;
+    @ApiModelProperty(value = "客户", required = true)
+    @NotNull(message = "客户不能为空")
+    private String customerName;
+
+    @ApiModelProperty(value = "联系方式", required = true)
+    @NotNull(message = "联系方式不能为空")
+    private String mobile;
+
+    @ApiModelProperty(value = "联系地址", required = true)
+    @NotNull(message = "联系地址不能为空")
+    private String address;
 
     @ApiModelProperty(value = "重要等级 1重要2一般3其它", required = true)
     @NotNull(message = "重要等级 1重要2一般3其它不能为空")
@@ -37,6 +45,6 @@ public class CustomerManageBaseVO {
 
     @ApiModelProperty(value = "跟进销售员", required = true)
     @NotNull(message = "跟进销售员不能为空")
-    private Long followUserId;
+    private String followUser;
 
 }

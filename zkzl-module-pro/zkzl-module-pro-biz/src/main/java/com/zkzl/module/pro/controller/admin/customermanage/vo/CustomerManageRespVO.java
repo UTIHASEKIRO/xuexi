@@ -10,6 +10,9 @@ import io.swagger.annotations.*;
 @ToString(callSuper = true)
 public class CustomerManageRespVO extends CustomerManageBaseVO {
 
+    @ApiModelProperty(value = "序号id", required = true)
+    private Long id;
+
     @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 

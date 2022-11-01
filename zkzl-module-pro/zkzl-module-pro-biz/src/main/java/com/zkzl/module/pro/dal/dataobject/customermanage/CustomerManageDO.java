@@ -21,10 +21,22 @@ import com.zkzl.framework.mybatis.core.dataobject.BaseDO;
 public class CustomerManageDO extends BaseDO {
 
     /**
-     * 客户id
+     * 序号id
      */
     @TableId
-    private Long userId;
+    private Long id;
+    /**
+     * 客户
+     */
+    private String customerName;
+    /**
+     * 联系方式
+     */
+    private String mobile;
+    /**
+     * 联系地址
+     */
+    private String address;
     /**
      * 重要等级 1重要2一般3其它
      */
@@ -52,6 +64,6 @@ public class CustomerManageDO extends BaseDO {
     /**
      * 跟进销售员
      */
-    private Long followUserId;
+    private String followUser;
 
 }
