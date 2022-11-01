@@ -112,7 +112,7 @@ public class CusUserController {
     * */
     @GetMapping("/pageCustomer")
     @ApiOperation("获得客户公司信息分页")
-    //@PreAuthorize("@ss.hasPermission('pro:cus-user:query')")
+    @PreAuthorize("@ss.hasPermission('pro:cus-user:query')")
     public CommonResult<PageResult<CusUserRespVO>> pageCustomer(@Valid CusUserPageReqVO pageVO) {
         PageResult<CusUserDO> pageResult = cusUserService.pageCustomer(pageVO);
         return success(CusUserConvert.INSTANCE.convertPage(pageResult));
