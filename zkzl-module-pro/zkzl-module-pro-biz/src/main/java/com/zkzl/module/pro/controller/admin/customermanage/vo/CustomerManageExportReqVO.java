@@ -12,8 +12,14 @@ import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DA
 @Data
 public class CustomerManageExportReqVO {
 
-    @ApiModelProperty(value = "客户id")
-    private Long userId;
+    @ApiModelProperty(value = "客户")
+    private String customerName;
+
+    @ApiModelProperty(value = "联系方式")
+    private String mobile;
+
+    @ApiModelProperty(value = "联系地址")
+    private String address;
 
     @ApiModelProperty(value = "重要等级 1重要2一般3其它")
     private String importantLevel;
@@ -34,7 +40,7 @@ public class CustomerManageExportReqVO {
     private Integer followNum;
 
     @ApiModelProperty(value = "跟进销售员")
-    private Long followUserId;
+    private String followUser;
 
     @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)

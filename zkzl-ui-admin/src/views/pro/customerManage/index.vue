@@ -17,8 +17,8 @@
         </el-select>
       </el-form-item>
 
-      <el-form-item label="跟进销售员" prop="followUserId" label-width="100px">
-        <el-input v-model="queryParams.followUserId" placeholder="请输入跟进销售员" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item label="跟进销售员" prop="followUser" label-width="100px">
+        <el-input v-model="queryParams.followUser" placeholder="请输入跟进销售员" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
 
       <el-form-item>
@@ -42,14 +42,17 @@
 
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
-      <el-table-column label="客户id" align="center" prop="userId" />
+      <el-table-column label="序号id" align="center" prop="id" />
+      <el-table-column label="客户" align="center" prop="customerName" />
+      <el-table-column label="联系方式" align="center" prop="mobile" />
+      <el-table-column label="联系地址" align="center" prop="address" />
       <el-table-column label="重要等级 1重要2一般3其它" align="center" prop="importantLevel" />
       <el-table-column label="客户意向  1高2中3低" align="center" prop="customerIntention" />
       <el-table-column label="客户需求，引号;分隔开" align="center" prop="customerDemand" />
       <el-table-column label="客户跟进结果 1进行中2已签约3已放弃" align="center" prop="customerResult" />
       <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="跟进次数" align="center" prop="followNum" />
-      <el-table-column label="跟进销售员" align="center" prop="followUserId" />
+      <el-table-column label="跟进销售员" align="center" prop="followUser" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -71,6 +74,15 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="客户" prop="customerName">
+          <el-input v-model="form.customerName" placeholder="请输入客户" />
+        </el-form-item>
+        <el-form-item label="联系方式" prop="mobile">
+          <el-input v-model="form.mobile" placeholder="请输入联系方式" />
+        </el-form-item>
+        <el-form-item label="联系地址" prop="address">
+          <el-input v-model="form.address" placeholder="请输入联系地址" />
+        </el-form-item>
         <el-form-item label="重要等级 1重要2一般3其它" prop="importantLevel">
           <el-input v-model="form.importantLevel" placeholder="请输入重要等级 1重要2一般3其它" />
         </el-form-item>
@@ -89,8 +101,8 @@
         <el-form-item label="跟进次数" prop="followNum">
           <el-input v-model="form.followNum" placeholder="请输入跟进次数" />
         </el-form-item>
-        <el-form-item label="跟进销售员" prop="followUserId">
-          <el-input v-model="form.followUserId" placeholder="请输入跟进销售员" />
+        <el-form-item label="跟进销售员" prop="followUser">
+          <el-input v-model="form.followUser" placeholder="请输入跟进销售员" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -128,25 +140,28 @@ export default {
       queryParams: {
         pageNo: 1,
         pageSize: 10,
-        userId: null,
+        customerName: null,
+        mobile: null,
+        address: null,
         importantLevel: null,
         customerIntention: null,
         customerDemand: null,
         customerResult: null,
         remark: null,
         followNum: null,
-        followUserId: null,
+        followUser: null,
         createTime: [],
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        customerName: [{ required: true, message: "客户不能为空", trigger: "blur" }],
+        mobile: [{ required: true, message: "联系方式不能为空", trigger: "blur" }],
+        address: [{ required: true, message: "联系地址不能为空", trigger: "blur" }],
         importantLevel: [{ required: true, message: "重要等级 1重要2一般3其它不能为空", trigger: "blur" }],
-        followUserId: [{ required: true, message: "跟进销售员不能为空", trigger: "blur" }],
-      },
-      importantLevelDict: getDictDatas(DICT_TYPE.IMPORTANT_LEVEL),
-      customerResultDict:getDictDatas(DICT_TYPE.customer_result),
+        followUser: [{ required: true, message: "跟进销售员不能为空", trigger: "blur" }],
+      }
     };
   },
   created() {
@@ -171,14 +186,17 @@ export default {
     /** 表单重置 */
     reset() {
       this.form = {
-        userId: undefined,
+        id: undefined,
+        customerName: undefined,
+        mobile: undefined,
+        address: undefined,
         importantLevel: undefined,
         customerIntention: undefined,
         customerDemand: undefined,
         customerResult: undefined,
         remark: undefined,
         followNum: undefined,
-        followUserId: undefined,
+        followUser: undefined,
       };
       this.resetForm("form");
     },
@@ -201,8 +219,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const userId = row.userId;
-      getCustomerManage(userId).then(response => {
+      const id = row.id;
+      getCustomerManage(id).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改客户管理跟进";
@@ -215,7 +233,7 @@ export default {
           return;
         }
         // 修改的提交
-        if (this.form.userId != null) {
+        if (this.form.id != null) {
           updateCustomerManage(this.form).then(response => {
             this.$modal.msgSuccess("修改成功");
             this.open = false;
@@ -233,9 +251,9 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const userId = row.userId;
-      this.$modal.confirm('是否确认删除客户管理跟进编号为"' + userId + '"的数据项?').then(function() {
-          return deleteCustomerManage(userId);
+      const id = row.id;
+      this.$modal.confirm('是否确认删除客户管理跟进编号为"' + id + '"的数据项?').then(function() {
+          return deleteCustomerManage(id);
         }).then(() => {
           this.getList();
           this.$modal.msgSuccess("删除成功");

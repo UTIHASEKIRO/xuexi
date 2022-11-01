@@ -1,8 +1,5 @@
 package com.zkzl.module.pro.service.customermanage;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
-import com.zkzl.module.pro.dal.dataobject.cususer.CusUserDO;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -17,7 +14,6 @@ import com.zkzl.module.pro.dal.mysql.customermanage.CustomerManageMapper;
 
 import static com.zkzl.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static com.zkzl.module.system.enums.ErrorCodeConstants.CUSTOMER_MANAGE_NOT_EXISTS;
-
 
 /**
  * 客户管理跟进 Service 实现类
@@ -37,13 +33,13 @@ public class CustomerManageServiceImpl implements CustomerManageService {
         CustomerManageDO customerManage = CustomerManageConvert.INSTANCE.convert(createReqVO);
         customerManageMapper.insert(customerManage);
         // 返回
-        return customerManage.getUserId();
+        return customerManage.getId();
     }
 
     @Override
     public void updateCustomerManage(CustomerManageUpdateReqVO updateReqVO) {
         // 校验存在
-        this.validateCustomerManageExists(updateReqVO.getUserId());
+        this.validateCustomerManageExists(updateReqVO.getId());
         // 更新
         CustomerManageDO updateObj = CustomerManageConvert.INSTANCE.convert(updateReqVO);
         customerManageMapper.updateById(updateObj);
@@ -81,13 +77,6 @@ public class CustomerManageServiceImpl implements CustomerManageService {
     @Override
     public List<CustomerManageDO> getCustomerManageList(CustomerManageExportReqVO exportReqVO) {
         return customerManageMapper.selectList(exportReqVO);
-    }
-
-    @Override
-    public PageResult<CustomerManageDO> pageCustFollow(CustomerManagePageReqVO pageVO) {
-        IPage<CustomerManageDO> page = MyBatisUtils.buildPage(pageVO);
-        customerManageMapper.pageCustFollow(page,pageVO);
-        return new PageResult<>(page.getRecords(),page.getTotal());
     }
 
 }

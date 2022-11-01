@@ -11,4 +11,8 @@ import javax.validation.constraints.*;
 @ToString(callSuper = true)
 public class CustomerManageUpdateReqVO extends CustomerManageBaseVO {
 
+    @ApiModelProperty(value = "序号id", required = true)
+    @NotNull(message = "序号id不能为空")
+    private Long id;
+
 }
