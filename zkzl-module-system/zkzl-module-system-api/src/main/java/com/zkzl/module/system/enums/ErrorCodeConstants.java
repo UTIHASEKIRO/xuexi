@@ -160,4 +160,5 @@ public interface ErrorCodeConstants {
     ErrorCode PRODUCT_TYPE_NOT_EXISTS = new ErrorCode(1002023013, "产品类别 不存在");
     ErrorCode PURCHASE_HISTORY_NOT_EXISTS = new ErrorCode(1002023014, "供应记录 不存在");
     ErrorCode SUPPLY_INFO_NOT_EXISTS = new ErrorCode(1002023015, "供货商信息 不存在");
+    ErrorCode DUCT_FINAL_PARAMETERS_NAME_NOT_EXISTS = new ErrorCode(1002023016, "产品参数名 不存在");
 }
