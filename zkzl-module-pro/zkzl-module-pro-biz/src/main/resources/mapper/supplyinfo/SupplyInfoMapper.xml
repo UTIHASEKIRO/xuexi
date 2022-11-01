@@ -9,4 +9,10 @@
         文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
      -->
 
+    <select id="getProductType" resultType="com.zkzl.module.pro.dal.dataobject.producttype.ProductTypeDO">
+        /*获得供货商信息-产品类别*/
+        select distinct ppt.id,ppt.parent_id,ppt.type_id,ppt.type_name_cn,ppt.type_name_en,ppt.sort
+        from pro_supply_info psi
+        left join pro_product_type ppt on psi.type_id = ppt.type_id
+    </select>
 </mapper>
