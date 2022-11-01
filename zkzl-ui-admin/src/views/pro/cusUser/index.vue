@@ -3,15 +3,15 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="联系地址" prop="address">
-        <el-input v-model="queryParams.address" placeholder="请输入联系地址" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item label="状态" prop="status">
+         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small" style="width: 240px">
+          <el-option v-for="dict in userStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
+        </el-select>
       </el-form-item>
       <el-form-item label="公司名称" prop="companyName">
         <el-input v-model="queryParams.companyName" placeholder="请输入公司名称" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="联系人" prop="contectName">
-        <el-input v-model="queryParams.contectName" placeholder="请输入联系人" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
+     
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -20,14 +20,14 @@
 
     <!-- 操作工具栏 -->
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
                    v-hasPermi="['pro:cus-user:create']">新增</el-button>
       </el-col>
       <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
                    v-hasPermi="['pro:cus-user:export']">导出</el-button>
-      </el-col>
+      </el-col> -->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
@@ -46,10 +46,14 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+          <el-button size="mini" type="text"  @click="handleUpdateUserPassword(scope.row)"
+                     >重置密码</el-button>
+                     <el-button size="mini" type="text"  @click="handleUpdateUserStatus(scope.row)"
+                     >{{scope.row.status === 0?"禁用":"启用"}}</el-button>
+          <!-- <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                      v-hasPermi="['pro:cus-user:update']">修改</el-button>
           <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['pro:cus-user:delete']">删除</el-button>
+                     v-hasPermi="['pro:cus-user:delete']">删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -79,7 +83,7 @@
 </template>
 
 <script>
-import { createCusUser, updateCusUser, deleteCusUser, getCusUser, getCusUserPage, exportCusUserExcel } from "@/api/pro/cusUser";
+import { createCusUser, updateCusUser, deleteCusUser, getCusUser, getCusUserPage, exportCusUserExcel,updateUserStatus,updateUserPassword } from "@/api/pro/cusUser";
 import {DICT_TYPE, getDictDatas} from "@/utils/dict";
 export default {
   name: "CusUser",
@@ -142,12 +146,46 @@ export default {
     /** 表单重置 */
     reset() {
       this.form = {
-        userId: undefined,
-        address: undefined,
+        status: undefined,
         companyName: undefined,
-        contectName: undefined,
       };
       this.resetForm("form");
+    },
+    // 重置密码
+    handleUpdateUserPassword(row){
+       var payload = {
+        id:row.userId,
+        password:"A2c1_3"
+      }
+    this.$modal.confirm('确认要重置'  + '"' + row.contectName + '"用户密码吗?').then(function() {
+          return  updateUserPassword(payload);
+        }).then(() => {
+          // this.getList()
+          this.$modal.msgSuccess("重置成功");
+        }).catch(function() {
+          // row.status = row.status === CommonStatusEnum.ENABLE ? CommonStatusEnum.DISABLE
+          //     : CommonStatusEnum.ENABLE;
+        });
+    },
+    /** 禁用/启用 用户登录前端页面 */
+    handleUpdateUserStatus(row) {
+      console.log("updateUserStatus",row)
+      var label = row.status=== 0?"禁用":"启用"
+      var payload = {
+        id:row.userId,
+        status:row.status===0?1:0
+      }
+      this.$modal.confirm('确认要' + label + '"' + row.contectName + '"用户吗?').then(function() {
+          return  updateUserStatus(payload);
+        }).then(() => {
+          this.getList()
+          this.$modal.msgSuccess(label + "成功");
+        }).catch(function() {
+          // row.status = row.status === CommonStatusEnum.ENABLE ? CommonStatusEnum.DISABLE
+          //     : CommonStatusEnum.ENABLE;
+        });
+      
+     
     },
     /** 搜索按钮操作 */
     handleQuery() {

@@ -52,3 +52,22 @@ export function exportCusUserExcel(query) {
     responseType: 'blob'
   })
 }
+
+
+// 禁用/启用 用户登录前端页面
+export function updateUserStatus(query) {
+  return request({
+    url: '/system/user/update-status',
+    method: 'put',
+    data: query,
+  })
+}
+
+// 重置密码
+export function updateUserPassword(query) {
+  return request({
+    url: '/system/user/update-password',
+    method: 'put',
+    data: query,
+  })
+}
