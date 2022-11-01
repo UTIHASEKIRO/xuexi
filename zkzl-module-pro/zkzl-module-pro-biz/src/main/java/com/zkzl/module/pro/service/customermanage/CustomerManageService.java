@@ -66,5 +66,8 @@ public interface CustomerManageService {
      * @return 客户管理跟进列表
      */
     List<CustomerManageDO> getCustomerManageList(CustomerManageExportReqVO exportReqVO);
-
+    /**
+     * 获得客户管理跟进分页
+     */
+    PageResult<CustomerManageDO> pageCustFollow(CustomerManagePageReqVO pageVO);
 }

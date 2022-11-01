@@ -9,4 +9,9 @@
         文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
      -->
 
+    <select id="pageCustFollow"
+            resultType="com.zkzl.module.pro.dal.dataobject.customermanage.CustomerManageDO">
+        /*查询客户跟进信息*/
+        
+    </select>
 </mapper>

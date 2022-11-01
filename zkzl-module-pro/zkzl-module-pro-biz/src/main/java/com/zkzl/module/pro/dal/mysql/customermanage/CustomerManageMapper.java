@@ -2,6 +2,7 @@ package com.zkzl.module.pro.dal.mysql.customermanage;
 
 import java.util.*;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
@@ -44,5 +45,6 @@ public interface CustomerManageMapper extends BaseMapperX<CustomerManageDO> {
                 .betweenIfPresent(CustomerManageDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(CustomerManageDO::getUserId));
     }
-
+    /*查询客户跟进信息*/
+    IPage<CustomerManageDO> pageCustFollow(IPage<CustomerManageDO> page, CustomerManagePageReqVO pageVO);
 }
