@@ -50,4 +50,7 @@ public class SupplyInfoExcelVO {
     @ExcelProperty("推荐理由-服务")
     private String reasonService;
 
+    @ExcelProperty("公司评价")
+    private String evaluation;
+
 }
