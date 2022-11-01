@@ -32,6 +32,14 @@ public class ProductServiceImpl implements ProductService {
         // 插入
         ProductDO duct = ProductConvert.INSTANCE.convert(createReqVO);
         ductMapper.insert(duct);
+
+        //插入产品参数
+
+        //插入产品图片
+
+        //插入产品类别
+
+
         // 返回
         return duct.getId();
     }

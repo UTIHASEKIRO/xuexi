@@ -39,7 +39,7 @@ public class SupplyInfoExcelVO {
     private String product;
 
     @ExcelProperty("产品类别id")
-    private String sortId;
+    private String typeId;
 
     @ExcelProperty("推荐理由-价格")
     private String reasonPrice;

@@ -28,7 +28,7 @@ public interface CustomerManageMapper extends BaseMapperX<CustomerManageDO> {
                 .eqIfPresent(CustomerManageDO::getCustomerResult, reqVO.getCustomerResult())
                 .eqIfPresent(CustomerManageDO::getRemark, reqVO.getRemark())
                 .eqIfPresent(CustomerManageDO::getFollowNum, reqVO.getFollowNum())
-                .eqIfPresent(CustomerManageDO::getFollowUser, reqVO.getFollowUser())
+                .likeIfPresent(CustomerManageDO::getFollowUser, reqVO.getFollowUser())
                 .betweenIfPresent(CustomerManageDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(CustomerManageDO::getId));
     }
