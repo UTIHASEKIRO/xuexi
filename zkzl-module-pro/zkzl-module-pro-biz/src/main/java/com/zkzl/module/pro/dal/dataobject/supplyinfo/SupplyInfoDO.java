@@ -52,7 +52,7 @@ public class SupplyInfoDO extends BaseDO {
     /**
      * 产品类别id
      */
-    private String sortId;
+    private String typeId;
     /**
      * 推荐理由-价格
      */

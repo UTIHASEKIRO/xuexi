@@ -37,7 +37,7 @@ public class SupplyInfoPageReqVO extends PageParam {
     private String product;
 
     @ApiModelProperty(value = "产品类别id")
-    private String sortId;
+    private String typeId;
 
     @ApiModelProperty(value = "推荐理由-价格")
     private String reasonPrice;
