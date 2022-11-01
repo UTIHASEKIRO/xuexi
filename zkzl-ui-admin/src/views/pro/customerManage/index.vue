@@ -2,35 +2,25 @@
   <div class="app-container">
 
     <!-- 搜索工作栏 -->
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="客户id" prop="userId">
-        <el-input v-model="queryParams.userId" placeholder="请输入客户id" clearable @keyup.enter.native="handleQuery"/>
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px" >
+      
+      <el-form-item label="重要等级" prop="importantLevel" >
+        <el-select v-model="queryParams.importantLevel" placeholder="请选择重要等级" clearable size="small" style="width: 240px">
+          <el-option v-for="dict in importantLevelDict" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
+        </el-select>
       </el-form-item>
-      <el-form-item label="重要等级 1重要2一般3其它" prop="importantLevel">
-        <el-input v-model="queryParams.importantLevel" placeholder="请输入重要等级 1重要2一般3其它" clearable @keyup.enter.native="handleQuery"/>
+     
+      <el-form-item label="客户跟进结果" prop="customerResult" label-width="100px">
+        
+        <el-select v-model="queryParams.customerResult" placeholder="请选择客户跟进结果" clearable size="small" style="width: 240px">
+          <el-option v-for="dict in customerResultDict" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
+        </el-select>
       </el-form-item>
-      <el-form-item label="客户意向  1高2中3低" prop="customerIntention">
-        <el-input v-model="queryParams.customerIntention" placeholder="请输入客户意向  1高2中3低" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="客户需求，引号;分隔开" prop="customerDemand">
-        <el-input v-model="queryParams.customerDemand" placeholder="请输入客户需求，引号;分隔开" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="客户跟进结果 1进行中2已签约3已放弃" prop="customerResult">
-        <el-input v-model="queryParams.customerResult" placeholder="请输入客户跟进结果 1进行中2已签约3已放弃" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input v-model="queryParams.remark" placeholder="请输入备注" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="跟进次数" prop="followNum">
-        <el-input v-model="queryParams.followNum" placeholder="请输入跟进次数" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="跟进销售员" prop="followUserId">
+
+      <el-form-item label="跟进销售员" prop="followUserId" label-width="100px">
         <el-input v-model="queryParams.followUserId" placeholder="请输入跟进销售员" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
-        <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -113,7 +103,7 @@
 
 <script>
 import { createCustomerManage, updateCustomerManage, deleteCustomerManage, getCustomerManage, getCustomerManagePage, exportCustomerManageExcel } from "@/api/pro/customerManage";
-
+import {DICT_TYPE, getDictDatas} from "@/utils/dict";
 export default {
   name: "CustomerManage",
   components: {
@@ -154,7 +144,9 @@ export default {
       rules: {
         importantLevel: [{ required: true, message: "重要等级 1重要2一般3其它不能为空", trigger: "blur" }],
         followUserId: [{ required: true, message: "跟进销售员不能为空", trigger: "blur" }],
-      }
+      },
+      importantLevelDict: getDictDatas(DICT_TYPE.IMPORTANT_LEVEL),
+      customerResultDict:getDictDatas(DICT_TYPE.customer_result),
     };
   },
   created() {
