@@ -65,5 +65,9 @@ public class SupplyInfoDO extends BaseDO {
      * 推荐理由-服务
      */
     private String reasonService;
+    /**
+     * 公司评价
+     */
+    private String evaluation;
 
 }

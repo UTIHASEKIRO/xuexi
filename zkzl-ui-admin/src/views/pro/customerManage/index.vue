@@ -32,8 +32,8 @@
       <!-- <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
                    v-hasPermi="['pro:customer-manage:create']">新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
+      </el-col> -->
+      <!-- <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
                    v-hasPermi="['pro:customer-manage:export']">导出</el-button>
       </el-col> -->
@@ -174,7 +174,7 @@ export default {
         customerName: [{ required: true, message: "客户不能为空", trigger: "blur" }],
         mobile: [{ required: true, message: "联系方式不能为空", trigger: "blur" }],
         address: [{ required: true, message: "联系地址不能为空", trigger: "blur" }],
-        importantLevel: [{ required: true, message: "重要等级 1重要2一般3其它不能为空", trigger: "blur" }],
+        importantLevel: [{ required: true, message: "重要等级不能为空", trigger: "blur" }],
         followUser: [{ required: true, message: "跟进销售员不能为空", trigger: "blur" }],
       },
       importantLevelDict: getDictDatas(DICT_TYPE.IMPORTANT_LEVEL),

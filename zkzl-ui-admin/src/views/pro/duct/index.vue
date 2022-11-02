@@ -3,19 +3,19 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="产品id" prop="productId">
+      <!-- <el-form-item label="产品id" prop="productId">
         <el-input v-model="queryParams.productId" placeholder="请输入产品id" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="产品类别id" prop="typeId">
         <el-input v-model="queryParams.typeId" placeholder="请输入产品类别id" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="产品名称" prop="productName">
         <el-input v-model="queryParams.productName" placeholder="请输入产品名称" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
+      <!-- <el-form-item label="创建时间" prop="createTime">
         <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
                         range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
