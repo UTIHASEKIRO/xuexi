@@ -94,4 +94,11 @@ public class SupplyInfoServiceImpl implements SupplyInfoService {
         return supplyInfoMapper.getProductType();
     }
 
+    @Override
+    public PageResult<SupplyInfoNameVO> getSupplyInfoName(SupplyInfoPageReqVO pageVO) {
+        IPage<SupplyInfoNameVO> mPage = MyBatisUtils.buildPage(pageVO);
+        supplyInfoMapper.getSupplyInfoName(mPage,pageVO);
+        return new PageResult<>(mPage.getRecords(), mPage.getTotal());
+    }
+
 }

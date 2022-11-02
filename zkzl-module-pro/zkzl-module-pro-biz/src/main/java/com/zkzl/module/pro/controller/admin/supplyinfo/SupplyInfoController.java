@@ -88,6 +88,14 @@ public class SupplyInfoController {
         return success(pageResult);
     }
 
+    @GetMapping("/pageName")
+    @ApiOperation("获得供货商名称")
+    @PreAuthorize("@ss.hasPermission('pro:supply-info:query')")
+    public CommonResult<PageResult<SupplyInfoNameVO>> getSupplyInfoName(@Valid SupplyInfoPageReqVO pageVO) {
+        PageResult<SupplyInfoNameVO> pageResult = supplyInfoService.getSupplyInfoName(pageVO);
+        return success(pageResult);
+    }
+
     @GetMapping("/export-excel")
     @ApiOperation("导出供货商信息 Excel")
     @PreAuthorize("@ss.hasPermission('pro:supply-info:export')")

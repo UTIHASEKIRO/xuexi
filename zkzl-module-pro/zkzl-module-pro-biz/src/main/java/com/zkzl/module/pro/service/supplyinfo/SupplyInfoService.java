@@ -70,4 +70,7 @@ public interface SupplyInfoService {
 
     /*获得供货商信息-产品类别*/
     List<ProductTypeDO> getProductType();
+
+    /*获得供货商名称*/
+    PageResult<SupplyInfoNameVO> getSupplyInfoName(SupplyInfoPageReqVO pageVO);
 }

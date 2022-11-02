@@ -30,4 +30,11 @@
             </if>
         </where>
     </select>
+    <select id="getSupplyInfoName"
+            resultType="com.zkzl.module.pro.controller.admin.supplyinfo.vo.SupplyInfoNameVO">
+        /*获得供货商名称*/
+        select psi.id,psi.name
+        from pro_supply_info psi
+        where deleted = '0'
+    </select>
 </mapper>

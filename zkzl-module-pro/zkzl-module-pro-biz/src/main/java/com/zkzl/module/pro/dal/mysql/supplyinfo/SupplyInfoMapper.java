@@ -57,4 +57,7 @@ public interface SupplyInfoMapper extends BaseMapperX<SupplyInfoDO> {
 
     /*供货商信息分页查询*/
     IPage<SupplyInfoPageVO> pageSupplyInfo(@Param("page") IPage<SupplyInfoPageVO> page, @Param("param") SupplyInfoPageReqVO pageReqVO);
+
+    /*获得供货商名称*/
+    IPage<SupplyInfoNameVO> getSupplyInfoName(@Param("page")IPage<SupplyInfoNameVO> mPage,@Param("param") SupplyInfoPageReqVO pageVO);
 }

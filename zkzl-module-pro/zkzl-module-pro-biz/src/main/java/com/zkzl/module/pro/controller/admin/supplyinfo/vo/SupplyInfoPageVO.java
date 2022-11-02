@@ -1,18 +1,15 @@
 package com.zkzl.module.pro.controller.admin.supplyinfo.vo;
 
-import com.zkzl.framework.common.pojo.PageParam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 
 @ApiModel("管理后台 - 供货商信息分页 返回VO")
 @Data
-@EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class SupplyInfoPageVO extends PageParam {
+public class SupplyInfoPageVO{
 
     @ApiModelProperty(value = "供货商id")
     private Long id;
