@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.dal.dataobject.purchasehistory;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import java.util.*;
 import java.math.BigDecimal;
@@ -27,9 +28,13 @@ public class PurchaseHistoryDO extends BaseDO {
     @TableId
     private Long id;
     /**
-     * 供应记录ID
+     * 供应记录ID-即供货单号
      */
     private String purchaseHistoryId;
+    /**
+     * 供货商
+     */
+    private String supplyCompany;
     /**
      * 产品编号
      */
