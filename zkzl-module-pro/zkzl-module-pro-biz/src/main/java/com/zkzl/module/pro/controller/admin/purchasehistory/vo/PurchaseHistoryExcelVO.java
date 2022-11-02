@@ -60,4 +60,13 @@ public class PurchaseHistoryExcelVO {
     @ExcelProperty("创建时间")
     private Date createTime;
 
+    @ApiModelProperty(value = "备注")
+    private String remark;
+
+    @ApiModelProperty(value = "数量")
+    private BigDecimal mount;
+
+    @ApiModelProperty(value = "总价")
+    private BigDecimal price;
+
 }

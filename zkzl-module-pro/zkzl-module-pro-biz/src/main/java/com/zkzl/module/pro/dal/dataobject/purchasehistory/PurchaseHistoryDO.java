@@ -79,5 +79,17 @@ public class PurchaseHistoryDO extends BaseDO {
      * 净重
      */
     private BigDecimal netWeight;
+    /**
+     * "备注"
+     */
+    private String remark;
+    /**
+     * "数量"
+     */
+    private BigDecimal mount;
+    /**
+     * "总价"
+     */
+    private BigDecimal price;
 
 }

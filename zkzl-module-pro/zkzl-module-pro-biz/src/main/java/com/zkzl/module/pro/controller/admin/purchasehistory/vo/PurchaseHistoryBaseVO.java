@@ -52,4 +52,13 @@ public class PurchaseHistoryBaseVO {
     @ApiModelProperty(value = "净重")
     private BigDecimal netWeight;
 
+    @ApiModelProperty(value = "备注")
+    private String remark;
+
+    @ApiModelProperty(value = "数量")
+    private BigDecimal mount;
+
+    @ApiModelProperty(value = "总价")
+    private BigDecimal price;
+
 }

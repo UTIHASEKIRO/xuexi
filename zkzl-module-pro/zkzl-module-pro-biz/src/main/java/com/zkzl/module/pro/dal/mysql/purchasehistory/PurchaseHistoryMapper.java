@@ -20,6 +20,7 @@ public interface PurchaseHistoryMapper extends BaseMapperX<PurchaseHistoryDO> {
     default PageResult<PurchaseHistoryDO> selectPage(PurchaseHistoryPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<PurchaseHistoryDO>()
                 .eqIfPresent(PurchaseHistoryDO::getPurchaseHistoryId, reqVO.getPurchaseHistoryId())
+                .likeIfPresent(PurchaseHistoryDO::getSupplyCompany, reqVO.getSupplyCompany())
                 .eqIfPresent(PurchaseHistoryDO::getProductSerial, reqVO.getProductSerial())
                 .eqIfPresent(PurchaseHistoryDO::getHsSerial, reqVO.getHsSerial())
                 .eqIfPresent(PurchaseHistoryDO::getProductSize, reqVO.getProductSize())

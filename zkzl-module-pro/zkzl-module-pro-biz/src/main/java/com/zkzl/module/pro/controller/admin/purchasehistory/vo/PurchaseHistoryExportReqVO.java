@@ -57,4 +57,13 @@ public class PurchaseHistoryExportReqVO {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date[] createTime;
 
+    @ApiModelProperty(value = "备注")
+    private String remark;
+
+    @ApiModelProperty(value = "数量")
+    private BigDecimal mount;
+
+    @ApiModelProperty(value = "总价")
+    private BigDecimal price;
+
 }

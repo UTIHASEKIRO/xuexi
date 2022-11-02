@@ -31,7 +31,7 @@ public class ProductFinalParametersController {
     @Resource
     private ProductFinalParametersNameService ductFinalParametersNameService;
 
-    @GetMapping("/page")
+    @GetMapping("/page1")
     @ApiOperation("产品固定参数查询")
     @PreAuthorize("@ss.hasPermission('pro:duct-final-parameters:query')")
     public CommonResult<PageResult<ProductFinalParametersNameRespVO>> getProductFinalParametersNamePage(@Valid ProductFinalParametersNamePageReqVO pageVO) {

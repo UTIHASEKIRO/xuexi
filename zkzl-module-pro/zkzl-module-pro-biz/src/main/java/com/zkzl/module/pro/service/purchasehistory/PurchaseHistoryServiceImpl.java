@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.service.purchasehistory;
 
+import cn.hutool.core.util.IdUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +32,7 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
     public Long createPurchaseHistory(PurchaseHistoryCreateReqVO createReqVO) {
         // 插入
         PurchaseHistoryDO purchaseHistory = PurchaseHistoryConvert.INSTANCE.convert(createReqVO);
+        purchaseHistory.setPurchaseHistoryId(IdUtil.getSnowflakeNextIdStr());//供应记录ID-即供货单号
         purchaseHistoryMapper.insert(purchaseHistory);
         // 返回
         return purchaseHistory.getId();
