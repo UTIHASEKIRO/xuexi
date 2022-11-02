@@ -19,11 +19,10 @@ public interface ProductFinalParametersMapper extends BaseMapperX<ProductFinalPa
 
     default PageResult<ProductFinalParametersDO> selectPage(ProductFinalParametersPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<ProductFinalParametersDO>()
-                .eqIfPresent(ProductFinalParametersDO::getFinalParametersId, reqVO.getFinalParametersId())
                 .eqIfPresent(ProductFinalParametersDO::getParameterCn, reqVO.getParameterCn())
                 .eqIfPresent(ProductFinalParametersDO::getParameterEn, reqVO.getParameterEn())
-                .eqIfPresent(ProductFinalParametersDO::getValueCn, reqVO.getValueCn())
-                .eqIfPresent(ProductFinalParametersDO::getValueEn, reqVO.getValueEn())
+                .likeIfPresent(ProductFinalParametersDO::getValueCn, reqVO.getValueCn())
+                .likeIfPresent(ProductFinalParametersDO::getValueEn, reqVO.getValueEn())
                 .orderByDesc(ProductFinalParametersDO::getId));
     }
 

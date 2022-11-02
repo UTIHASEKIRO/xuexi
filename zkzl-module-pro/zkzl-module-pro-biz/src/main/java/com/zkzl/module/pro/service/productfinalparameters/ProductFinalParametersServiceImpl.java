@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.service.productfinalparameters;
 
+import cn.hutool.core.util.IdUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +30,7 @@ public class ProductFinalParametersServiceImpl implements ProductFinalParameters
 
     @Override
     public Long createductFinalParameters(ProductFinalParametersCreateReqVO createReqVO) {
+        createReqVO.setFinalParametersId(IdUtil.getSnowflakeNextIdStr());
         // 插入
         ProductFinalParametersDO ductFinalParameters = ProductFinalParametersConvert.INSTANCE.convert(createReqVO);
         ductFinalParametersMapper.insert(ductFinalParameters);

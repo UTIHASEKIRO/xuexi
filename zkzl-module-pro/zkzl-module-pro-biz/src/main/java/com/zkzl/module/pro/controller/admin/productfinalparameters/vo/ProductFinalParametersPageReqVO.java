@@ -11,9 +11,6 @@ import com.zkzl.framework.common.pojo.PageParam;
 @ToString(callSuper = true)
 public class ProductFinalParametersPageReqVO extends PageParam {
 
-    @ApiModelProperty(value = "固定参数id")
-    private String finalParametersId;
-
     @ApiModelProperty(value = "参数名-中文")
     private String parameterCn;
 
