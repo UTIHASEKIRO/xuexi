@@ -64,6 +64,11 @@ export const DICT_TYPE = {
   PRICE_INQUERY_STATUS: 'price_inqury_status', // 询价单状态
   ORDER_STATUS: 'order_status', // 订单状态
   USER_STATUS: 'user_status', // 订单状态
+
+  REASON_SERVICE: 'reason_service', // 选择原因 价格
+
+  REASON_QUALITY: 'reason_quality', // 选择原因-质量
+  REASON_PRICE: 'reason_price', // 选择原因-价格
 }
 
 /**

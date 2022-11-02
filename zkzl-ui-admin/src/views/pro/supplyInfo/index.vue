@@ -3,40 +3,17 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
+      <el-form-item label="产品类别" prop="typeId">
+        <el-select v-model="queryParams.typeId" placeholder="请选择产品类别" clearable size="small" style="width: 240px">
+          <el-option v-for="dict in duckTypeList" :key="parseInt(dict.id)" :label="dict.typeNameCn" :value="parseInt(dict.typeId)"/>
+        </el-select>
+        <!-- <el-input v-model="queryParams.sortId" placeholder="请选择产品类别" clearable @keyup.enter.native="handleQuery"/> -->
+      </el-form-item>
       <el-form-item label="公司名称" prop="name">
         <el-input v-model="queryParams.name" placeholder="请输入公司名称" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="公司地址" prop="address">
-        <el-input v-model="queryParams.address" placeholder="请输入公司地址" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="联系人" prop="contact">
-        <el-input v-model="queryParams.contact" placeholder="请输入联系人" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="电话" prop="phone">
-        <el-input v-model="queryParams.phone" placeholder="请输入电话" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="email" prop="email">
-        <el-input v-model="queryParams.email" placeholder="请输入email" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
-        <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
-      <el-form-item label="主要产品" prop="product">
-        <el-input v-model="queryParams.product" placeholder="请输入主要产品" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="产品类别id" prop="sortId">
-        <el-input v-model="queryParams.sortId" placeholder="请输入产品类别id" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="推荐理由-价格" prop="reasonPrice">
-        <el-input v-model="queryParams.reasonPrice" placeholder="请输入推荐理由-价格" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="推荐理由-质量" prop="reasonQuality">
-        <el-input v-model="queryParams.reasonQuality" placeholder="请输入推荐理由-质量" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="推荐理由-服务" prop="reasonService">
-        <el-input v-model="queryParams.reasonService" placeholder="请输入推荐理由-服务" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
+     
+      
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -49,31 +26,50 @@
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
                    v-hasPermi="['pro:supply-info:create']">新增</el-button>
       </el-col>
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
                    v-hasPermi="['pro:supply-info:export']">导出</el-button>
-      </el-col>
+      </el-col> -->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
       <el-table-column label="序号id" align="center" prop="id" />
+      <el-table-column label="产品类别" align="center" prop="typeNameCn" />
       <el-table-column label="公司名称" align="center" prop="name" />
-      <el-table-column label="公司地址" align="center" prop="address" />
       <el-table-column label="联系人" align="center" prop="contact" />
-      <el-table-column label="电话" align="center" prop="phone" />
+      <el-table-column label="联系电话" align="center" prop="phone" />
+      <el-table-column label="公司评级" align="center" prop="evaluation" />
+      <el-table-column label="主要产品" align="center" prop="product" />
+      <el-table-column label="推荐理由-价格" align="center" prop="reasonPrice" >
+        <template slot-scope="scope">
+          <dict-tag :type="DICT_TYPE.REASON_PRICE" :value="scope.row.reasonPrice"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="推荐理由-质量" align="center" prop="reasonQuality" >
+        <template slot-scope="scope">
+          <dict-tag :type="DICT_TYPE.REASON_QUALITY" :value="scope.row.reasonQuality"/>
+        </template>
+      </el-table-column>
+      <el-table-column label="推荐理由-服务" align="center" prop="reasonService" >
+        <template slot-scope="scope">
+          <dict-tag :type="DICT_TYPE.REASON_SERVICE" :value="parseInt(scope.row.reasonService)"/>
+        </template>
+      </el-table-column>
+
+      <!-- <el-table-column label="公司地址" align="center" prop="address" />
+      
+      
       <el-table-column label="email" align="center" prop="email" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
-      </el-table-column>
-      <el-table-column label="主要产品" align="center" prop="product" />
-      <el-table-column label="产品类别id" align="center" prop="sortId" />
-      <el-table-column label="推荐理由-价格" align="center" prop="reasonPrice" />
-      <el-table-column label="推荐理由-质量" align="center" prop="reasonQuality" />
-      <el-table-column label="推荐理由-服务" align="center" prop="reasonService" />
+      </el-table-column> -->
+      
+     
+      
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
@@ -90,35 +86,43 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="产品类别" prop="typeId">
+          <el-select v-model="form.typeId" placeholder="请选择产品类别" clearable size="small" style="width: 240px">
+            <el-option v-for="dict in duckTypeList" :key="parseInt(dict.id)" :label="dict.typeNameCn" :value="parseInt(dict.typeId)"/>
+          </el-select>
+        </el-form-item>
         <el-form-item label="公司名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入公司名称" />
-        </el-form-item>
-        <el-form-item label="公司地址" prop="address">
-          <el-input v-model="form.address" placeholder="请输入公司地址" />
         </el-form-item>
         <el-form-item label="联系人" prop="contact">
           <el-input v-model="form.contact" placeholder="请输入联系人" />
         </el-form-item>
-        <el-form-item label="电话" prop="phone">
+        <el-form-item label="联系电话" prop="phone">
           <el-input v-model="form.phone" placeholder="请输入电话" />
         </el-form-item>
-        <el-form-item label="email" prop="email">
-          <el-input v-model="form.email" placeholder="请输入email" />
+        <el-form-item label="公司评价" prop="evaluation">
+          <el-input v-model="form.evaluation" placeholder="请输入公司评价" />
         </el-form-item>
+        
+        
         <el-form-item label="主要产品" prop="product">
           <el-input v-model="form.product" placeholder="请输入主要产品" />
         </el-form-item>
-        <el-form-item label="产品类别id" prop="sortId">
-          <el-input v-model="form.sortId" placeholder="请输入产品类别id" />
-        </el-form-item>
+        
         <el-form-item label="推荐理由-价格" prop="reasonPrice">
-          <el-input v-model="form.reasonPrice" placeholder="请输入推荐理由-价格" />
+          <el-select v-model="form.reasonPrice" placeholder="请选择推荐理由" clearable size="small" style="width: 240px">
+            <el-option v-for="dict in reasonServiceDict" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="推荐理由-质量" prop="reasonQuality">
-          <el-input v-model="form.reasonQuality" placeholder="请输入推荐理由-质量" />
+           <el-select v-model="form.reasonQuality" placeholder="请选择推荐理由" clearable size="small" style="width: 240px">
+            <el-option v-for="dict in reasonQualityDict" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="推荐理由-服务" prop="reasonService">
-          <el-input v-model="form.reasonService" placeholder="请输入推荐理由-服务" />
+           <el-select v-model="form.reasonService" placeholder="请选择推荐理由" clearable size="small" style="width: 240px">
+            <el-option v-for="dict in reasonPriceDict" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -131,7 +135,8 @@
 
 <script>
 import { createSupplyInfo, updateSupplyInfo, deleteSupplyInfo, getSupplyInfo, getSupplyInfoPage, exportSupplyInfoExcel } from "@/api/pro/supplyInfo";
-
+import { getductTypePage } from "@/api/pro/ductType";
+import {DICT_TYPE, getDictDatas} from "@/utils/dict";
 export default {
   name: "SupplyInfo",
   components: {
@@ -172,11 +177,47 @@ export default {
       form: {},
       // 表单校验
       rules: {
-      }
+         typeId: [
+          { required: true, message: "产品类别不能为空", trigger: "blur" }
+        ],
+        name: [
+          { required: true, message: "公司名称不能为空", trigger: "blur" }
+        ],
+        contact: [
+          { required: true, message: "联系人不能为空", trigger: "blur" }
+        ],
+        phone: [
+          {
+            pattern: /^(?:(?:\+|00)86)?1(?:(?:3[\d])|(?:4[5-79])|(?:5[0-35-9])|(?:6[5-7])|(?:7[0-8])|(?:8[\d])|(?:9[189]))\d{8}$/,
+            message: "请输入正确的联系电话",
+            trigger: "blur"
+          }
+        ],
+        evaluation: [
+          { required: true, message: "公司评价不能为空", trigger: "blur" }
+        ],
+        product: [
+          { required: true, message: "主要产品不能为空", trigger: "blur" }
+        ],
+        reasonPrice: [
+          { required: true, message: "推荐理由不能为空", trigger: "blur" }
+        ],
+        reasonQuality: [
+          { required: true, message: "推荐理由不能为空", trigger: "blur" }
+        ],
+         reasonService: [
+          { required: true, message: "推荐理由不能为空", trigger: "blur" }
+        ],
+      },
+      duckTypeList:[],
+      reasonServiceDict: getDictDatas(DICT_TYPE.REASON_SERVICE), 
+      reasonQualityDict: getDictDatas(DICT_TYPE.REASON_QUALITY), 
+      reasonPriceDict: getDictDatas(DICT_TYPE.REASON_PRICE), 
     };
   },
   created() {
     this.getList();
+    this.getDuckTypePage()
   },
   methods: {
     /** 查询列表 */
@@ -188,6 +229,11 @@ export default {
         this.total = response.data.total;
         this.loading = false;
       });
+    },
+    getDuckTypePage(){
+      getductTypePage().then(result=>{
+        this.duckTypeList = result.data.list
+      })
     },
     /** 取消按钮 */
     cancel() {
@@ -232,6 +278,10 @@ export default {
       this.reset();
       const id = row.id;
       getSupplyInfo(id).then(response => {
+        response.data.typeId = parseInt(response.data.typeId)
+        response.data.reasonPrice = parseInt(response.data.reasonPrice)
+        response.data.reasonQuality = parseInt(response.data.reasonQuality)
+        response.data.reasonService = parseInt(response.data.reasonService)
         this.form = response.data;
         this.open = true;
         this.title = "修改供货商信息";
