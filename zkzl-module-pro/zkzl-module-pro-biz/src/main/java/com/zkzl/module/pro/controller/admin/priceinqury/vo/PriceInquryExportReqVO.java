@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.controller.admin.priceinqury.vo;
 
+import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -49,7 +50,11 @@ public class PriceInquryExportReqVO {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date[] effectiveDate;
 
-    @ApiModelProperty(value = "状态 1客户询价状态 2老板确认状态 3询价完成状态")
+    @ApiModelProperty("0初始化状态 需要业务员补充卖方信息* 1客户询价后状态  需要管理员即老板报价" +
+            "* 2老板确认后状态  待签约" +
+            "    * 3客户确认  生成订单" +
+            "    * 4放弃状态  客户存在恶意询价或老板拒签" +
+            "    * */")
     private String status;
 
     @ApiModelProperty(value = "创建时间")

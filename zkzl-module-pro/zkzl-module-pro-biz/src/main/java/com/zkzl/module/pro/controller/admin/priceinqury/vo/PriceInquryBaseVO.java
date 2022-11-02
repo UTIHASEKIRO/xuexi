@@ -17,23 +17,18 @@ import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DA
 public class PriceInquryBaseVO {
 
     @ApiModelProperty(value = "询价表id", required = true)
-    @NotNull(message = "询价表id不能为空")
     private String priceInquryId;
 
     @ApiModelProperty(value = "卖方公司名称", required = true)
-    @NotNull(message = "卖方公司名称不能为空")
     private String sellerCompanyName;
 
     @ApiModelProperty(value = "卖方联系地址", required = true)
-    @NotNull(message = "卖方联系地址不能为空")
     private String sellerCompanyAddress;
 
     @ApiModelProperty(value = "卖方联系人", required = true)
-    @NotNull(message = "卖方联系人不能为空")
     private String sellerContact;
 
     @ApiModelProperty(value = "卖方联系电话", required = true)
-    @NotNull(message = "卖方联系电话不能为空")
     private String sellerTel;
 
     @ApiModelProperty(value = "客户id", required = true)
@@ -59,7 +54,12 @@ public class PriceInquryBaseVO {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date effectiveDate;
 
-    @ApiModelProperty(value = "状态 1客户询价状态 2老板确认状态 3询价完成状态")
+    @ApiModelProperty(value = " 0初始化状态 需要业务员补充卖方信息" +
+            "    * 1客户询价后状态  需要管理员即老板报价" +
+            "    * 2老板确认后状态  待签约" +
+            "    * 3客户确认  生成订单" +
+            "    * 4放弃状态  客户存在恶意询价或老板拒签" +
+            "    * ")
     private String status;
 
 }
