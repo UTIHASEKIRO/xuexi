@@ -18,8 +18,11 @@ public class PurchaseHistoryExcelVO {
     @ExcelProperty("序号id")
     private Long id;
 
-    @ExcelProperty("供应记录ID")
+    @ExcelProperty("供应记录ID-即供货单号")
     private String purchaseHistoryId;
+
+    @ApiModelProperty(value = "供货商")
+    private String supplyCompany;
 
     @ExcelProperty("产品编号")
     private String productSerial;

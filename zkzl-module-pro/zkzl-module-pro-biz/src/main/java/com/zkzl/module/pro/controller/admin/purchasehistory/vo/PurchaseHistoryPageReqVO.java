@@ -16,8 +16,11 @@ import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DA
 @ToString(callSuper = true)
 public class PurchaseHistoryPageReqVO extends PageParam {
 
-    @ApiModelProperty(value = "供应记录ID")
+    @ApiModelProperty(value = "供应记录ID-即供货单号")
     private String purchaseHistoryId;
+
+    @ApiModelProperty(value = "供货商")
+    private String supplyCompany;
 
     @ApiModelProperty(value = "产品编号")
     private String productSerial;

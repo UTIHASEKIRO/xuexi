@@ -13,7 +13,6 @@ import javax.validation.constraints.*;
 public class ProductFinalParametersBaseVO {
 
     @ApiModelProperty(value = "固定参数id", required = true)
-    @NotNull(message = "固定参数id不能为空")
     private String finalParametersId;
 
     @ApiModelProperty(value = "参数名-中文")

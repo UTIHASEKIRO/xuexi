@@ -58,7 +58,7 @@ public interface SupplyInfoService {
      * @param pageReqVO 分页查询
      * @return 供货商信息分页
      */
-    PageResult<SupplyInfoDO> getSupplyInfoPage(SupplyInfoPageReqVO pageReqVO);
+    PageResult<SupplyInfoPageVO> getSupplyInfoPage(SupplyInfoPageReqVO pageReqVO);
 
     /**
      * 获得供货商信息列表, 用于 Excel 导出

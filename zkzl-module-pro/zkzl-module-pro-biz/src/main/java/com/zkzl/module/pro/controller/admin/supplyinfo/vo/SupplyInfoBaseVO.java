@@ -42,4 +42,7 @@ public class SupplyInfoBaseVO {
     @ApiModelProperty(value = "推荐理由-服务")
     private String reasonService;
 
+    @ApiModelProperty(value = "公司评价")
+    private String evaluation;
+
 }

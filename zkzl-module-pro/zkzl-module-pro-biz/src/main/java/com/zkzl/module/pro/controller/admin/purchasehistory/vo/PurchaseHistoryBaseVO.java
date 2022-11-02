@@ -13,7 +13,10 @@ import javax.validation.constraints.*;
 @Data
 public class PurchaseHistoryBaseVO {
 
-    @ApiModelProperty(value = "供应记录ID")
+    @ApiModelProperty(value = "供货商")
+    private String supplyCompany;
+
+    @ApiModelProperty(value = "供应记录ID-即供货单号")
     private String purchaseHistoryId;
 
     @ApiModelProperty(value = "产品编号")

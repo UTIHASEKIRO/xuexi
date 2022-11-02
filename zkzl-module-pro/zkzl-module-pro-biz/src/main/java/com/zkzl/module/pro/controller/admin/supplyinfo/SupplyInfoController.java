@@ -83,9 +83,9 @@ public class SupplyInfoController {
     @GetMapping("/page")
     @ApiOperation("获得供货商信息分页")
     @PreAuthorize("@ss.hasPermission('pro:supply-info:query')")
-    public CommonResult<PageResult<SupplyInfoRespVO>> getSupplyInfoPage(@Valid SupplyInfoPageReqVO pageVO) {
-        PageResult<SupplyInfoDO> pageResult = supplyInfoService.getSupplyInfoPage(pageVO);
-        return success(SupplyInfoConvert.INSTANCE.convertPage(pageResult));
+    public CommonResult<PageResult<SupplyInfoPageVO>> getSupplyInfoPage(@Valid SupplyInfoPageReqVO pageVO) {
+        PageResult<SupplyInfoPageVO> pageResult = supplyInfoService.getSupplyInfoPage(pageVO);
+        return success(pageResult);
     }
 
     @GetMapping("/export-excel")

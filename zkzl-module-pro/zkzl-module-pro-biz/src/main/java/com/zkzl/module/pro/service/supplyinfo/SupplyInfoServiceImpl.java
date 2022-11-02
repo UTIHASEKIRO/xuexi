@@ -2,6 +2,9 @@ package com.zkzl.module.pro.service.supplyinfo;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
+import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.module.pro.dal.dataobject.producttype.ProductTypeDO;
 import me.ahoo.cosid.snowflake.SnowflakeFriendlyId;
 import org.springframework.stereotype.Service;
@@ -15,7 +18,6 @@ import com.zkzl.framework.common.pojo.PageResult;
 
 import com.zkzl.module.pro.convert.supplyinfo.SupplyInfoConvert;
 import com.zkzl.module.pro.dal.mysql.supplyinfo.SupplyInfoMapper;
-import sun.plugin.util.UIUtil;
 
 import static com.zkzl.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static com.zkzl.module.system.enums.ErrorCodeConstants.SUPPLY_INFO_NOT_EXISTS;
@@ -36,7 +38,7 @@ public class SupplyInfoServiceImpl implements SupplyInfoService {
     public Long createSupplyInfo(SupplyInfoCreateReqVO createReqVO) {
         // 插入
         SupplyInfoDO supplyInfo = SupplyInfoConvert.INSTANCE.convert(createReqVO);
-        //supplyInfo.setTypeId(UUID.randomUUID());
+//        supplyInfo.setTypeId(IdUtil.getSnowflakeNextIdStr());
         supplyInfoMapper.insert(supplyInfo);
         // 返回
         return supplyInfo.getId();
@@ -76,8 +78,10 @@ public class SupplyInfoServiceImpl implements SupplyInfoService {
     }
 
     @Override
-    public PageResult<SupplyInfoDO> getSupplyInfoPage(SupplyInfoPageReqVO pageReqVO) {
-        return supplyInfoMapper.selectPage(pageReqVO);
+    public PageResult<SupplyInfoPageVO> getSupplyInfoPage(SupplyInfoPageReqVO pageReqVO) {
+        IPage<SupplyInfoPageVO> mPage = MyBatisUtils.buildPage(pageReqVO);
+        supplyInfoMapper.pageSupplyInfo(mPage,pageReqVO);
+        return new PageResult<>(mPage.getRecords(), mPage.getTotal());
     }
 
     @Override
