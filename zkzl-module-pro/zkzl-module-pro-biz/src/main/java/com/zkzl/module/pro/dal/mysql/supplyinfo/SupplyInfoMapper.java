@@ -56,5 +56,5 @@ public interface SupplyInfoMapper extends BaseMapperX<SupplyInfoDO> {
     List<ProductTypeDO> getProductType();
 
     /*供货商信息分页查询*/
-    IPage<SupplyInfoDO> pageSupplyInfo(@Param("page") IPage<SupplyInfoDO> page, @Param("param") SupplyInfoPageReqVO pageReqVO);
+    IPage<SupplyInfoPageVO> pageSupplyInfo(@Param("page") IPage<SupplyInfoPageVO> page, @Param("param") SupplyInfoPageReqVO pageReqVO);
 }

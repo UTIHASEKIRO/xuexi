@@ -18,7 +18,6 @@ import com.zkzl.framework.common.pojo.PageResult;
 
 import com.zkzl.module.pro.convert.supplyinfo.SupplyInfoConvert;
 import com.zkzl.module.pro.dal.mysql.supplyinfo.SupplyInfoMapper;
-import sun.plugin.util.UIUtil;
 
 import static com.zkzl.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static com.zkzl.module.system.enums.ErrorCodeConstants.SUPPLY_INFO_NOT_EXISTS;
@@ -79,8 +78,8 @@ public class SupplyInfoServiceImpl implements SupplyInfoService {
     }
 
     @Override
-    public PageResult<SupplyInfoDO> getSupplyInfoPage(SupplyInfoPageReqVO pageReqVO) {
-        IPage<SupplyInfoDO> mPage = MyBatisUtils.buildPage(pageReqVO);
+    public PageResult<SupplyInfoPageVO> getSupplyInfoPage(SupplyInfoPageReqVO pageReqVO) {
+        IPage<SupplyInfoPageVO> mPage = MyBatisUtils.buildPage(pageReqVO);
         supplyInfoMapper.pageSupplyInfo(mPage,pageReqVO);
         return new PageResult<>(mPage.getRecords(), mPage.getTotal());
     }
