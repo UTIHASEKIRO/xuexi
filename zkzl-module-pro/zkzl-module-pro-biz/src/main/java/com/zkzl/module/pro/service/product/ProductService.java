@@ -68,4 +68,6 @@ public interface ProductService {
     List<ProductDO> getductList(ProductExportReqVO exportReqVO);
 
     ProductRespVO getProduct(String productId);
+
+    void updateShipped(String productId);
 }

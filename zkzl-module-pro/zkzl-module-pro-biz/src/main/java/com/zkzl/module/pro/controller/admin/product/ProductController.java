@@ -66,6 +66,14 @@ public class ProductController {
         return success(true);
     }
 
+    @GetMapping("/updateShipped")
+    @ApiOperation("上架下架")
+    @PreAuthorize("@ss.hasPermission('pro:duct:update')")
+    public CommonResult<Boolean> updateShipped(@RequestParam("productId") String productId) {
+        ductService.updateShipped(productId);
+        return success(true);
+    }
+
     @DeleteMapping("/delete")
     @ApiOperation("删除产品")
     @PreAuthorize("@ss.hasPermission('pro:duct:delete')")

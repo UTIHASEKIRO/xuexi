@@ -158,6 +158,20 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
 
+    @Override
+    public void updateShipped(String productId) {
+        ProductDO productDO = ductMapper.selectOne(new QueryWrapper<ProductDO>().lambda().eq(ProductDO::getProductId, productId));
+        if (productDO == null) {
+            throw exception(PRODUCT_NOT_EXISTS);
+        }
+        if("1".equals(productDO.getShipped())){
+            productDO.setShipped("0");
+        }else {
+            productDO.setShipped("1");
+        }
+        ductMapper.update(productDO,new UpdateWrapper<ProductDO>().lambda().eq(ProductDO::getProductId,productId));
+    }
+
     private void addProductParameters(List<ParametersVO> parametersVOList, String productId, Long parentId) {
         for (ParametersVO parametersVO : parametersVOList) {
             ProductParametersDO parametersDO = ProductParametersConvert.INSTANCE.convert(parametersVO);
