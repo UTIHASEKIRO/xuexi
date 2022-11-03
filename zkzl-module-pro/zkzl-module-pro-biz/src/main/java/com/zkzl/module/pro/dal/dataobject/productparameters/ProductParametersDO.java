@@ -1,6 +1,8 @@
 package com.zkzl.module.pro.dal.dataobject.productparameters;
 
 import lombok.*;
+
+import java.io.Serializable;
 import java.util.*;
 import com.baomidou.mybatisplus.annotation.*;
 import com.zkzl.framework.mybatis.core.dataobject.BaseDO;
@@ -13,12 +15,12 @@ import com.zkzl.framework.mybatis.core.dataobject.BaseDO;
 @TableName("pro_product_parameters")
 @KeySequence("pro_product_parameters_seq") // 用于 Oracle、PostgreSQL、Kingbase、DB2、H2 数据库的主键自增。如果是 MySQL 等数据库，可不写。
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductParametersDO extends BaseDO {
+public class ProductParametersDO implements Serializable {
 
     /**
      * 序号id
@@ -34,12 +36,21 @@ public class ProductParametersDO extends BaseDO {
      */
     private Long parentParamId;
     /**
-     * 参数名
+     * 中文参数名
      */
-    private String parameter;
+    private String parameterCn;
     /**
-     * 值
+     * 英文参数名
      */
-    private String value;
+    private String parameterEn;
+    /**
+     * 中文值
+     */
+    private String valueCn;
+    /**
+     * 英文值
+     */
+    private String valueEn;
 
+    private List<ProductParametersDO> parametersDOS;
 }

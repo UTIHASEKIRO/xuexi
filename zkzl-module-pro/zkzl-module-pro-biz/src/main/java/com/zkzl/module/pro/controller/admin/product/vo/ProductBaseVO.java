@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.controller.admin.product.vo;
 
+import com.zkzl.module.pro.dal.dataobject.productpic.ProductPicDO;
 import lombok.*;
 import java.util.*;
 import io.swagger.annotations.*;
@@ -10,7 +11,7 @@ import javax.validation.constraints.*;
 * 如果子 VO 存在差异的字段，请不要添加到这里，影响 Swagger 文档生成
 */
 @Data
-public class ProductBaseVO {
+public class ProductBaseVO extends FinalParametersVO  {
 
     @ApiModelProperty(value = "产品id", required = true)
     @NotNull(message = "产品id不能为空")
@@ -20,8 +21,22 @@ public class ProductBaseVO {
     @NotNull(message = "产品类别id不能为空")
     private String typeId;
 
-    @ApiModelProperty(value = "产品名称", required = true)
-    @NotNull(message = "产品名称不能为空")
-    private String productName;
+    @ApiModelProperty(value = "中文产品名称", required = true)
+    @NotNull(message = "中文产品名称不能为空")
+    private String productNameCn;
+
+    @ApiModelProperty(value = "英文产品名称", required = true)
+    @NotNull(message = "英文产品名称不能为空")
+    private String productNameEn;
+
+    @ApiModelProperty(value = "状态", required = true)
+    @NotNull(message = "状态")
+    private String shipped;
+
+    @ApiModelProperty(value = "参数", required = true)
+    private List<ParametersVO> parametersVOList;
+
+    @ApiModelProperty(value = "图片", required = true)
+    private List<ProductPicDO> picDOS;
 
 }

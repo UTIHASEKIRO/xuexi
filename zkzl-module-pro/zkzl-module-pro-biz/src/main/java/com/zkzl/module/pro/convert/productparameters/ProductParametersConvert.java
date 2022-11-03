@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.zkzl.framework.common.pojo.PageResult;
 
+import com.zkzl.module.pro.controller.admin.product.vo.ParametersVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import com.zkzl.module.pro.controller.admin.productparameters.vo.*;
@@ -22,6 +23,8 @@ public interface ProductParametersConvert {
     ProductParametersDO convert(ProductParametersCreateReqVO bean);
 
     ProductParametersDO convert(ProductParametersUpdateReqVO bean);
+
+    ProductParametersDO convert(ParametersVO bean);
 
     ProductParametersRespVO convert(ProductParametersDO bean);
 

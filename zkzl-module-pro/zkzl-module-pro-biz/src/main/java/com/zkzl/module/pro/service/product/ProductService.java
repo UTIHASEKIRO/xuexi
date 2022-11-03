@@ -33,7 +33,7 @@ public interface ProductService {
      *
      * @param id 编号
      */
-    void deleteduct(Long id);
+    void deleteduct(String id);
 
     /**
      * 获得产品
@@ -57,7 +57,7 @@ public interface ProductService {
      * @param pageReqVO 分页查询
      * @return 产品分页
      */
-    PageResult<ProductDO> getductPage(ProductPageReqVO pageReqVO);
+    PageResult<ProductRespVO> getductPage(ProductPageReqVO pageReqVO);
 
     /**
      * 获得产品列表, 用于 Excel 导出
@@ -67,4 +67,5 @@ public interface ProductService {
      */
     List<ProductDO> getductList(ProductExportReqVO exportReqVO);
 
+    ProductRespVO getProduct(String productId);
 }

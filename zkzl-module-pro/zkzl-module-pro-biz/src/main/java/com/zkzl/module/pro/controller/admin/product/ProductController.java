@@ -42,6 +42,22 @@ public class ProductController {
         return success(ductService.createduct(createReqVO));
     }
 
+    @GetMapping("/page")
+    @ApiOperation("获得产品分页")
+    @PreAuthorize("@ss.hasPermission('pro:duct:query')")
+    public CommonResult<PageResult<ProductRespVO>> getProductPage(@Valid ProductPageReqVO pageVO) {
+        PageResult<ProductRespVO> pageResult = ductService.getductPage(pageVO);
+        return success(pageResult);
+    }
+
+    @GetMapping("/get")
+    @ApiOperation("获得产品")
+    @PreAuthorize("@ss.hasPermission('pro:duct:query')")
+    public CommonResult<ProductRespVO> getProduct(@RequestParam("productId") String productId) {
+        ProductRespVO duct = ductService.getProduct(productId);
+        return success(duct);
+    }
+
     @PutMapping("/update")
     @ApiOperation("更新产品")
     @PreAuthorize("@ss.hasPermission('pro:duct:update')")
@@ -52,49 +68,9 @@ public class ProductController {
 
     @DeleteMapping("/delete")
     @ApiOperation("删除产品")
-    @ApiImplicitParam(name = "id", value = "编号", required = true, dataTypeClass = Long.class)
     @PreAuthorize("@ss.hasPermission('pro:duct:delete')")
-    public CommonResult<Boolean> deleteduct(@RequestParam("id") Long id) {
-        ductService.deleteduct(id);
+    public CommonResult<Boolean> deleteduct(@RequestParam("productId") String productId) {
+        ductService.deleteduct(productId);
         return success(true);
     }
-
-    @GetMapping("/get")
-    @ApiOperation("获得产品")
-    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
-    @PreAuthorize("@ss.hasPermission('pro:duct:query')")
-    public CommonResult<ProductRespVO> getduct(@RequestParam("id") Long id) {
-        ProductDO duct = ductService.getduct(id);
-        return success(ProductConvert.INSTANCE.convert(duct));
-    }
-
-    @GetMapping("/list")
-    @ApiOperation("获得产品列表")
-    @ApiImplicitParam(name = "ids", value = "编号列表", required = true, example = "1024,2048", dataTypeClass = List.class)
-    @PreAuthorize("@ss.hasPermission('pro:duct:query')")
-    public CommonResult<List<ProductRespVO>> getductList(@RequestParam("ids") Collection<Long> ids) {
-        List<ProductDO> list = ductService.getductList(ids);
-        return success(ProductConvert.INSTANCE.convertList(list));
-    }
-
-    @GetMapping("/page")
-    @ApiOperation("获得产品分页")
-    @PreAuthorize("@ss.hasPermission('pro:duct:query')")
-    public CommonResult<PageResult<ProductRespVO>> getductPage(@Valid ProductPageReqVO pageVO) {
-        PageResult<ProductDO> pageResult = ductService.getductPage(pageVO);
-        return success(ProductConvert.INSTANCE.convertPage(pageResult));
-    }
-
-    @GetMapping("/export-excel")
-    @ApiOperation("导出产品 Excel")
-    @PreAuthorize("@ss.hasPermission('pro:duct:export')")
-    @OperateLog(type = EXPORT)
-    public void exportductExcel(@Valid ProductExportReqVO exportReqVO,
-              HttpServletResponse response) throws IOException {
-        List<ProductDO> list = ductService.getductList(exportReqVO);
-        // 导出 Excel
-        List<ProductExcelVO> datas = ProductConvert.INSTANCE.convertList02(list);
-        ExcelUtils.write(response, "产品.xls", "数据", ProductExcelVO.class, datas);
-    }
-
 }

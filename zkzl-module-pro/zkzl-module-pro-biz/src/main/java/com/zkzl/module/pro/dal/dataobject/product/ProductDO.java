@@ -1,9 +1,12 @@
 package com.zkzl.module.pro.dal.dataobject.product;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import java.util.*;
 import com.baomidou.mybatisplus.annotation.*;
 import com.zkzl.framework.mybatis.core.dataobject.BaseDO;
+
+import javax.validation.constraints.NotNull;
 
 /**
  * 产品 DO
@@ -34,8 +37,18 @@ public class ProductDO extends BaseDO {
      */
     private String typeId;
     /**
-     * 产品名称
+     * 中文产品名称
      */
-    private String productName;
+    private String productNameCn;
+
+    /**
+     * 英文产品名称
+     */
+    private String productNameEn;
+
+    /**
+     * 状态
+     */
+    private String shipped;
 
 }

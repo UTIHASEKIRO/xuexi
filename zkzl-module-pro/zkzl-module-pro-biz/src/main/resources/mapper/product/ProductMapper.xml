@@ -8,5 +8,60 @@
         代码生成器暂时只生成 Mapper XML 文件本身，更多推荐 MybatisX 快速开发插件来生成查询。
         文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
      -->
+    <resultMap id="productRespVO" type="com.zkzl.module.pro.controller.admin.product.vo.ProductRespVO">
+        <id column="id" property="id"/>
+        <result column="product_id" property="productId"/>
+        <result column="type_id" property="typeId"/>
+        <result column="product_name_cn" property="productNameCn"/>
+        <result column="product_name_en" property="productNameEn"/>
+        <result column="shipped" property="shipped"/>
+        <result column="create_time" property="createTime"/>
+        <collection property="parametersDOS"
+                    ofType="com.zkzl.module.pro.dal.dataobject.productparameters.ProductParametersDO">
+            <id column="ppp_id" property="id"/>
+            <result column="ppp_product_id" property="productId"/>
+            <result column="parent_product_id" property="parentParamId"/>
+            <result column="parameter_cn" property="parameterCn"/>
+            <result column="parameter_en" property="parameterEn"/>
+            <result column="value_cn" property="valueCn"/>
+            <result column="value_en" property="valueEn"/>
+        </collection>
+        <collection property="picDOS" ofType="com.zkzl.module.pro.dal.dataobject.productpic.ProductPicDO">
+            <id column="p_id" property="id"/>
+            <result column="p_product_id" property="productId"/>
+            <result column="url" property="url"/>
+        </collection>
+    </resultMap>
 
+    <select id="getProductPage" resultMap="productRespVO">
+        select pp.*,ppp.id ppp_id, ppp.product_id ppp_product_id, parent_product_id, parameter_cn, parameter_en,
+        value_cn, value_en,p.id p_id,
+        p.product_id p_product_id, url
+        from pro_product pp
+        left join pro_product_parameters ppp on pp.product_id = ppp.product_id
+        left join pro_product_pic p on pp.product_id = p.product_id
+        <where>
+            <if test="pageReqVO.productName != null and pageReqVO.productName != ''">
+                pp.product_name_cn like CONCAT('%',#{pageReqVO.productName},'%')
+                or pp.product_name_en like CONCAT('%',#{pageReqVO.productName},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getProduct" resultMap="productRespVO">
+        select pp.*,
+               ppp.id         ppp_id,
+               ppp.product_id ppp_product_id,
+               parent_product_id,
+               parameter_cn,
+               parameter_en,
+               value_cn,
+               value_en,
+               p.id           p_id,
+               p.product_id   p_product_id,
+               url
+        from pro_product pp
+                 left join pro_product_parameters ppp on pp.product_id = ppp.product_id
+                 left join pro_product_pic p on pp.product_id = p.product_id
+        where pp.product_id = #{productId}
+    </select>
 </mapper>

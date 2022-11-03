@@ -21,8 +21,6 @@ public interface ProductParametersMapper extends BaseMapperX<ProductParametersDO
         return selectPage(reqVO, new LambdaQueryWrapperX<ProductParametersDO>()
                 .eqIfPresent(ProductParametersDO::getProductId, reqVO.getProductId())
                 .eqIfPresent(ProductParametersDO::getParentParamId, reqVO.getParentParamId())
-                .eqIfPresent(ProductParametersDO::getParameter, reqVO.getParameter())
-                .eqIfPresent(ProductParametersDO::getValue, reqVO.getValue())
                 .orderByDesc(ProductParametersDO::getId));
     }
 
@@ -30,8 +28,6 @@ public interface ProductParametersMapper extends BaseMapperX<ProductParametersDO
         return selectList(new LambdaQueryWrapperX<ProductParametersDO>()
                 .eqIfPresent(ProductParametersDO::getProductId, reqVO.getProductId())
                 .eqIfPresent(ProductParametersDO::getParentParamId, reqVO.getParentParamId())
-                .eqIfPresent(ProductParametersDO::getParameter, reqVO.getParameter())
-                .eqIfPresent(ProductParametersDO::getValue, reqVO.getValue())
                 .orderByDesc(ProductParametersDO::getId));
     }
 
