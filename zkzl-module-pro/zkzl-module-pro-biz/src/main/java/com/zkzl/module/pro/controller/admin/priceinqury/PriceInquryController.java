@@ -35,6 +35,15 @@ public class PriceInquryController {
     @Resource
     private PriceInquryService priceInquryService;
 
+
+    /*
+    * 询价单 状态更新
+    * 0初始化状态 需要业务员补充卖方信息
+    * 1客户询价后状态  需要管理员即老板报价
+    * 2老板确认后状态  待签约
+    * 3客户确认  生成订单
+    * 4放弃状态  客户存在恶意询价或老板拒签
+    * */
     @PostMapping("/create")
     @ApiOperation("创建询价")
     @PreAuthorize("@ss.hasPermission('pro:price-inqury:create')")

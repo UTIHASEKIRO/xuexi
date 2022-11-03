@@ -24,4 +24,7 @@ public class CusUserBaseVO {
     @NotNull(message = "联系人不能为空")
     private String contectName;
 
+    @ApiModelProperty(value = "营业执照")
+    private String businessLicense;
+
 }

@@ -19,6 +19,9 @@ public class CusUserRespVO extends CusUserBaseVO {
     @ApiModelProperty(value = "注册时间")
     private String createTime;
 
+    @ApiModelProperty(value = "营业执照")
+    private String businessLicense;
+
     @ApiModelProperty(value = "帐号状态（0正常 1停用）")
     private Integer status;
 

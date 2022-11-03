@@ -18,4 +18,7 @@ public class CusUserExportReqVO {
     @ApiModelProperty(value = "联系人")
     private String contectName;
 
+    @ApiModelProperty(value = "营业执照")
+    private String businessLicense;
+
 }

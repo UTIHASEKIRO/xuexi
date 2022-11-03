@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.service.priceinqury;
 
+import cn.hutool.core.util.IdUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +32,7 @@ public class PriceInquryServiceImpl implements PriceInquryService {
     public Long createPriceInqury(PriceInquryCreateReqVO createReqVO) {
         // 插入
         PriceInquryDO priceInqury = PriceInquryConvert.INSTANCE.convert(createReqVO);
+        priceInqury.setPriceInquryId(IdUtil.getSnowflakeNextIdStr());//业务id
         priceInquryMapper.insert(priceInqury);
         // 返回
         return priceInqury.getId();

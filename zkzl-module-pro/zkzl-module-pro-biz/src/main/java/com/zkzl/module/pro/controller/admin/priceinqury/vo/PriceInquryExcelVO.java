@@ -51,7 +51,11 @@ public class PriceInquryExcelVO {
     @ExcelProperty("报价有效日期")
     private Date effectiveDate;
 
-    @ExcelProperty("状态 1客户询价状态 2老板确认状态 3询价完成状态")
+    @ExcelProperty("0初始化状态 需要业务员补充卖方信息* 1客户询价后状态  需要管理员即老板报价" +
+            "* 2老板确认后状态  待签约" +
+            "    * 3客户确认  生成订单" +
+            "    * 4放弃状态  客户存在恶意询价或老板拒签" +
+            "    * */")
     private String status;
 
     @ExcelProperty("创建时间")
