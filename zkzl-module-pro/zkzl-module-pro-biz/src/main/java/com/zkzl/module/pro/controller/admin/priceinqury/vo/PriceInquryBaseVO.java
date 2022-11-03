@@ -45,12 +45,10 @@ public class PriceInquryBaseVO {
     private BigDecimal total;
 
     @ApiModelProperty(value = "报价日期", required = true)
-    @NotNull(message = "报价日期不能为空")
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date priceDate;
 
     @ApiModelProperty(value = "报价有效日期", required = true)
-    @NotNull(message = "报价有效日期不能为空")
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date effectiveDate;
 

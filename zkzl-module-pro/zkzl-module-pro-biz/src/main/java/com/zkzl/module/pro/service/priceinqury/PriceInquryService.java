@@ -67,4 +67,9 @@ public interface PriceInquryService {
      */
     List<PriceInquryDO> getPriceInquryList(PriceInquryExportReqVO exportReqVO);
 
+    /*管理员查看询价表*/
+    PageResult<PriceInquryPageVO> pageManage(PriceInquryPageReqVO pageVO);
+
+    /*业务源查看询价表*/
+    PageResult<PriceInquryPageVO> pageCommon(PriceInquryPageReqVO pageVO);
 }

@@ -40,6 +40,7 @@ public class PriceInquryController {
     * 询价单 状态更新
     * 0初始化状态 需要业务员补充卖方信息
     * 1客户询价后状态  需要管理员即老板报价
+    *  客户回应老板报价状态 客户是否接受老板报价
     * 2老板确认后状态  待签约
     * 3客户确认  生成订单
     * 4放弃状态  客户存在恶意询价或老板拒签
@@ -86,12 +87,20 @@ public class PriceInquryController {
         return success(PriceInquryConvert.INSTANCE.convertList(list));
     }
 
-    @GetMapping("/page")
-    @ApiOperation("获得询价分页")
+    @GetMapping("/page-manage")
+    @ApiOperation("获得询价分页-管理员")
     @PreAuthorize("@ss.hasPermission('pro:price-inqury:query')")
-    public CommonResult<PageResult<PriceInquryRespVO>> getPriceInquryPage(@Valid PriceInquryPageReqVO pageVO) {
-        PageResult<PriceInquryDO> pageResult = priceInquryService.getPriceInquryPage(pageVO);
-        return success(PriceInquryConvert.INSTANCE.convertPage(pageResult));
+    public CommonResult<PageResult<PriceInquryPageVO>> pageManage(@Valid PriceInquryPageReqVO pageVO) {
+        PageResult<PriceInquryPageVO> pageResult = priceInquryService.pageManage(pageVO);
+        return success(pageResult);
+    }
+
+    @GetMapping("/page-common")
+    @ApiOperation("获得询价分页-业务员")
+    @PreAuthorize("@ss.hasPermission('pro:price-inqury:query')")
+    public CommonResult<PageResult<PriceInquryPageVO>> pageCommon(@Valid PriceInquryPageReqVO pageVO) {
+        PageResult<PriceInquryPageVO> pageResult = priceInquryService.pageCommon(pageVO);
+        return success(pageResult);
     }
 
     @GetMapping("/export-excel")

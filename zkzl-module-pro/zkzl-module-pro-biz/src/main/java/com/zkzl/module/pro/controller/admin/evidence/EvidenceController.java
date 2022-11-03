@@ -36,14 +36,14 @@ public class EvidenceController {
     private EvidenceService evidenceService;
 
     @PostMapping("/create")
-    @ApiOperation("创建订单凭证信息")
+    @ApiOperation("上传定金截图")
     @PreAuthorize("@ss.hasPermission('pro:evidence:create')")
     public CommonResult<Long> createEvidence(@Valid @RequestBody EvidenceCreateReqVO createReqVO) {
         return success(evidenceService.createEvidence(createReqVO));
     }
 
     @PutMapping("/update")
-    @ApiOperation("更新订单凭证信息")
+    @ApiOperation("上传尾款截图")
     @PreAuthorize("@ss.hasPermission('pro:evidence:update')")
     public CommonResult<Boolean> updateEvidence(@Valid @RequestBody EvidenceUpdateReqVO updateReqVO) {
         evidenceService.updateEvidence(updateReqVO);

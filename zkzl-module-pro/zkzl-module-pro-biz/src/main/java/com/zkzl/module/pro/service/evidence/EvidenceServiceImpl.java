@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.service.evidence;
 
+import cn.hutool.core.util.IdUtil;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -31,6 +32,7 @@ public class EvidenceServiceImpl implements EvidenceService {
     public Long createEvidence(EvidenceCreateReqVO createReqVO) {
         // 插入
         EvidenceDO evidence = EvidenceConvert.INSTANCE.convert(createReqVO);
+        evidence.setEvidenceId(IdUtil.getSnowflakeNextIdStr());//业务id
         evidenceMapper.insert(evidence);
         // 返回
         return evidence.getId();

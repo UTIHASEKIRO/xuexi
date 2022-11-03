@@ -1,7 +1,6 @@
 package com.zkzl.module.pro.controller.admin.evidence.vo;
 
 import lombok.*;
-import java.util.*;
 import io.swagger.annotations.*;
 import javax.validation.constraints.*;
 
@@ -12,8 +11,7 @@ import javax.validation.constraints.*;
 @Data
 public class EvidenceBaseVO {
 
-    @ApiModelProperty(value = "凭证id", required = true)
-    @NotNull(message = "凭证id不能为空")
+    @ApiModelProperty(value = "凭证id")
     private String evidenceId;
 
     @ApiModelProperty(value = "询价单id", required = true)
@@ -24,7 +22,8 @@ public class EvidenceBaseVO {
     @NotNull(message = "订单id不能为空")
     private String orderId;
 
-    @ApiModelProperty(value = "定金截图")
+    @ApiModelProperty(value = "定金截图", required = true)
+    @NotNull(message = "定金截图不能为空")
     private String depositPic;
 
     @ApiModelProperty(value = "尾款截图")

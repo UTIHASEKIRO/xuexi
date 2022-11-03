@@ -9,4 +9,36 @@
         文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
      -->
 
+    <select id="pageManage" resultType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryPageVO">
+        /*管理员查看询价表*/
+        select ppi.id,ppi.price_inqury_id,pcu.company_name,pcu.contect_name,su.mobile,
+               ppi.create_time,ppi.status ,su1.username operator
+        from pro_price_inqury ppi
+                 left join pro_cus_user pcu on ppi.buyer_company_id = pcu.user_id
+                 left join system_users su on ppi.buyer_company_id = su.id
+                 left join system_users su1 on ppi.operator = su1.id
+        <where>
+            <if test="param.buyerCompanyName != null and param.buyerCompanyName != ''">
+                and pcu.company_name like concat('%',#{param.buyerCompanyName},'%')
+            </if>
+            <if test="param.status != null and param.status != ''">
+                and ppi.status = #{param.status}
+            </if>
+        </where>
+    </select>
+    <select id="pageCommon" resultType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryPageVO">
+        /*业务员查看询价表*/
+        select ppi.id,ppi.price_inqury_id,pcu.company_name,pcu.contect_name,su.mobile,
+               ppi.create_time,ppi.status ,su1.username operator
+        from pro_price_inqury ppi
+                 left join pro_cus_user pcu on ppi.buyer_company_id = pcu.user_id
+                 left join system_users su on ppi.buyer_company_id = su.id
+                 left join system_users su1 on ppi.operator = su1.id
+        where (ppi.operator is null
+            or ppi.operator = #{param.loginUserId}
+            or ppi.status in (0,1))
+            <if test="param.buyerCompanyName != null and param.buyerCompanyName != ''">
+                and pcu.company_name like concat('%',#{param.buyerCompanyName},'%')
+            </if>
+    </select>
 </mapper>

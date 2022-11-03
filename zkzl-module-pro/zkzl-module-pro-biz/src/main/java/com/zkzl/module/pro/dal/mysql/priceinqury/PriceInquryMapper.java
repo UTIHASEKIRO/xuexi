@@ -2,12 +2,14 @@ package com.zkzl.module.pro.dal.mysql.priceinqury;
 
 import java.util.*;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
 import com.zkzl.module.pro.dal.dataobject.priceinqury.PriceInquryDO;
 import org.apache.ibatis.annotations.Mapper;
 import com.zkzl.module.pro.controller.admin.priceinqury.vo.*;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 询价 Mapper
@@ -52,5 +54,11 @@ public interface PriceInquryMapper extends BaseMapperX<PriceInquryDO> {
                 .betweenIfPresent(PriceInquryDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(PriceInquryDO::getId));
     }
+
+    /*管理员查看询价表*/
+    IPage<PriceInquryPageVO> pageManage(@Param("mPage") IPage<PriceInquryPageVO> mPage,@Param("param") PriceInquryPageReqVO pageVO);
+
+    /*业务员查看询价表*/
+    IPage<PriceInquryPageVO> pageCommon(@Param("mPage")IPage<PriceInquryPageVO> mPage,@Param("param") PriceInquryPageReqVO pageVO);
 
 }

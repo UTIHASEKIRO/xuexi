@@ -63,4 +63,11 @@ public class PriceInquryPageReqVO extends PageParam {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date[] createTime;
 
+    @ApiModelProperty(value = "买方公司名称")
+    private String buyerCompanyName;
+
+    @ApiModelProperty(value = "登陆人id")
+    private Long LoginUserId;
+
+
 }
