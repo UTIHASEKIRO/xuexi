@@ -2,14 +2,14 @@
   <div class="app-container">
 
     <!-- 搜索工作栏 -->
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="固定参数id" prop="finalParametersId">
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="100px">
+      <!-- <el-form-item label="固定参数id" prop="finalParametersId">
         <el-input v-model="queryParams.finalParametersId" placeholder="请输入固定参数id" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="参数名-中文" prop="parameterCn">
+      </el-form-item> -->
+      <el-form-item label="参数名-中文" prop="parameterCn" >
         <el-input v-model="queryParams.parameterCn" placeholder="请输入参数名-中文" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="参数名-英文" prop="parameterEn">
+      <!-- <el-form-item label="参数名-英文" prop="parameterEn">
         <el-input v-model="queryParams.parameterEn" placeholder="请输入参数名-英文" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="值-中文" prop="valueCn">
@@ -17,7 +17,7 @@
       </el-form-item>
       <el-form-item label="值-英文" prop="valueEn">
         <el-input v-model="queryParams.valueEn" placeholder="请输入值-英文" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -26,31 +26,31 @@
 
     <!-- 操作工具栏 -->
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
                    v-hasPermi="['pro:duct-final-parameters:create']">新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
+      </el-col> -->
+      <!-- <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
                    v-hasPermi="['pro:duct-final-parameters:export']">导出</el-button>
-      </el-col>
+      </el-col> -->
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
       <el-table-column label="序号id" align="center" prop="id" />
-      <el-table-column label="固定参数id" align="center" prop="finalParametersId" />
+      <!-- <el-table-column label="固定参数id" align="center" prop="finalParametersId" /> -->
       <el-table-column label="参数名-中文" align="center" prop="parameterCn" />
       <el-table-column label="参数名-英文" align="center" prop="parameterEn" />
-      <el-table-column label="值-中文" align="center" prop="valueCn" />
-      <el-table-column label="值-英文" align="center" prop="valueEn" />
+      <!-- <el-table-column label="值-中文" align="center" prop="valueCn" />
+      <el-table-column label="值-英文" align="center" prop="valueEn" /> -->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                      v-hasPermi="['pro:duct-final-parameters:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['pro:duct-final-parameters:delete']">删除</el-button>
+          <!-- <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+                     v-hasPermi="['pro:duct-final-parameters:delete']">删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -61,21 +61,19 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="固定参数id" prop="finalParametersId">
-          <el-input v-model="form.finalParametersId" placeholder="请输入固定参数id" />
-        </el-form-item>
+
         <el-form-item label="参数名-中文" prop="parameterCn">
           <el-input v-model="form.parameterCn" placeholder="请输入参数名-中文" />
         </el-form-item>
         <el-form-item label="参数名-英文" prop="parameterEn">
           <el-input v-model="form.parameterEn" placeholder="请输入参数名-英文" />
         </el-form-item>
-        <el-form-item label="值-中文" prop="valueCn">
+        <!-- <el-form-item label="值-中文" prop="valueCn">
           <el-input v-model="form.valueCn" placeholder="请输入值-中文" />
         </el-form-item>
         <el-form-item label="值-英文" prop="valueEn">
           <el-input v-model="form.valueEn" placeholder="请输入值-英文" />
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -175,13 +173,19 @@ export default {
     },
     /** 修改按钮操作 */
     handleUpdate(row) {
-      this.reset();
-      const id = row.id;
-      getductFinalParameters(id).then(response => {
-        this.form = response.data;
-        this.open = true;
-        this.title = "修改产品固定参数";
-      });
+      // this.reset();
+
+      // this.form = row;
+      //   this.open = true;
+      //   this.title = "修改产品固定参数";
+        this.$router.push({path:'/pro/productFinalParametersValue',query:{cn:row.parameterCn,en:row.parameterEn}})
+
+      // const id = row.id;
+      // getductFinalParameters(id).then(response => {
+      //   this.form = response.data;
+      //   this.open = true;
+      //   this.title = "修改产品固定参数";
+      // });
     },
     /** 提交按钮 */
     submitForm() {

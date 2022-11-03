@@ -37,7 +37,7 @@ export function getductParameters(id) {
 // 获得产品参数分页
 export function getductParametersPage(query) {
   return request({
-    url: '/pro/duct-parameters/page',
+    url: '/pro/duct-final-parameters/valuePage',
     method: 'get',
     params: query
   })
