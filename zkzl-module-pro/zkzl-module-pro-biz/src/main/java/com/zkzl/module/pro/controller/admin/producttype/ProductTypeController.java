@@ -38,7 +38,7 @@ public class ProductTypeController {
     @PostMapping("/create")
     @ApiOperation("创建商品类别")
     @PreAuthorize("@ss.hasPermission('pro:duct-type:create')")
-    public CommonResult<Long> createductType(@Valid @RequestBody ProductTypeCreateReqVO createReqVO) {
+    public CommonResult<String> createductType(@Valid @RequestBody ProductTypeCreateReqVO createReqVO) {
         return success(ductTypeService.createductType(createReqVO));
     }
 
@@ -52,49 +52,25 @@ public class ProductTypeController {
 
     @DeleteMapping("/delete")
     @ApiOperation("删除商品类别")
-    @ApiImplicitParam(name = "id", value = "编号", required = true, dataTypeClass = Long.class)
     @PreAuthorize("@ss.hasPermission('pro:duct-type:delete')")
-    public CommonResult<Boolean> deleteductType(@RequestParam("id") Long id) {
-        ductTypeService.deleteductType(id);
+    public CommonResult<Boolean> deleteductType(@RequestParam("typeId") String typeId) {
+        ductTypeService.deleteductType(typeId);
         return success(true);
     }
 
     @GetMapping("/get")
     @ApiOperation("获得商品类别")
-    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("@ss.hasPermission('pro:duct-type:query')")
-    public CommonResult<ProductTypeRespVO> getductType(@RequestParam("id") Long id) {
-        ProductTypeDO ductType = ductTypeService.getductType(id);
+    public CommonResult<ProductTypeRespVO> getductType(@RequestParam("typeId") String typeId) {
+        ProductTypeDO ductType = ductTypeService.getductType(typeId);
         return success(ProductTypeConvert.INSTANCE.convert(ductType));
     }
 
     @GetMapping("/list")
     @ApiOperation("获得商品类别列表")
-    @ApiImplicitParam(name = "ids", value = "编号列表", required = true, example = "1024,2048", dataTypeClass = List.class)
     @PreAuthorize("@ss.hasPermission('pro:duct-type:query')")
-    public CommonResult<List<ProductTypeRespVO>> getductTypeList(@RequestParam("ids") Collection<Long> ids) {
-        List<ProductTypeDO> list = ductTypeService.getductTypeList(ids);
-        return success(ProductTypeConvert.INSTANCE.convertList(list));
-    }
-
-    @GetMapping("/page")
-    @ApiOperation("获得商品类别分页")
-    @PreAuthorize("@ss.hasPermission('pro:duct-type:query')")
-    public CommonResult<PageResult<ProductTypeRespVO>> getductTypePage(@Valid ProductTypePageReqVO pageVO) {
-        PageResult<ProductTypeDO> pageResult = ductTypeService.getductTypePage(pageVO);
-        return success(ProductTypeConvert.INSTANCE.convertPage(pageResult));
-    }
-
-    @GetMapping("/export-excel")
-    @ApiOperation("导出商品类别 Excel")
-    @PreAuthorize("@ss.hasPermission('pro:duct-type:export')")
-    @OperateLog(type = EXPORT)
-    public void exportductTypeExcel(@Valid ProductTypeExportReqVO exportReqVO,
-              HttpServletResponse response) throws IOException {
-        List<ProductTypeDO> list = ductTypeService.getductTypeList(exportReqVO);
-        // 导出 Excel
-        List<ProductTypeExcelVO> datas = ProductTypeConvert.INSTANCE.convertList02(list);
-        ExcelUtils.write(response, "商品类别.xls", "数据", ProductTypeExcelVO.class, datas);
+    public CommonResult<List<ProductTypeDO>> getductTypeList(@RequestParam("typeName") String typeName) {
+        return success(ductTypeService.getductTypeList(typeName));
     }
 
 }

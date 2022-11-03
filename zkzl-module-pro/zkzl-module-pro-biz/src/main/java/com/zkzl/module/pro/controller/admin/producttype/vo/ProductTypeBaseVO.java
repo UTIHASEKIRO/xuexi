@@ -11,7 +11,7 @@ import io.swagger.annotations.*;
 public class ProductTypeBaseVO {
 
     @ApiModelProperty(value = "父id")
-    private Long parentId;
+    private String parentId;
 
     @ApiModelProperty(value = "类别业务id")
     private String typeId;

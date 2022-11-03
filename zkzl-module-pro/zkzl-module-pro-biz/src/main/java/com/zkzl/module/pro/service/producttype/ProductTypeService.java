@@ -19,7 +19,7 @@ public interface ProductTypeService {
      * @param createReqVO 创建信息
      * @return 编号
      */
-    Long createductType(@Valid ProductTypeCreateReqVO createReqVO);
+    String createductType(@Valid ProductTypeCreateReqVO createReqVO);
 
     /**
      * 更新商品类别
@@ -33,23 +33,22 @@ public interface ProductTypeService {
      *
      * @param id 编号
      */
-    void deleteductType(Long id);
+    void deleteductType(String id);
 
     /**
      * 获得商品类别
      *
-     * @param id 编号
+     * @param typeId 编号
      * @return 商品类别
      */
-    ProductTypeDO getductType(Long id);
+    ProductTypeDO getductType(String typeId);
 
     /**
      * 获得商品类别列表
      *
-     * @param ids 编号
      * @return 商品类别列表
      */
-    List<ProductTypeDO> getductTypeList(Collection<Long> ids);
+    List<ProductTypeDO> getductTypeList(String typeName);
 
     /**
      * 获得商品类别分页

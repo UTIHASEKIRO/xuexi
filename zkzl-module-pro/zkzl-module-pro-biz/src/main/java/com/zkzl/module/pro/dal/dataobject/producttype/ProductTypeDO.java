@@ -28,7 +28,7 @@ public class ProductTypeDO extends BaseDO {
     /**
      * 父id
      */
-    private Long parentId;
+    private String parentId;
     /**
      * 类别业务id
      */
@@ -45,5 +45,7 @@ public class ProductTypeDO extends BaseDO {
      * 排序
      */
     private Integer sort;
+
+    private List<ProductTypeDO> productTypeDOS;
 
 }

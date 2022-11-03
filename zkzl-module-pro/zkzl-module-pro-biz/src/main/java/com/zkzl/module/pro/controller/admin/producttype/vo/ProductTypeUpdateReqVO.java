@@ -11,8 +11,4 @@ import javax.validation.constraints.*;
 @ToString(callSuper = true)
 public class ProductTypeUpdateReqVO extends ProductTypeBaseVO {
 
-    @ApiModelProperty(value = "主键", required = true)
-    @NotNull(message = "主键不能为空")
-    private Long id;
-
 }
