@@ -46,6 +46,7 @@ public class ProductTypeDO extends BaseDO {
      */
     private Integer sort;
 
+    @TableField(exist = false)
     private List<ProductTypeDO> productTypeDOS;
 
 }

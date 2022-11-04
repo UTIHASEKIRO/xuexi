@@ -52,5 +52,6 @@ public class ProductParametersDO implements Serializable {
      */
     private String valueEn;
 
+    @TableField(exist = false)
     private List<ProductParametersDO> parametersDOS;
 }

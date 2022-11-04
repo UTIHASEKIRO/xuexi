@@ -20,7 +20,7 @@
                     ofType="com.zkzl.module.pro.dal.dataobject.productparameters.ProductParametersDO">
             <id column="ppp_id" property="id"/>
             <result column="ppp_product_id" property="productId"/>
-            <result column="parent_product_id" property="parentParamId"/>
+            <result column="parent_param_id" property="parentParamId"/>
             <result column="parameter_cn" property="parameterCn"/>
             <result column="parameter_en" property="parameterEn"/>
             <result column="value_cn" property="valueCn"/>
@@ -33,25 +33,64 @@
         </collection>
     </resultMap>
 
-    <select id="getProductPage" resultMap="productRespVO">
-        select pp.*,ppp.id ppp_id, ppp.product_id ppp_product_id, parent_product_id, parameter_cn, parameter_en,
-        value_cn, value_en,p.id p_id,
-        p.product_id p_product_id, url
-        from pro_product pp
-        left join pro_product_parameters ppp on pp.product_id = ppp.product_id
-        left join pro_product_pic p on pp.product_id = p.product_id
+    <resultMap id="productReVO" type="com.zkzl.module.pro.controller.admin.product.vo.ProductRespVO">
+        <id column="id" property="id"/>
+        <result column="product_id" property="productId"/>
+        <result column="type_id" property="typeId"/>
+        <result column="product_name_cn" property="productNameCn"/>
+        <result column="product_name_en" property="productNameEn"/>
+        <result column="shipped" property="shipped"/>
+        <result column="create_time" property="createTime"/>
+        <collection property="parametersDOS"
+                    select="selectParametersDOS"
+                    column="product_id"
+                    ofType="com.zkzl.module.pro.dal.dataobject.productparameters.ProductParametersDO">
+            <id column="id" property="id"/>
+            <result column="product_id" property="productId"/>
+            <result column="parent_param_id" property="parentParamId"/>
+            <result column="parameter_cn" property="parameterCn"/>
+            <result column="parameter_en" property="parameterEn"/>
+            <result column="value_cn" property="valueCn"/>
+            <result column="value_en" property="valueEn"/>
+        </collection>
+        <collection property="picDOS"
+                    select="selectPicDOS"
+                    column="product_id"
+                    ofType="com.zkzl.module.pro.dal.dataobject.productpic.ProductPicDO">
+            <id column="id" property="id"/>
+            <result column="product_id" property="productId"/>
+            <result column="url" property="url"/>
+        </collection>
+    </resultMap>
+
+    <select id="getProductPage" resultMap="productReVO">
+        select *
+        from pro_product
         <where>
             <if test="pageReqVO.productName != null and pageReqVO.productName != ''">
-                pp.product_name_cn like CONCAT('%',#{pageReqVO.productName},'%')
-                or pp.product_name_en like CONCAT('%',#{pageReqVO.productName},'%')
+                product_name_cn like CONCAT('%',#{pageReqVO.productName},'%')
+                or product_name_en like CONCAT('%',#{pageReqVO.productName},'%')
             </if>
         </where>
     </select>
+
+    <select id="selectParametersDOS" parameterType="String" resultType="com.zkzl.module.pro.dal.dataobject.productparameters.ProductParametersDO">
+        select *
+        from pro_product_parameters
+        where product_id = #{product_id}
+    </select>
+
+    <select id="selectPicDOS" parameterType="String" resultType="com.zkzl.module.pro.dal.dataobject.productpic.ProductPicDO">
+        select *
+        from pro_product_pic
+        where product_id = #{product_id}
+    </select>
+
     <select id="getProduct" resultMap="productRespVO">
         select pp.*,
                ppp.id         ppp_id,
                ppp.product_id ppp_product_id,
-               parent_product_id,
+               parent_param_id,
                parameter_cn,
                parameter_en,
                value_cn,

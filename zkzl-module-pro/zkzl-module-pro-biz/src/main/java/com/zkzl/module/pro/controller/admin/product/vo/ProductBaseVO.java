@@ -14,11 +14,9 @@ import javax.validation.constraints.*;
 public class ProductBaseVO extends FinalParametersVO  {
 
     @ApiModelProperty(value = "产品id", required = true)
-    @NotNull(message = "产品id不能为空")
     private String productId;
 
     @ApiModelProperty(value = "产品类别id", required = true)
-    @NotNull(message = "产品类别id不能为空")
     private String typeId;
 
     @ApiModelProperty(value = "中文产品名称", required = true)

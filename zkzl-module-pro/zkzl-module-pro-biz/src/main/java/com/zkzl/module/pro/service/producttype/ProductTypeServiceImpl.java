@@ -107,7 +107,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
                 .filter(t -> t.getParentId().equals(parentId))
                 // 递归设置子节点
                 .map(item -> {
-                    item.setProductTypeDOS(streamMethod(item.getParentId(), treeList));
+                    item.setProductTypeDOS(streamMethod(item.getTypeId(), treeList));
                     return item;
                 })
                 .collect(Collectors.toList());
