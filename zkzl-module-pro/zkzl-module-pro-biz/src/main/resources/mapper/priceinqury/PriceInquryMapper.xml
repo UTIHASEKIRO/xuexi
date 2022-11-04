@@ -25,7 +25,8 @@
         <result column="price_date" property="priceDate" />
         <result column="effective_date" property="effectiveDate" />
         <result column="status" property="status" />
-        <collection property="childs">
+        <collection property="childs" ofType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryChildsVO">
+            <id column="id" property="id" />
             <result column="product_id" property="productId" />
             <result column="hs_serial" property="hsSerial" />
             <result column="desc" property="desc" />
@@ -84,13 +85,13 @@
                pcu.company_name buyerCompanyName,su.mobile buyerMobile,
                ppi.price,ppi.discount,ppi.total, ppi.price_date,ppi.effective_date,ppi.status,
 
-               ppic.product_id,ppic.hs_serial,ppic.desc,ppic.product_size,ppic.product_color,
+               ppic.id,ppic.product_id,ppic.hs_serial,ppic.desc,ppic.product_size,ppic.product_color,
                ppic.product_g,ppic.package_way,ppic.box_length,ppic.box_height,ppic.box_wide,
                ppic.volume,ppic.price,ppic.gross_weight,ppic.net_weight
         from pro_price_inqury ppi
                  left join pro_cus_user pcu on ppi.buyer_company_id = pcu.user_id
                  left join system_users su on ppi.buyer_company_id = su.id
                  left join pro_price_inqury_child ppic on ppi.price_inqury_id = ppic.price_inqury_id
-
+        where ppi.id = #{0}
     </select>
 </mapper>

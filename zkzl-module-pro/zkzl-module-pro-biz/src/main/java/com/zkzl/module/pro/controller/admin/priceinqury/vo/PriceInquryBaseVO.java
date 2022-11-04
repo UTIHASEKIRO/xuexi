@@ -16,24 +16,20 @@ import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DA
 @Data
 public class PriceInquryBaseVO {
 
-    @ApiModelProperty(value = "询价表id", required = true)
+    @ApiModelProperty(value = "询价表id")
     private String priceInquryId;
 
-    @ApiModelProperty(value = "卖方公司名称", required = true)
+    @ApiModelProperty(value = "卖方公司名称")
     private String sellerCompanyName;
 
-    @ApiModelProperty(value = "卖方联系地址", required = true)
+    @ApiModelProperty(value = "卖方联系地址")
     private String sellerCompanyAddress;
 
-    @ApiModelProperty(value = "卖方联系人", required = true)
+    @ApiModelProperty(value = "卖方联系人")
     private String sellerContact;
 
-    @ApiModelProperty(value = "卖方联系电话", required = true)
+    @ApiModelProperty(value = "卖方联系电话")
     private String sellerTel;
-
-    @ApiModelProperty(value = "客户id", required = true)
-    @NotNull(message = "客户id不能为空")
-    private Long buyerCompanyId;
 
     @ApiModelProperty(value = "客户理想价格")
     private String buyerIdealPrice;

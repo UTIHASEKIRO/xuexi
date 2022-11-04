@@ -1,13 +1,17 @@
 package com.zkzl.module.pro.service.priceinqury;
 
+
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.framework.security.core.util.SecurityFrameworkUtils;
 import com.zkzl.module.pro.controller.admin.priceinqurychild.vo.PriceInquryChildCreateReqVO;
 import com.zkzl.module.pro.convert.priceinqurychild.PriceInquryChildConvert;
 import com.zkzl.module.pro.dal.dataobject.priceinqurychild.PriceInquryChildDO;
+import com.zkzl.module.pro.dal.dataobject.supplyinfo.SupplyInfoDO;
 import com.zkzl.module.pro.dal.mysql.priceinqurychild.PriceInquryChildMapper;
+import com.zkzl.module.pro.dal.mysql.supplyinfo.SupplyInfoMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -37,6 +41,9 @@ public class PriceInquryServiceImpl implements PriceInquryService {
 
     @Resource
     private PriceInquryChildMapper priceInquryChildMapper;
+
+    @Resource
+    private SupplyInfoMapper supplyInfoMapper;
 
     @Override
     public Long createPriceInqury(PriceInquryCreateReqVO createReqVO) {
@@ -115,8 +122,13 @@ public class PriceInquryServiceImpl implements PriceInquryService {
 
     @Override
     public PriceInquryAndChildsVO getPriceInquryAndChilds(Long id) {
+        PriceInquryAndChildsVO result = priceInquryMapper.getPriceInquryAndChilds(id);
 
-        return priceInquryMapper.getPriceInquryAndChilds(id);
+        for (PriceInquryChildsVO child : result.getChilds()) {
+            List<PriceInquryChildsSupplyerVO> supplys = supplyInfoMapper.getSupplyByProductId(child.getProductId());
+            child.setSupplyers(supplys);
+        }
+        return result;
     }
 
 }

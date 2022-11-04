@@ -37,4 +37,11 @@
         from pro_supply_info psi
         where deleted = '0'
     </select>
+    <select id="getSupplyByProductId"
+            resultType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryChildsSupplyerVO">
+        select psi.supply_info_id,psi.name
+        from pro_supply_info psi
+        where psi.deleted = '0'
+        and psi.product_id = #{0}
+    </select>
 </mapper>

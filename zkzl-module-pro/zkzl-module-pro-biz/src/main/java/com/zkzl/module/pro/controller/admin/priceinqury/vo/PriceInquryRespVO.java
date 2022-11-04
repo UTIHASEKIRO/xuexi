@@ -6,6 +6,8 @@ import java.util.*;
 import io.swagger.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotNull;
+
 import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 import static com.zkzl.framework.common.util.date.DateUtils.TIME_ZONE_DEFAULT;
 
@@ -17,6 +19,9 @@ public class PriceInquryRespVO extends PriceInquryBaseVO {
 
     @ApiModelProperty(value = "id", required = true)
     private Long id;
+
+    @ApiModelProperty(value = "客户id",required = true)
+    private Long buyerCompanyId;
 
     @ApiModelProperty(value = "创建时间", required = true)
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)

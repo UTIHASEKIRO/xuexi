@@ -12,6 +12,9 @@ import javax.validation.constraints.*;
 @ToString(callSuper = true)
 public class PriceInquryCreateReqVO extends PriceInquryBaseVO {
 
+    @ApiModelProperty(value = "客户id",required = true)
+    @NotNull(message = "客户id不能为空！")
+    private Long buyerCompanyId;
 
     private List<PriceInquryChildCreateReqVO> priceInquryChilds;
 }

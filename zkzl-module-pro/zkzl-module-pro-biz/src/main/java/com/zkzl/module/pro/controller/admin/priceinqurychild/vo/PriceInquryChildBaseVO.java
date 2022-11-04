@@ -14,11 +14,9 @@ import javax.validation.constraints.*;
 public class PriceInquryChildBaseVO {
 
     @ApiModelProperty(value = "询价表id", required = true)
-    @NotNull(message = "询价表id不能为空")
     private String priceInquryId;
 
     @ApiModelProperty(value = "产品id", required = true)
-    @NotNull(message = "产品id不能为空")
     private String productId;
 
     @ApiModelProperty(value = "HS编码")

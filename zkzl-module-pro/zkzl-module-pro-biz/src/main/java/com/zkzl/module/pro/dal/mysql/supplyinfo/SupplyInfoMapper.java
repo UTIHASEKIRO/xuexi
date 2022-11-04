@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
+import com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryChildsSupplyerVO;
 import com.zkzl.module.pro.dal.dataobject.producttype.ProductTypeDO;
 import com.zkzl.module.pro.dal.dataobject.supplyinfo.SupplyInfoDO;
 import org.apache.ibatis.annotations.Mapper;
@@ -60,4 +61,7 @@ public interface SupplyInfoMapper extends BaseMapperX<SupplyInfoDO> {
 
     /*获得供货商名称*/
     IPage<SupplyInfoNameVO> getSupplyInfoName(@Param("page")IPage<SupplyInfoNameVO> mPage,@Param("param") SupplyInfoPageReqVO pageVO);
+
+    /*根据产品id查询供应商列表*/
+    List<PriceInquryChildsSupplyerVO> getSupplyByProductId(String productId);
 }
