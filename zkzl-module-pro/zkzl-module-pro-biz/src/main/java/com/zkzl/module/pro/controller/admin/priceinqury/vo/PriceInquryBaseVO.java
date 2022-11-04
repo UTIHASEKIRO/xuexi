@@ -35,6 +35,9 @@ public class PriceInquryBaseVO {
     @NotNull(message = "客户id不能为空")
     private Long buyerCompanyId;
 
+    @ApiModelProperty(value = "客户理想价格")
+    private String buyerIdealPrice;
+
     @ApiModelProperty(value = "总价格")
     private BigDecimal price;
 

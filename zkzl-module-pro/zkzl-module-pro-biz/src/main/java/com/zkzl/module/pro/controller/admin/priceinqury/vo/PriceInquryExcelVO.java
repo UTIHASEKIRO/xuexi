@@ -36,6 +36,9 @@ public class PriceInquryExcelVO {
     @ExcelProperty("客户id")
     private Long buyerCompanyId;
 
+    @ExcelProperty(value = "客户理想价格")
+    private String buyerIdealPrice;
+
     @ExcelProperty("总价格")
     private BigDecimal price;
 

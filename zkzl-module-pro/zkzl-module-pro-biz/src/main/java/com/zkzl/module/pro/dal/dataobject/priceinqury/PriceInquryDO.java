@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.dal.dataobject.priceinqury;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import java.util.*;
 import java.math.BigDecimal;
@@ -50,6 +51,10 @@ public class PriceInquryDO extends BaseDO {
      * 客户id
      */
     private Long buyerCompanyId;
+    /**
+     * "客户理想价格"
+     */
+    private String buyerIdealPrice;
     /**
      * 总价格
      */

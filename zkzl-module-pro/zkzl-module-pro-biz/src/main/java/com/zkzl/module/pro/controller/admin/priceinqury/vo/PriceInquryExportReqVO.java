@@ -33,6 +33,9 @@ public class PriceInquryExportReqVO {
     @ApiModelProperty(value = "客户id")
     private Long buyerCompanyId;
 
+    @ApiModelProperty(value = "客户理想价格")
+    private String buyerIdealPrice;
+
     @ApiModelProperty(value = "总价格")
     private BigDecimal price;
 
