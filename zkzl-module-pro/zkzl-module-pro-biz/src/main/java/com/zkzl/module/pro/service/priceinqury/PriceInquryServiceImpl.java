@@ -113,4 +113,10 @@ public class PriceInquryServiceImpl implements PriceInquryService {
         return new PageResult<>(mPage.getRecords(),mPage.getTotal());
     }
 
+    @Override
+    public PriceInquryAndChildsVO getPriceInquryAndChilds(Long id) {
+
+        return priceInquryMapper.getPriceInquryAndChilds(id);
+    }
+
 }

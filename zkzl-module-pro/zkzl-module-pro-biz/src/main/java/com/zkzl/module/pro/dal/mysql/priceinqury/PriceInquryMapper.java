@@ -61,4 +61,6 @@ public interface PriceInquryMapper extends BaseMapperX<PriceInquryDO> {
     /*业务员查看询价表*/
     IPage<PriceInquryPageVO> pageCommon(@Param("mPage")IPage<PriceInquryPageVO> mPage,@Param("param") PriceInquryPageReqVO pageVO);
 
+    /*查看询价表及子表*/
+    PriceInquryAndChildsVO getPriceInquryAndChilds(Long id);
 }

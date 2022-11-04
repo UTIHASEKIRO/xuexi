@@ -32,7 +32,7 @@ public class SupplyInfoExportReqVO {
     private Date[] createTime;
 
     @ApiModelProperty(value = "主要产品")
-    private String product;
+    private String productId;
 
     @ApiModelProperty(value = "产品类别id")
     private String typeId;

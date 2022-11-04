@@ -12,6 +12,9 @@ import javax.validation.constraints.*;
 @Data
 public class SupplyInfoBaseVO {
 
+    @ApiModelProperty(value = "供货商业务id")
+    private String supplyInfoId;
+
     @ApiModelProperty(value = "公司名称")
     private String name;
 
@@ -28,7 +31,7 @@ public class SupplyInfoBaseVO {
     private String email;
 
     @ApiModelProperty(value = "主要产品")
-    private String product;
+    private String productId;
 
     @ApiModelProperty(value = "产品类别id")
     private String typeId;

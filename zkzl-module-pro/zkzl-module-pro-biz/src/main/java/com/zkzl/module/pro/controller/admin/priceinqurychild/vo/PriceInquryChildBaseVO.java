@@ -19,7 +19,7 @@ public class PriceInquryChildBaseVO {
 
     @ApiModelProperty(value = "产品id", required = true)
     @NotNull(message = "产品id不能为空")
-    private Long productId;
+    private String productId;
 
     @ApiModelProperty(value = "HS编码")
     private String hsSerial;

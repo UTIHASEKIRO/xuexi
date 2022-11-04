@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.controller.admin.priceinqury.vo;
 
+import com.zkzl.module.pro.dal.dataobject.priceinqurychild.PriceInquryChildDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -9,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
@@ -74,4 +76,77 @@ public class PriceInquryAndChildsVO {
 
     @ApiModelProperty(value = "合计")
     private BigDecimal total;
+
+    @ApiModelProperty(value = "子表")
+    private List<Childs> childs;
+}
+
+@Data
+class Childs {
+    /**
+     * 产品id
+     */
+    private String productId;
+    /**
+     * HS编码
+     */
+    private String hsSerial;
+    /**
+     * 货描
+     */
+    private String desc;
+    /**
+     * 产品详情-尺寸
+     */
+    private String productSize;
+    /**
+     * 产品详情-颜色
+     */
+    private String productColor;
+    /**
+     * 产品详情-克重
+     */
+    private String productG;
+    /**
+     * 包装方式
+     */
+    private String packageWay;
+    /**
+     * 箱规-长
+     */
+    private BigDecimal boxLength;
+    /**
+     * 箱规-高
+     */
+    private BigDecimal boxHeight;
+    /**
+     * 箱规-宽
+     */
+    private BigDecimal boxWide;
+    /**
+     * 体积
+     */
+    private BigDecimal volume;
+    /**
+     * 总价格
+     */
+    private BigDecimal price;
+    /**
+     * 毛重
+     */
+    private BigDecimal grossWeight;
+    /**
+     * 净重
+     */
+    private BigDecimal netWeight;
+    /*
+    * 供应商
+    * */
+    private List<Supplyer> supplyers;
+}
+
+@Data
+class Supplyer {
+    private String supplyInfoId;
+    private String name;
 }

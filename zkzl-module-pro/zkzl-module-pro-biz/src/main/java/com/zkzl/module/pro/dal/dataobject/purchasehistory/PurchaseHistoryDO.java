@@ -32,6 +32,14 @@ public class PurchaseHistoryDO extends BaseDO {
      */
     private String purchaseHistoryId;
     /**
+     * 订单id
+     */
+    private String orderId;
+    /**
+     * 供应商id
+     */
+    private String supplyInfoId;
+    /**
      * 供货商
      */
     private String supplyCompany;

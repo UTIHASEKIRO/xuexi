@@ -25,6 +25,8 @@ public class SupplyInfoDO extends BaseDO {
      */
     @TableId
     private Long id;
+
+    private String supplyInfoId;
     /**
      * 公司名称
      */
@@ -48,7 +50,7 @@ public class SupplyInfoDO extends BaseDO {
     /**
      * 主要产品
      */
-    private String product;
+    private String productId;
     /**
      * 产品类别id
      */

@@ -72,4 +72,6 @@ public interface PriceInquryService {
 
     /*业务源查看询价表*/
     PageResult<PriceInquryPageVO> pageCommon(PriceInquryPageReqVO pageVO);
+    /*查看询价表及子表*/
+    PriceInquryAndChildsVO getPriceInquryAndChilds(Long id);
 }

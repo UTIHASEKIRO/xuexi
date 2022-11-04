@@ -39,7 +39,7 @@ public class SupplyInfoPageVO{
     private String reasonService;
 
     @ApiModelProperty(value = "主要产品")
-    private String product;
+    private String productId;
 
     @ApiModelProperty(value = "评价")
     private String evaluation;

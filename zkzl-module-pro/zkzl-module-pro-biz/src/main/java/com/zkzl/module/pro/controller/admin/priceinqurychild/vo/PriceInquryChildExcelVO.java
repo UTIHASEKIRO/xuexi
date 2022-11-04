@@ -22,7 +22,7 @@ public class PriceInquryChildExcelVO {
     private String priceInquryId;
 
     @ExcelProperty("产品id")
-    private Long productId;
+    private String productId;
 
     @ExcelProperty("HS编码")
     private String hsSerial;

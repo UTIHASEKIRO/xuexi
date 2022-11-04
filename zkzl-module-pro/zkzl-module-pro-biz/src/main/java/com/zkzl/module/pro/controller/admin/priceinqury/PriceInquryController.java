@@ -73,9 +73,9 @@ public class PriceInquryController {
     @ApiOperation("获得询价")
     @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("@ss.hasPermission('pro:price-inqury:query')")
-    public CommonResult<PriceInquryRespVO> getPriceInqury(@RequestParam("id") Long id) {
-        PriceInquryDO priceInqury = priceInquryService.getPriceInqury(id);
-        return success(PriceInquryConvert.INSTANCE.convert(priceInqury));
+    public CommonResult<PriceInquryAndChildsVO> getPriceInqury(@RequestParam("id") Long id) {
+        PriceInquryAndChildsVO priceInqury = priceInquryService.getPriceInquryAndChilds(id);
+        return success(priceInqury);
     }
 
     @GetMapping("/list")

@@ -36,7 +36,7 @@ public class SupplyInfoExcelVO {
     private Date createTime;
 
     @ExcelProperty("主要产品")
-    private String product;
+    private String productId;
 
     @ExcelProperty("产品类别id")
     private String typeId;

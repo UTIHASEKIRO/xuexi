@@ -33,7 +33,11 @@ public class PriceInquryChildDO extends BaseDO {
     /**
      * 产品id
      */
-    private Long productId;
+    private String productId;
+    /**
+     * 供应商业务id
+     */
+    private String supplyInfoId;
     /**
      * HS编码
      */

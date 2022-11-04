@@ -19,6 +19,9 @@ public class OrderBaseVO {
     @NotNull(message = "订单id不能为空")
     private String orderId;
 
+    @ApiModelProperty(value = "询价单id")
+    private String priceInquryId;
+
     @ApiModelProperty(value = "卖方公司名称", required = true)
     @NotNull(message = "卖方公司名称不能为空")
     private String sellerCompanyName;

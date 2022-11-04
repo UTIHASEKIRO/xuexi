@@ -8,6 +8,41 @@
         代码生成器暂时只生成 Mapper XML 文件本身，更多推荐 MybatisX 快速开发插件来生成查询。
         文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
      -->
+    <resultMap id="inquryAndChilds" type="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryAndChildsVO">
+        <id column="id" property="id" />
+        <result column="price_inqury_id" property="priceInquryId" />
+        <result column="seller_company_name" property="sellerCompanyName" />
+        <result column="seller_company_address" property="sellerCompanyAddress" />
+        <result column="seller_contact" property="sellerContact" />
+        <result column="seller_tel" property="sellerTel" />
+        <result column="buyer_ideal_price" property="buyerIdealPrice" />
+        <result column="address" property="buyerAddress" />
+        <result column="company_name" property="buyerCompanyName" />
+        <result column="mobile" property="buyerMobile" />
+        <result column="price" property="price" />
+        <result column="discount" property="discount" />
+        <result column="total" property="total" />
+        <result column="price_date" property="priceDate" />
+        <result column="effective_date" property="effectiveDate" />
+        <result column="status" property="status" />
+        <collection property="childs">
+            <result column="product_id" property="productId" />
+            <result column="hs_serial" property="hsSerial" />
+            <result column="desc" property="desc" />
+            <result column="product_size" property="productSize" />
+            <result column="product_color" property="productColor" />
+            <result column="product_g" property="productG" />
+            <result column="package_way" property="packageWay" />
+            <result column="box_length" property="boxLength" />
+            <result column="box_height" property="boxHeight" />
+            <result column="box_wide" property="boxWide" />
+            <result column="volume" property="volume" />
+            <result column="price" property="price" />
+            <result column="gross_weight" property="grossWeight" />
+            <result column="net_weight" property="netWeight" />
+        </collection>
+    </resultMap>
+    
 
     <select id="pageManage" resultType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryPageVO">
         /*管理员查看询价表*/
@@ -40,5 +75,22 @@
             <if test="param.buyerCompanyName != null and param.buyerCompanyName != ''">
                 and pcu.company_name like concat('%',#{param.buyerCompanyName},'%')
             </if>
+    </select>
+    <select id="getPriceInquryAndChilds" resultMap="inquryAndChilds">
+        /*查看询价表及子表*/
+        select ppi.id,ppi.price_inqury_id,ppi.seller_company_name,ppi.seller_company_address,
+               ppi.seller_contact,ppi.seller_tel,
+               ppi.buyer_ideal_price,pcu.contect_name buyerContactName,pcu.address buyerAddress,
+               pcu.company_name buyerCompanyName,su.mobile buyerMobile,
+               ppi.price,ppi.discount,ppi.total, ppi.price_date,ppi.effective_date,ppi.status,
+
+               ppic.product_id,ppic.hs_serial,ppic.desc,ppic.product_size,ppic.product_color,
+               ppic.product_g,ppic.package_way,ppic.box_length,ppic.box_height,ppic.box_wide,
+               ppic.volume,ppic.price,ppic.gross_weight,ppic.net_weight
+        from pro_price_inqury ppi
+                 left join pro_cus_user pcu on ppi.buyer_company_id = pcu.user_id
+                 left join system_users su on ppi.buyer_company_id = su.id
+                 left join pro_price_inqury_child ppic on ppi.price_inqury_id = ppic.price_inqury_id
+
     </select>
 </mapper>

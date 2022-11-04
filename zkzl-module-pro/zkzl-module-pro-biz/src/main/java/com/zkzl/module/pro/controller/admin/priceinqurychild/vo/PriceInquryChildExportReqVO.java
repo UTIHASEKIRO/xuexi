@@ -18,7 +18,7 @@ public class PriceInquryChildExportReqVO {
     private String priceInquryId;
 
     @ApiModelProperty(value = "产品id")
-    private Long productId;
+    private String productId;
 
     @ApiModelProperty(value = "HS编码")
     private String hsSerial;
