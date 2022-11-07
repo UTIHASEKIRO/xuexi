@@ -25,13 +25,13 @@ public class OrderGoodsExcelVO {
     private String orderId;
 
     @ExcelProperty("产品id")
-    private Long productId;
+    private String productId;
 
     @ExcelProperty("HS编码")
     private String hsSerial;
 
     @ExcelProperty("货描")
-    private String desc;
+    private String productDesc;
 
     @ExcelProperty("产品详情-尺寸")
     private String productSize;

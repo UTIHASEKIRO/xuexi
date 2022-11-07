@@ -1,12 +1,9 @@
 package com.zkzl.module.pro.dal.dataobject.product;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import java.util.*;
 import com.baomidou.mybatisplus.annotation.*;
 import com.zkzl.framework.mybatis.core.dataobject.BaseDO;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * 产品 DO
@@ -37,17 +34,79 @@ public class ProductDO extends BaseDO {
      */
     private String typeId;
     /**
-     * 中文产品名称
+     * 产品名称-中文
      */
     private String productNameCn;
-
     /**
-     * 英文产品名称
+     * 产品名称-英文
      */
     private String productNameEn;
-
     /**
-     * 状态
+     * 产品型号
+     */
+    private String productModel;
+    /**
+     * HS编码
+     */
+    private String hsNo;
+    /**
+     * 包装方式-中文
+     */
+    private String packagingMethodCn;
+    /**
+     * 包装方式-英文
+     */
+    private String packagingMethodEn;
+    /**
+     * 颜色-中文
+     */
+    private String colourCn;
+    /**
+     * 颜色-英文
+     */
+    private String colourEn;
+    /**
+     * 用途分类-中文
+     */
+    private String useClassificationCn;
+    /**
+     * 用途分类-英文
+     */
+    private String useClassificationEn;
+    /**
+     * 交货方式-中文
+     */
+    private String deliveryMethodCn;
+    /**
+     * 交货方式-英文
+     */
+    private String deliveryMethodEn;
+    /**
+     * 克重
+     */
+    private String gramWeight;
+    /**
+     * 尺寸
+     */
+    private String size;
+    /**
+     * 箱规
+     */
+    private String boxGauge;
+    /**
+     * 体积
+     */
+    private String volume;
+    /**
+     * 毛重
+     */
+    private String grossWeight;
+    /**
+     * 净重
+     */
+    private String netWeight;
+    /**
+     * 1上架0下架
      */
     private String shipped;
 

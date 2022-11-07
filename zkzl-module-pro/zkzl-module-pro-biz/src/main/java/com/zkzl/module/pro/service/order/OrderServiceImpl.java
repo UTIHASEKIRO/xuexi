@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.service.order;
 
+import cn.hutool.core.util.IdUtil;
 import com.zkzl.module.pro.dal.mysql.order.ProOrderMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -31,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
     public Long createOrder(OrderCreateReqVO createReqVO) {
         // 插入
         OrderDO order = OrderConvert.INSTANCE.convert(createReqVO);
+        order.setOrderId(IdUtil.getSnowflakeNextIdStr());
         orderMapper.insert(order);
         // 返回
         return order.getId();

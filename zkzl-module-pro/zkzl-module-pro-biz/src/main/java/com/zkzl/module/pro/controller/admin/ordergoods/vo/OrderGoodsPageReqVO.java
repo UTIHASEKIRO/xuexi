@@ -23,13 +23,13 @@ public class OrderGoodsPageReqVO extends PageParam {
     private String orderId;
 
     @ApiModelProperty(value = "产品id")
-    private Long productId;
+    private String productId;
 
     @ApiModelProperty(value = "HS编码")
     private String hsSerial;
 
     @ApiModelProperty(value = "货描")
-    private String desc;
+    private String productDesc;
 
     @ApiModelProperty(value = "产品详情-尺寸")
     private String productSize;

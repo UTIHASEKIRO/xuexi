@@ -17,7 +17,6 @@ import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DA
 public class OrderSummaryBaseVO {
 
     @ApiModelProperty(value = "订单汇总表id", required = true)
-    @NotNull(message = "订单汇总表id不能为空")
     private String orderSummaryId;
 
     @ApiModelProperty(value = "订单id")
@@ -73,5 +72,8 @@ public class OrderSummaryBaseVO {
 
     @ApiModelProperty(value = "备注")
     private String remarks;
+
+    @ApiModelProperty(value = "1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成")
+    private String status;
 
 }

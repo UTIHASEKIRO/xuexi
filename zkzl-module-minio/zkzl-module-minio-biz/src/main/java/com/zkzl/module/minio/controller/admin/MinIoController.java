@@ -1,8 +1,12 @@
 package com.zkzl.module.minio.controller.admin;
 
 import cn.hutool.core.io.FileTypeUtil;
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.UUID;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
+import com.zkzl.framework.common.exception.ErrorCode;
 import com.zkzl.framework.common.pojo.CommonResult;
 import com.zkzl.framework.minio.config.MinioConfig;
 import com.zkzl.framework.minio.config.MinioTemplate;
@@ -14,6 +18,7 @@ import com.zkzl.module.minio.vo.FileDO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +26,7 @@ import org.springframework.http.MediaType;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,10 +40,13 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Api(tags = "MINIO - 文件上传")
@@ -91,6 +96,7 @@ public class MinIoController {
 
     /**
      * 文件上传，适合大文件，集成了分片上传
+     * 参考 https://blog.csdn.net/qq_40096897/article/details/125474078
      */
     @PostMapping(value = "/upload")
     @ApiOperation("文件上传")
@@ -149,6 +155,43 @@ public class MinIoController {
 
     }
 
+
+    @PostMapping(value = "/fileUpload")
+    @ApiOperation("图片上传")
+    public CommonResult<Map<String, String>> fileUpload(@RequestParam("file") MultipartFile file) {
+        FileCreateReqVO fileCreateReqVO = new FileCreateReqVO();
+        String fileName = IdUtil.simpleUUID() + StrUtil.DOT + FileUtil.extName(file.getOriginalFilename());
+        Map<String, String> resultMap = new HashMap<>(4);
+        resultMap.put("bucketName", minioConfig.getBucketName());
+        resultMap.put("fileName", fileName);
+        resultMap.put("fileType", fileType(file.getOriginalFilename()));
+        resultMap.put("originalFilename", file.getOriginalFilename());
+
+        try {
+            String fileMd5 = DigestUtils.md5Hex(file.getInputStream());
+            FileDO minioFileServiceFile = minioFileService.getFile(fileMd5);
+
+            //判断文件是否已存在  存在则跳过上传直接用已存在的文件
+            if(minioFileServiceFile != null){
+                resultMap.put("path", minioFileServiceFile.getUrl());
+                return success(resultMap);
+            }
+
+            OssFile ossFile = minioTemplate.putObject(file.getInputStream(), minioConfig.getBucketName(), fileName);
+            resultMap.put("path", ossFile.getOssFilePath());
+
+            // 保存到数据库
+            fileCreateReqVO.setMd5(fileMd5);
+            fileCreateReqVO.setUrl(ossFile.getOssFilePath());
+            fileCreateReqVO.setPath(ossFile.getOriginalFileName());
+            minioFileService.createFile(fileCreateReqVO);
+        } catch (Exception e) {
+            log.error("上传失败", e);
+            return error(new ErrorCode(2000009,"上传失败"));
+        }
+        return success(resultMap);
+
+    }
     /**
      * 文件合并
      *

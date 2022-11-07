@@ -1,6 +1,8 @@
 package com.zkzl.module.minio.vo;
 
 import lombok.*;
+
+import java.io.Serializable;
 import java.util.*;
 import com.baomidou.mybatisplus.annotation.*;
 import com.zkzl.framework.mybatis.core.dataobject.BaseDO;
@@ -12,12 +14,12 @@ import com.zkzl.framework.mybatis.core.dataobject.BaseDO;
  */
 @TableName("minio_file")
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode
 @ToString(callSuper = true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class FileDO extends BaseDO {
+public class FileDO implements Serializable {
 
     /**
      * 参数主键

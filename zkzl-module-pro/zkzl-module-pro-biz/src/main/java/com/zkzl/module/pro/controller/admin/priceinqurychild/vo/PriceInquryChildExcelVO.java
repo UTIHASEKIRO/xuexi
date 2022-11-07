@@ -28,7 +28,7 @@ public class PriceInquryChildExcelVO {
     private String hsSerial;
 
     @ExcelProperty("货描")
-    private String desc;
+    private String productDesc;
 
     @ExcelProperty("产品详情-尺寸")
     private String productSize;
