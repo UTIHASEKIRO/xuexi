@@ -24,7 +24,7 @@ public class PriceInquryChildExportReqVO {
     private String hsSerial;
 
     @ApiModelProperty(value = "货描")
-    private String desc;
+    private String productDesc;
 
     @ApiModelProperty(value = "产品详情-尺寸")
     private String productSize;

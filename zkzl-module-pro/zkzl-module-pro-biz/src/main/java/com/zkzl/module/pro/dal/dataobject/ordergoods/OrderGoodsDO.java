@@ -37,7 +37,7 @@ public class OrderGoodsDO extends BaseDO {
     /**
      * 产品id
      */
-    private Long productId;
+    private String productId;
     /**
      * HS编码
      */
@@ -45,7 +45,7 @@ public class OrderGoodsDO extends BaseDO {
     /**
      * 货描
      */
-    private String desc;
+    private String productDesc;
     /**
      * 产品详情-尺寸
      */
