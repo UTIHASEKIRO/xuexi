@@ -46,8 +46,8 @@ public class ProductController {
     @ApiOperation("获得产品分页")
     @PreAuthorize("@ss.hasPermission('pro:duct:query')")
     public CommonResult<PageResult<ProductRespVO>> getProductPage(@Valid ProductPageReqVO pageVO) {
-        PageResult<ProductRespVO> pageResult = ductService.getductPage(pageVO);
-        return success(pageResult);
+        PageResult<ProductDO> pageResult = ductService.getductPage(pageVO);
+        return success(ProductConvert.INSTANCE.convertPage(pageResult));
     }
 
     @GetMapping("/get")

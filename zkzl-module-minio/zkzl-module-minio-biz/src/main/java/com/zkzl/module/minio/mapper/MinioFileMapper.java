@@ -21,15 +21,13 @@ public interface MinioFileMapper extends BaseMapperX<FileDO> {
     default PageResult<FileDO> selectPage(FilePageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<FileDO>()
                 .eqIfPresent(FileDO::getUrl, reqVO.getUrl())
-                .eqIfPresent(FileDO::getPath, reqVO.getPath())
-                .betweenIfPresent(FileDO::getCreateTime, reqVO.getCreateTime()));
+                .eqIfPresent(FileDO::getPath, reqVO.getPath()));
     }
 
     default List<FileDO> selectList(FileExportReqVO reqVO) {
         return selectList(new LambdaQueryWrapperX<FileDO>()
                 .eqIfPresent(FileDO::getUrl, reqVO.getUrl())
-                .eqIfPresent(FileDO::getPath, reqVO.getPath())
-                .betweenIfPresent(FileDO::getCreateTime, reqVO.getCreateTime()));
+                .eqIfPresent(FileDO::getPath, reqVO.getPath()));
     }
 
 }

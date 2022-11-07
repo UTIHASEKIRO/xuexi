@@ -14,9 +14,25 @@
         <result column="type_id" property="typeId"/>
         <result column="product_name_cn" property="productNameCn"/>
         <result column="product_name_en" property="productNameEn"/>
+        <result column="product_model" property="productModel"/>
+        <result column="hs_no" property="hsNo"/>
+        <result column="packaging_method_cn" property="packagingMethodCn"/>
+        <result column="packaging_method_en" property="packagingMethodEn"/>
+        <result column="colour_cn" property="colourCn"/>
+        <result column="colour_en" property="colourEn"/>
+        <result column="use_classification_cn" property="useClassificationCn"/>
+        <result column="use_classification_en" property="useClassificationEn"/>
+        <result column="delivery_method_cn" property="deliveryMethodCn"/>
+        <result column="delivery_method_en" property="deliveryMethodEn"/>
+        <result column="gram_weight" property="gramWeight"/>
+        <result column="size" property="size"/>
+        <result column="box_gauge" property="boxGauge"/>
+        <result column="volume" property="volume"/>
+        <result column="gross_weight" property="grossWeight"/>
+        <result column="net_weight" property="netWeight"/>
         <result column="shipped" property="shipped"/>
         <result column="create_time" property="createTime"/>
-        <collection property="parametersDOS"
+        <collection property="productParametersDOS"
                     ofType="com.zkzl.module.pro.dal.dataobject.productparameters.ProductParametersDO">
             <id column="ppp_id" property="id"/>
             <result column="ppp_product_id" property="productId"/>
@@ -31,6 +47,12 @@
             <result column="p_product_id" property="productId"/>
             <result column="url" property="url"/>
         </collection>
+        <collection property="productCertificateDOS"
+                    ofType="com.zkzl.module.pro.dal.dataobject.productcertificate.ProductCertificateDO">
+            <id column="ppc_id" property="id"/>
+            <result column="ppc_product_id" property="productId"/>
+            <result column="certificate_url" property="certificateUrl"/>
+        </collection>
     </resultMap>
 
     <resultMap id="productReVO" type="com.zkzl.module.pro.controller.admin.product.vo.ProductRespVO">
@@ -41,7 +63,7 @@
         <result column="product_name_en" property="productNameEn"/>
         <result column="shipped" property="shipped"/>
         <result column="create_time" property="createTime"/>
-        <collection property="parametersDOS"
+        <collection property="productParametersDOS"
                     select="selectParametersDOS"
                     column="product_id"
                     ofType="com.zkzl.module.pro.dal.dataobject.productparameters.ProductParametersDO">
@@ -74,17 +96,19 @@
         </where>
     </select>
 
-    <select id="selectParametersDOS" parameterType="String" resultType="com.zkzl.module.pro.dal.dataobject.productparameters.ProductParametersDO">
+<!--    <select id="selectParametersDOS" parameterType="String"
+            resultType="com.zkzl.module.pro.dal.dataobject.productparameters.ProductParametersDO">
         select *
         from pro_product_parameters
         where product_id = #{product_id}
     </select>
 
-    <select id="selectPicDOS" parameterType="String" resultType="com.zkzl.module.pro.dal.dataobject.productpic.ProductPicDO">
+    <select id="selectPicDOS" parameterType="String"
+            resultType="com.zkzl.module.pro.dal.dataobject.productpic.ProductPicDO">
         select *
         from pro_product_pic
         where product_id = #{product_id}
-    </select>
+    </select>-->
 
     <select id="getProduct" resultMap="productRespVO">
         select pp.*,
@@ -97,10 +121,14 @@
                value_en,
                p.id           p_id,
                p.product_id   p_product_id,
-               url
+               url,
+               ppc.id         ppc_id,
+               ppc.product_id ppc_product_id,
+               ppc.certificate_url
         from pro_product pp
                  left join pro_product_parameters ppp on pp.product_id = ppp.product_id
                  left join pro_product_pic p on pp.product_id = p.product_id
+                 left join pro_product_certificate ppc on pp.product_id = ppc.product_id
         where pp.product_id = #{productId}
     </select>
 </mapper>

@@ -57,7 +57,7 @@ public interface ProductService {
      * @param pageReqVO 分页查询
      * @return 产品分页
      */
-    PageResult<ProductRespVO> getductPage(ProductPageReqVO pageReqVO);
+    PageResult<ProductDO> getductPage(ProductPageReqVO pageReqVO);
 
     /**
      * 获得产品列表, 用于 Excel 导出
