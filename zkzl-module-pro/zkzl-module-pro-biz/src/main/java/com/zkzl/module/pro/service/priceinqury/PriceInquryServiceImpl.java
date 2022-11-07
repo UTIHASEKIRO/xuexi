@@ -8,17 +8,23 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.framework.security.core.util.SecurityFrameworkUtils;
+import com.zkzl.module.pro.controller.admin.ordersummary.vo.OrderSummaryCreateReqVO;
 import com.zkzl.module.pro.controller.admin.priceinqurychild.vo.PriceInquryChildCreateReqVO;
 import com.zkzl.module.pro.controller.admin.priceinqurychild.vo.PriceInquryChildExportReqVO;
 import com.zkzl.module.pro.controller.admin.priceinqurychild.vo.PriceInquryChildUpdateReqVO;
 import com.zkzl.module.pro.convert.priceinqurychild.PriceInquryChildConvert;
 import com.zkzl.module.pro.dal.dataobject.order.OrderDO;
 import com.zkzl.module.pro.dal.dataobject.ordergoods.OrderGoodsDO;
+import com.zkzl.module.pro.dal.dataobject.ordersummary.OrderSummaryDO;
 import com.zkzl.module.pro.dal.dataobject.priceinqurychild.PriceInquryChildDO;
+import com.zkzl.module.pro.dal.dataobject.procurementsummary.ProcurementSummaryDO;
 import com.zkzl.module.pro.dal.mysql.order.ProOrderMapper;
 import com.zkzl.module.pro.dal.mysql.ordergoods.OrderGoodsMapper;
+import com.zkzl.module.pro.dal.mysql.ordersummary.OrderSummaryMapper;
 import com.zkzl.module.pro.dal.mysql.priceinqurychild.PriceInquryChildMapper;
+import com.zkzl.module.pro.dal.mysql.procurementsummary.ProcurementSummaryMapper;
 import com.zkzl.module.pro.dal.mysql.supplyinfo.SupplyInfoMapper;
+import com.zkzl.module.system.dal.mysql.user.AdminUserMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
@@ -61,6 +67,12 @@ public class PriceInquryServiceImpl implements PriceInquryService {
     private ProOrderMapper proOrderMapper;
     @Resource
     private OrderGoodsMapper orderGoodsMapper;
+    @Resource
+    private OrderSummaryMapper orderSummaryMapper;
+    @Resource
+    private ProcurementSummaryMapper procurementSummaryMapper;
+    @Resource
+    private AdminUserMapper userMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -97,9 +109,10 @@ public class PriceInquryServiceImpl implements PriceInquryService {
                 priceInquryChildMapper.updateById(PriceInquryChildConvert.INSTANCE.convert(updateVO));
             }
         }
-        //status=3 询价单成交 同时创建订单
+        //status=3 询价单成交 同时1创建订单 2创建订单汇总 3创建采购汇总
         if ("3".equals(updateReqVO.getStatus())){
             PriceInquryDO currentInqury = priceInquryMapper.selectById(updateReqVO.getId());
+            //1创建订单
             OrderDO insertOrder = inqury2Order(currentInqury);
             insertOrder.setOrderId(IdUtil.getSnowflakeNextIdStr());
             proOrderMapper.insert(insertOrder);
@@ -107,66 +120,32 @@ public class PriceInquryServiceImpl implements PriceInquryService {
             //批量插入订单子表
             List<PriceInquryChildDO> childs = priceInquryChildMapper.selectList(
                     new PriceInquryChildExportReqVO().setPriceInquryId(currentInqury.getPriceInquryId()));
-            List<OrderGoodsDO> insertGoods = inquryChild3OrderGoods(childs,insertOrder.getOrderId());
+            List<OrderGoodsDO> insertGoods = inquryChild2OrderGoods(childs,insertOrder.getOrderId());
             orderGoodsMapper.insertBatch(insertGoods);
+
+            //2创建订单汇总
+            //String customer = userMapper.selectById(insertOrder.getUserId()).getUsername();
+            String customer = "ccc";
+            OrderSummaryDO insertSummary = new OrderSummaryDO();
+            insertSummary.setOrderSummaryId(IdUtil.getSnowflakeNextIdStr())
+                    .setOrderId(insertOrder.getOrderId())
+                    .setCustomer(customer);
+            orderSummaryMapper.insert(insertSummary);
+
+            //3创建采购汇总
+            ProcurementSummaryDO insertProcurement;
+            for (OrderGoodsDO insertGood : insertGoods) {
+                insertProcurement = new ProcurementSummaryDO();
+                insertProcurement.setProcurementSummaryId(IdUtil.getSnowflakeNextIdStr())
+                        .setOrderId(insertGood.getOrderId())
+                        .setOrderChildId(insertGood.getOrderChildId());
+                procurementSummaryMapper.insert(insertProcurement);
+            }
+
         }
         priceInquryMapper.updateById(updateObj);
     }
 
-    /**
-     * 询价单转订单
-     * @param inquryDO
-     * @return
-     */
-    private OrderDO inqury2Order(PriceInquryDO inquryDO){
-        OrderDO result = new OrderDO();
-        result.setPriceInquryId(inquryDO.getPriceInquryId())
-                .setPrice(inquryDO.getPrice())
-                .setDiscount(inquryDO.getDiscount())
-                .setPriceDate(inquryDO.getPriceDate())
-                .setEffectiveDate(inquryDO.getEffectiveDate())
-                .setSellerCompanyAddress(inquryDO.getSellerCompanyAddress())
-                .setSellerCompanyName(inquryDO.getSellerCompanyName())
-                .setSellerTel(inquryDO.getSellerTel())
-                .setSellerContact(inquryDO.getSellerContact())
-                .setTotal(inquryDO.getTotal())
-                .setUserId(inquryDO.getBuyerCompanyId());
-        return result;
-    }
-
-    /**
-     * 询价子单转订单子单
-     * @param childs
-     * @return
-     */
-    private List<OrderGoodsDO> inquryChild3OrderGoods(List<PriceInquryChildDO> childs,String orderId){
-        List<OrderGoodsDO> results = new CopyOnWriteArrayList<>();
-        OrderGoodsDO result;
-        for (PriceInquryChildDO child : childs) {
-            result = new OrderGoodsDO();
-            result.setPrice(child.getPrice())
-                    .setUnitPrice(child.getUnitPrice())
-                    .setMount(child.getMount())
-                    .setBoxHeight(child.getBoxHeight())
-                    .setBoxLength(child.getBoxLength())
-                    .setBoxWide(child.getBoxWide())
-                    .setProductDesc(child.getProductDesc())
-                    .setGrossWeight(child.getGrossWeight())
-                    .setNetWeight(child.getNetWeight())
-                    .setHsSerial(child.getHsSerial())
-                    .setOrderId(orderId)
-                    .setPackageWay(child.getPackageWay())
-                    .setVolume(child.getVolume())
-                    .setRemark(child.getRemark())
-                    .setProductId(child.getProductId())
-                    .setProductG(child.getProductG())
-                    .setProductColor(child.getProductColor())
-                    .setProductSize(child.getProductSize())
-                    .setOrderChildId(IdUtil.getSnowflakeNextIdStr());
-            results.add(result);
-        }
-        return results;
-    }
 
     @Override
     public void deletePriceInqury(Long id) {
@@ -228,4 +207,60 @@ public class PriceInquryServiceImpl implements PriceInquryService {
         return result;
     }
 
+
+
+    /**
+     * 询价单转订单
+     * @param inquryDO
+     * @return
+     */
+    private OrderDO inqury2Order(PriceInquryDO inquryDO){
+        OrderDO result = new OrderDO();
+        result.setPriceInquryId(inquryDO.getPriceInquryId())
+                .setPrice(inquryDO.getPrice())
+                .setDiscount(inquryDO.getDiscount())
+                .setPriceDate(inquryDO.getPriceDate())
+                .setEffectiveDate(inquryDO.getEffectiveDate())
+                .setSellerCompanyAddress(inquryDO.getSellerCompanyAddress())
+                .setSellerCompanyName(inquryDO.getSellerCompanyName())
+                .setSellerTel(inquryDO.getSellerTel())
+                .setSellerContact(inquryDO.getSellerContact())
+                .setTotal(inquryDO.getTotal())
+                .setUserId(inquryDO.getBuyerCompanyId());
+        return result;
+    }
+
+    /**
+     * 询价子单转订单子单
+     * @param childs
+     * @return
+     */
+    private List<OrderGoodsDO> inquryChild2OrderGoods(List<PriceInquryChildDO> childs,String orderId){
+        List<OrderGoodsDO> results = new CopyOnWriteArrayList<>();
+        OrderGoodsDO result;
+        for (PriceInquryChildDO child : childs) {
+            result = new OrderGoodsDO();
+            result.setPrice(child.getPrice())
+                    .setUnitPrice(child.getUnitPrice())
+                    .setMount(child.getMount())
+                    .setBoxHeight(child.getBoxHeight())
+                    .setBoxLength(child.getBoxLength())
+                    .setBoxWide(child.getBoxWide())
+                    .setProductDesc(child.getProductDesc())
+                    .setGrossWeight(child.getGrossWeight())
+                    .setNetWeight(child.getNetWeight())
+                    .setHsSerial(child.getHsSerial())
+                    .setOrderId(orderId)
+                    .setPackageWay(child.getPackageWay())
+                    .setVolume(child.getVolume())
+                    .setRemark(child.getRemark())
+                    .setProductId(child.getProductId())
+                    .setProductG(child.getProductG())
+                    .setProductColor(child.getProductColor())
+                    .setProductSize(child.getProductSize())
+                    .setOrderChildId(IdUtil.getSnowflakeNextIdStr());
+            results.add(result);
+        }
+        return results;
+    }
 }
