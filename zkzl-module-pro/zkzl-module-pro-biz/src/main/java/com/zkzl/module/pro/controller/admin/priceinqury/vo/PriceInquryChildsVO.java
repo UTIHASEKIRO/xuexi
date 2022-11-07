@@ -70,5 +70,5 @@ public class PriceInquryChildsVO {
     /*
      * 供应商
      * */
-    private List<PriceInquryChildsSupplyerVO> supplyers;
+    private String supplyName;
 }

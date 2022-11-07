@@ -126,7 +126,7 @@ public class PriceInquryServiceImpl implements PriceInquryService {
 
         for (PriceInquryChildsVO child : result.getChilds()) {
             List<PriceInquryChildsSupplyerVO> supplys = supplyInfoMapper.getSupplyByProductId(child.getProductId());
-            child.setSupplyers(supplys);
+            child.setSupplyName(supplys.get(0).getName());
         }
         return result;
     }
