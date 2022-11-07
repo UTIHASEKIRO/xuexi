@@ -52,3 +52,10 @@ export function exportductTypeExcel(query) {
     responseType: 'blob'
   })
 }
+export function ductTypeList(query) {
+  return request({
+    url: '/pro/duct-type/list',
+    method: 'get',
+    params: query,
+  })
+}

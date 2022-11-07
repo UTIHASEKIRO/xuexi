@@ -52,3 +52,13 @@ export function exportductExcel(query) {
     responseType: 'blob'
   })
 }
+
+
+export function updateShipped(query) {
+  return request({
+    url: '/pro/duct/updateShipped',
+    method: 'get',
+    params: query,
+  })
+}
+

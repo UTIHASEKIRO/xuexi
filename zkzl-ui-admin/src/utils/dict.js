@@ -69,6 +69,7 @@ export const DICT_TYPE = {
 
   REASON_QUALITY: 'reason_quality', // 选择原因-质量
   REASON_PRICE: 'reason_price', // 选择原因-价格
+  SHIPPED: 'shipped', // 商品状态 上下架
 }
 
 /**

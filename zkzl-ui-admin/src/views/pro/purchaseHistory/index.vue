@@ -3,10 +3,10 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="供应记录ID" prop="purchaseHistoryId">
-        <el-input v-model="queryParams.purchaseHistoryId" placeholder="请输入供应记录ID" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item label="供货商" prop="supplyCompany">
+        <el-input v-model="queryParams.supplyCompany" placeholder="请输入供货商" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="产品编号" prop="productSerial">
+      <!-- <el-form-item label="产品编号" prop="productSerial">
         <el-input v-model="queryParams.productSerial" placeholder="请输入产品编号" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="HS编号" prop="hsSerial">
@@ -42,7 +42,7 @@
       <el-form-item label="创建时间" prop="createTime">
         <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
                         range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -65,16 +65,23 @@
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
       <el-table-column label="序号id" align="center" prop="id" />
-      <el-table-column label="供应记录ID" align="center" prop="purchaseHistoryId" />
+      <el-table-column label="供货单号" align="center" prop="purchaseHistoryId" />
+      <el-table-column label="供货商" align="center" prop="supplyCompany" />
+      
       <el-table-column label="产品编号" align="center" prop="productSerial" />
       <el-table-column label="HS编号" align="center" prop="hsSerial" />
-      <el-table-column label="产品-尺寸" align="center" prop="productSize" />
-      <el-table-column label="产品-颜色" align="center" prop="productColor" />
-      <el-table-column label="产品-克重" align="center" prop="productG" />
-      <el-table-column label="箱规-长" align="center" prop="boxLength" />
-      <el-table-column label="箱规-宽" align="center" prop="boxWide" />
-      <el-table-column label="箱规-高" align="center" prop="boxHeight" />
+      <el-table-column label="尺寸" align="center" prop="productSize" />
+      <el-table-column label="颜色" align="center" prop="productColor" />
+      <el-table-column label="克重" align="center" prop="productG" />
+      <el-table-column label="包装方式" align="center" prop="packingWay" />
+      <el-table-column label="长" align="center" prop="boxLength" />
+      <el-table-column label="宽" align="center" prop="boxWide" />
+      <el-table-column label="高" align="center" prop="boxHeight" />
+      
+      <el-table-column label="数量" align="center" prop="mount" />
       <el-table-column label="单价" align="center" prop="unitPrice" />
+      
+      <el-table-column label="合计" align="center" prop="price" />
       <el-table-column label="毛重" align="center" prop="grossWeight" />
       <el-table-column label="净重" align="center" prop="netWeight" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -82,12 +89,13 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
+      <el-table-column label="备注" align="center" prop="remark" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                      v-hasPermi="['pro:purchase-history:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['pro:purchase-history:delete']">删除</el-button>
+          <!-- <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+                     v-hasPermi="['pro:purchase-history:delete']">删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -98,8 +106,10 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="供应记录ID" prop="purchaseHistoryId">
-          <el-input v-model="form.purchaseHistoryId" placeholder="请输入供应记录ID" />
+        <el-form-item label="供货商" prop="supplyCompany">
+          <el-select v-model="form.supplyCompany" placeholder="请选择供货商" clearable size="small" style="width: 240px">
+            <el-option v-for="dict in supplyList" :key="parseInt(dict.id)" :label="dict.name" :value="dict.name"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="产品编号" prop="productSerial">
           <el-input v-model="form.productSerial" placeholder="请输入产品编号" />
@@ -145,6 +155,7 @@
 
 <script>
 import { createPurchaseHistory, updatePurchaseHistory, deletePurchaseHistory, getPurchaseHistory, getPurchaseHistoryPage, exportPurchaseHistoryExcel } from "@/api/pro/purchaseHistory";
+import { getSupplyInfoPage } from "@/api/pro/supplyInfo";
 
 export default {
   name: "PurchaseHistory",
@@ -188,11 +199,13 @@ export default {
       form: {},
       // 表单校验
       rules: {
-      }
+      },
+      supplyList:[]
     };
   },
   created() {
     this.getList();
+    this.getSupplyInfoPage()
   },
   methods: {
     /** 查询列表 */
@@ -204,6 +217,12 @@ export default {
         this.total = response.data.total;
         this.loading = false;
       });
+    },
+    /**获取供货商 */
+    getSupplyInfoPage(){
+      getSupplyInfoPage().then(result=>{
+        this.supplyList = result.data.list
+      })
     },
     /** 取消按钮 */
     cancel() {
