@@ -76,4 +76,7 @@ public class ProcurementSummaryBaseVO {
     @ApiModelProperty(value = "备注")
     private String remarks;
 
+    @ApiModelProperty(value = "采购单状态（0采购中1已完成）")
+    private Integer status;
+
 }

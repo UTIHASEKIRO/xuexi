@@ -9,4 +9,62 @@
         文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
      -->
 
+    <resultMap id="procurementSummaryRespVO"
+               type="com.zkzl.module.pro.controller.admin.procurementsummary.vo.ProcurementSummaryRespVO">
+        <id column="id" property="id"/>
+        <result column="procurement_summary_id" property="procurementSummaryId"/>
+        <result column="order_id" property="orderId"/>
+        <result column="order_child_id" property="orderChildId"/>
+        <result column="product_name_cn" property="productName"/>
+        <result column="mount" property="mount"/>
+        <result column="supply_company" property="supplyCompany"/>
+        <result column="finish_percent" property="finishPercent"/>
+        <result column="buyer" property="buyer"/>
+        <result column="procurement_amount" property="procurementAmount"/>
+        <result column="deposit_amount" property="depositAmount"/>
+        <result column="balance_amount" property="balanceAmount"/>
+        <result column="produce_date" property="produceDate"/>
+        <result column="confirm_date" property="confirmDate"/>
+        <result column="end_date" property="endDate"/>
+        <result column="result" property="result"/>
+        <result column="volume" property="volume"/>
+        <result column="freight" property="freight"/>
+        <result column="delevery_time" property="deleveryTime"/>
+        <result column="pack_time" property="packTime"/>
+        <result column="remarks" property="remarks"/>
+        <result column="status" property="status"/>
+    </resultMap>
+    <select id="getcurementSummaryPage" resultMap="procurementSummaryRespVO">
+        select pps.*,
+        pog.mount,
+        pp.product_name_cn
+        from pro_procurement_summary pps
+        left join pro_order_goods pog on pps.order_child_id = pog.order_child_id
+        left join pro_product pp on pog.product_id = pp.product_id
+        <where>
+            <if test="pageReqVO.status != null and pageReqVO.status != ''">
+                and pps.status = #{pageReqVO.status}
+            </if>
+            <if test="pageReqVO.createTime != null and pageReqVO.createTime.length == 2">
+                and pps.create_time between #{pageReqVO.createTime[0]} and #{pageReqVO.createTime[1]}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+    <select id="getcurementSummary" resultMap="procurementSummaryRespVO">
+        select pps.*,
+               pog.mount,
+               pp.product_name_cn
+        from pro_procurement_summary pps
+                 left join pro_order_goods pog on pps.order_child_id = pog.order_child_id
+                 left join pro_product pp on pog.product_id = pp.product_id
+        where pps.procurement_summary_id = #{procurementSummaryId}
+    </select>
+    <select id="getcurementSummaryStatistics"
+            resultType="com.zkzl.module.pro.controller.admin.procurementsummary.vo.ProcurementSummaryStatisticsVO">
+        select count(1)                  totalCount,
+               sum(IF(status = 0, 1, 0)) afootCount,
+               sum(IF(status = 1, 1, 0)) finishCount
+        from pro_procurement_summary
+    </select>
 </mapper>

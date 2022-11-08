@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.dal.dataobject.procurementsummary;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import java.util.*;
 import java.math.BigDecimal;
@@ -98,5 +99,10 @@ public class ProcurementSummaryDO extends BaseDO {
      * 备注
      */
     private String remarks;
+
+    /**
+     * 采购单状态（0采购中1已完成）
+     */
+    private Integer status;
 
 }
