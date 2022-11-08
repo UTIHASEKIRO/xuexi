@@ -84,6 +84,14 @@ public class OrderSummaryController {
         return success(pageResult);
     }
 
+    @GetMapping("/pageOrderCount")
+    @ApiOperation("获得订单总数、完成数、正在进行数")
+    @PreAuthorize("@ss.hasPermission('pro:order-summary:query')")
+    public CommonResult<Map<String,Long>> pageOrderCount() {
+        Map<String,Long> mapResult = orderSummaryService.pageOrderCount();
+        return success(mapResult);
+    }
+
     @GetMapping("/export-excel")
     @ApiOperation("导出订单汇总 Excel")
     @PreAuthorize("@ss.hasPermission('pro:order-summary:export')")

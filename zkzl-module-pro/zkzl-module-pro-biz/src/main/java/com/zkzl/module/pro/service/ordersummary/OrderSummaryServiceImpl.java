@@ -1,12 +1,15 @@
 package com.zkzl.module.pro.service.ordersummary;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+
 import com.zkzl.module.pro.controller.admin.ordersummary.vo.*;
 import com.zkzl.module.pro.dal.dataobject.ordersummary.OrderSummaryDO;
 import com.zkzl.framework.common.pojo.PageResult;
@@ -86,6 +89,16 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
         IPage<OrderSummaryPageVO> mPage = MyBatisUtils.buildPage(pageVO);
         orderSummaryMapper.pageOrderSummary(mPage,pageVO);
         return new PageResult<>(mPage.getRecords(),mPage.getTotal());
+    }
+
+    @Override
+    public Map<String, Long> pageOrderCount() {
+        /*获得订单总数、完成数、正在进行数*/
+        Map<String,Long> result = new ConcurrentHashMap<>();
+        result.put("订单总数",orderSummaryMapper.selectCount());
+        result.put("已经完成",orderSummaryMapper.selectCount("status","6"));
+        result.put("正在进行",orderSummaryMapper.selectCount(new LambdaQueryWrapperX<OrderSummaryDO>().ne(OrderSummaryDO::getStatus,"6")));
+        return result;
     }
 
 }

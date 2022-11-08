@@ -71,4 +71,7 @@ public interface OrderSummaryService {
     订单汇总分页
      */
     PageResult<OrderSummaryPageVO> pageOrderSummary(OrderSummaryPageVO pageVO);
+
+    /*获得订单总数、完成数、正在进行数*/
+    Map<String, Long> pageOrderCount();
 }
