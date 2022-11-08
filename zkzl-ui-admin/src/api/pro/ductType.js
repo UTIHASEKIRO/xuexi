@@ -19,18 +19,20 @@ export function updateductType(data) {
 }
 
 // 删除商品类别
-export function deleteductType(id) {
+export function deleteductType(query) {
   return request({
-    url: '/pro/duct-type/delete?id=' + id,
-    method: 'delete'
+    url: '/pro/duct-type/delete',
+    method: 'delete',
+    params: query
   })
 }
 
 // 获得商品类别
-export function getductType(id) {
+export function getductType(query) {
   return request({
-    url: '/pro/duct-type/get?id=' + id,
-    method: 'get'
+    url: '/pro/duct-type/get',
+    method: 'get',
+    params: query
   })
 }
 

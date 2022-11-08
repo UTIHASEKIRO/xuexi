@@ -57,7 +57,7 @@
                      v-hasPermi="['pro:duct:update']">修改</el-button>
 
           <el-button size="mini" type="text" icon="el-icon-delete" @click="updateShipped(scope.row)"
-                     v-hasPermi="['pro:duct:delete']">{{ scope.row.shipped=== '0'?'上架':'下架'}}</el-button>
+                     v-hasPermi="['pro:duct:update']">{{ row.shipped=== '0'?'上架':'下架'}}</el-button>
         </template>
       </el-table-column>
     </el-table>
