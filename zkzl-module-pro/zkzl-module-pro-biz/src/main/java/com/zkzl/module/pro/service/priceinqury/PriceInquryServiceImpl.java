@@ -124,11 +124,12 @@ public class PriceInquryServiceImpl implements PriceInquryService {
             orderGoodsMapper.insertBatch(insertGoods);
 
             //2创建订单汇总
-            //String customer = userMapper.selectById(insertOrder.getUserId()).getUsername();
-            String customer = "ccc";
+            String customer = userMapper.selectById(insertOrder.getUserId()).getUsername();
+            //String customer = "ccc";
             OrderSummaryDO insertSummary = new OrderSummaryDO();
             insertSummary.setOrderSummaryId(IdUtil.getSnowflakeNextIdStr())
                     .setOrderId(insertOrder.getOrderId())
+                    .setPriceInquryId(insertOrder.getPriceInquryId())
                     .setCustomer(customer);
             orderSummaryMapper.insert(insertSummary);
 

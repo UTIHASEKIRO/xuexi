@@ -1,5 +1,7 @@
 package com.zkzl.module.pro.service.ordersummary;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -77,6 +79,13 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
     @Override
     public List<OrderSummaryDO> getOrderSummaryList(OrderSummaryExportReqVO exportReqVO) {
         return orderSummaryMapper.selectList(exportReqVO);
+    }
+
+    @Override
+    public PageResult<OrderSummaryPageVO> pageOrderSummary(OrderSummaryPageVO pageVO) {
+        IPage<OrderSummaryPageVO> mPage = MyBatisUtils.buildPage(pageVO);
+        orderSummaryMapper.pageOrderSummary(mPage,pageVO);
+        return new PageResult<>(mPage.getRecords(),mPage.getTotal());
     }
 
 }

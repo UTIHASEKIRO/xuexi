@@ -67,4 +67,8 @@ public interface OrderSummaryService {
      */
     List<OrderSummaryDO> getOrderSummaryList(OrderSummaryExportReqVO exportReqVO);
 
+    /*
+    订单汇总分页
+     */
+    PageResult<OrderSummaryPageVO> pageOrderSummary(OrderSummaryPageVO pageVO);
 }
