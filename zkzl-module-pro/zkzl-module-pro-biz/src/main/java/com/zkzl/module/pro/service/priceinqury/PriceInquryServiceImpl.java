@@ -25,6 +25,7 @@ import com.zkzl.module.pro.dal.mysql.priceinqurychild.PriceInquryChildMapper;
 import com.zkzl.module.pro.dal.mysql.procurementsummary.ProcurementSummaryMapper;
 import com.zkzl.module.pro.dal.mysql.supplyinfo.SupplyInfoMapper;
 import com.zkzl.module.system.dal.mysql.user.AdminUserMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
@@ -52,6 +53,7 @@ import static com.zkzl.module.system.enums.ErrorCodeConstants.PRICE_INQURY_NOT_E
  */
 @Service
 @Validated
+@Slf4j
 public class PriceInquryServiceImpl implements PriceInquryService {
 
     @Resource
@@ -203,6 +205,10 @@ public class PriceInquryServiceImpl implements PriceInquryService {
 
         for (PriceInquryChildsVO child : result.getChilds()) {
             List<PriceInquryChildsSupplyerVO> supplys = supplyInfoMapper.getSupplyByProductId(child.getProductId());
+            if (ObjectUtil.isEmpty(supplys)){
+                log.info("产品:"+child.getProductId()+" 无法查询供应商！");
+                continue;
+            }
             child.setSupplyName(supplys.get(0).getName());
         }
         return result;

@@ -95,9 +95,9 @@ public class OrderSummaryServiceImpl implements OrderSummaryService {
     public Map<String, Long> pageOrderCount() {
         /*获得订单总数、完成数、正在进行数*/
         Map<String,Long> result = new ConcurrentHashMap<>();
-        result.put("订单总数",orderSummaryMapper.selectCount());
-        result.put("已经完成",orderSummaryMapper.selectCount("status","6"));
-        result.put("正在进行",orderSummaryMapper.selectCount(new LambdaQueryWrapperX<OrderSummaryDO>().ne(OrderSummaryDO::getStatus,"6")));
+        result.put("allOrder",orderSummaryMapper.selectCount());
+        result.put("finishOrder",orderSummaryMapper.selectCount("status","6"));
+        result.put("ingOrder",orderSummaryMapper.selectCount(new LambdaQueryWrapperX<OrderSummaryDO>().ne(OrderSummaryDO::getStatus,"6")));
         return result;
     }
 

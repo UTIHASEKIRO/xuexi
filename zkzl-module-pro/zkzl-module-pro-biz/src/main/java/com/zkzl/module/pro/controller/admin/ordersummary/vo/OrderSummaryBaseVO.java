@@ -7,6 +7,9 @@ import java.math.BigDecimal;
 import io.swagger.annotations.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+
 import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
 /**
@@ -35,12 +38,15 @@ public class OrderSummaryBaseVO {
     private String salesman;
 
     @ApiModelProperty(value = "合同金额")
+    @Digits(integer=6,fraction = 2,message = "整数位数最大6位，小数最大两位！")
     private BigDecimal contractAmount;
 
     @ApiModelProperty(value = "定金金额")
+    @Digits(integer=6,fraction = 2,message = "整数位数最大6位，小数最大两位！")
     private BigDecimal depositAmount;
 
     @ApiModelProperty(value = "尾款金额")
+    @Digits(integer=6,fraction = 2,message = "整数位数最大6位，小数最大两位！")
     private BigDecimal balanceAmount;
 
     @ApiModelProperty(value = "生产进度-生产日期")

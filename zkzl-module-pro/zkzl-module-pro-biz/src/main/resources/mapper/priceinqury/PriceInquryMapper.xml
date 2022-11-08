@@ -18,6 +18,7 @@
         <result column="buyer_ideal_price" property="buyerIdealPrice" />
         <result column="address" property="buyerAddress" />
         <result column="company_name" property="buyerCompanyName" />
+        <result column="contect_name" property="buyerContactName" />
         <result column="mobile" property="buyerMobile" />
         <result column="price" property="price" />
         <result column="discount" property="discount" />
@@ -29,7 +30,7 @@
             <id column="id" property="id" />
             <result column="product_id" property="productId" />
             <result column="hs_serial" property="hsSerial" />
-            <result column="desc" property="desc" />
+            <result column="product_desc" property="productDesc" />
             <result column="product_size" property="productSize" />
             <result column="product_color" property="productColor" />
             <result column="product_g" property="productG" />
@@ -81,11 +82,10 @@
         /*查看询价表及子表*/
         select ppi.id,ppi.price_inqury_id,ppi.seller_company_name,ppi.seller_company_address,
                ppi.seller_contact,ppi.seller_tel,
-               ppi.buyer_ideal_price,pcu.contect_name buyerContactName,pcu.address buyerAddress,
-               pcu.company_name buyerCompanyName,su.mobile buyerMobile,
+               ppi.buyer_ideal_price,pcu.contect_name,pcu.address,pcu.company_name,su.mobile,
                ppi.price,ppi.discount,ppi.total, ppi.price_date,ppi.effective_date,ppi.status,
 
-               ppic.id,ppic.product_id,ppic.hs_serial,ppic.desc,ppic.product_size,ppic.product_color,
+               ppic.id,ppic.product_id,ppic.hs_serial,ppic.product_desc,ppic.product_size,ppic.product_color,
                ppic.product_g,ppic.package_way,ppic.box_length,ppic.box_height,ppic.box_wide,
                ppic.volume,ppic.price,ppic.gross_weight,ppic.net_weight
         from pro_price_inqury ppi

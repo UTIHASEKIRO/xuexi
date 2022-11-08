@@ -22,7 +22,7 @@ public class PriceInquryChildsVO {
     /**
      * 货描
      */
-    private String desc;
+    private String productDesc;
     /**
      * 产品详情-尺寸
      */
