@@ -38,8 +38,8 @@ public class SupplyInfoPageVO{
     @ApiModelProperty(value = "推荐理由-服务")
     private String reasonService;
 
-    @ApiModelProperty(value = "主要产品")
-    private String productId;
+    @ApiModelProperty(value = "产品名称")
+    private String productNameCn;
 
     @ApiModelProperty(value = "评价")
     private String evaluation;
