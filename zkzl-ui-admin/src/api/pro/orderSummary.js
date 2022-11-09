@@ -52,3 +52,20 @@ export function exportOrderSummaryExcel(query) {
     responseType: 'blob'
   })
 }
+
+// /admin-api/pro/order-summary/pageOrderSummary
+export function pageOrderSummary(query) {
+  return request({
+    url: '/pro/order-summary/pageOrderSummary',
+    method: 'get',
+    params: query,
+  })
+}
+
+export function pageOrderCount(query) {
+  return request({
+    url: '/pro/order-summary/pageOrderCount',
+    method: 'get',
+    params: query,
+  })
+}

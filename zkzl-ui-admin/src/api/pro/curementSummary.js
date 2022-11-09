@@ -27,10 +27,11 @@ export function deletecurementSummary(id) {
 }
 
 // 获得采购汇总
-export function getcurementSummary(id) {
+export function getcurementSummary(query) {
   return request({
-    url: '/pro/curement-summary/get?id=' + id,
-    method: 'get'
+    url: '/pro/curement-summary/get',
+    method: 'get',
+    params: query
   })
 }
 
@@ -50,5 +51,13 @@ export function exportcurementSummaryExcel(query) {
     method: 'get',
     params: query,
     responseType: 'blob'
+  })
+}
+
+export function statistics(query) {
+  return request({
+    url: '/pro/curement-summary/statistics',
+    method: 'get',
+    params: query,
   })
 }

@@ -62,6 +62,7 @@ export const DICT_TYPE = {
   CUSTOMER_INTENTION: 'customer_intention', // 客户意向
   CUSTOMER_RESULT: 'customer_result', // 客户跟进结果
   PRICE_INQUERY_STATUS: 'price_inqury_status', // 询价单状态
+  PROCUREMENT_SUMMARY_STATUS:'procurement_summary', // 采购单状态
   ORDER_STATUS: 'order_status', // 订单状态
   USER_STATUS: 'user_status', // 订单状态
 

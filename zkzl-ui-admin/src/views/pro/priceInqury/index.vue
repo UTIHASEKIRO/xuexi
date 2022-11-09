@@ -3,50 +3,18 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="询价表id" prop="priceInquryId">
-        <el-input v-model="queryParams.priceInquryId" placeholder="请输入询价表id" clearable @keyup.enter.native="handleQuery"/>
+
+      <el-form-item label="公司名称" prop="buyerCompanyName">
+        <el-input v-model="queryParams.buyerCompanyName" placeholder="请输入公司名称" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="卖方公司名称" prop="sellerCompanyName">
-        <el-input v-model="queryParams.sellerCompanyName" placeholder="请输入卖方公司名称" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="卖方联系地址" prop="sellerCompanyAddress">
-        <el-input v-model="queryParams.sellerCompanyAddress" placeholder="请输入卖方联系地址" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="卖方联系人" prop="sellerContact">
-        <el-input v-model="queryParams.sellerContact" placeholder="请输入卖方联系人" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="卖方联系电话" prop="sellerTel">
-        <el-input v-model="queryParams.sellerTel" placeholder="请输入卖方联系电话" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="客户id" prop="buyerCompanyId">
-        <el-input v-model="queryParams.buyerCompanyId" placeholder="请输入客户id" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="总价格" prop="price">
-        <el-input v-model="queryParams.price" placeholder="请输入总价格" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="折扣" prop="discount">
-        <el-input v-model="queryParams.discount" placeholder="请输入折扣" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="合计" prop="total">
-        <el-input v-model="queryParams.total" placeholder="请输入合计" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="报价日期" prop="priceDate">
-        <el-date-picker v-model="queryParams.priceDate" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
-      <el-form-item label="报价有效日期" prop="effectiveDate">
-        <el-date-picker v-model="queryParams.effectiveDate" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
-      <el-form-item label="状态 1客户询价状态 2老板确认状态 3询价完成状态" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择状态 1客户询价状态 2老板确认状态 3询价完成状态" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+     
+      <el-form-item label="状态" prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
+         <el-option v-for="dict in inqueryStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="dict.value"/>
+        
         </el-select>
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
-        <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
+     
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -68,12 +36,14 @@
 
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
-      <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="询价表id" align="center" prop="priceInquryId" />
-      <el-table-column label="卖方公司名称" align="center" prop="sellerCompanyName" />
-      <el-table-column label="卖方联系地址" align="center" prop="sellerCompanyAddress" />
-      <el-table-column label="卖方联系人" align="center" prop="sellerContact" />
-      <el-table-column label="卖方联系电话" align="center" prop="sellerTel" />
+      <el-table-column label="序号" align="center" prop="id" />
+      <el-table-column label="询价单号" align="center" prop="priceInquryId" />
+      <el-table-column label="公司名称" align="center" prop="companyName" />
+      <!-- <el-table-column label="卖方联系地址" align="center" prop="sellerCompanyAddress" /> -->
+      <el-table-column label="联系人" align="center" prop="contactName" />
+      <el-table-column label="联系电话" align="center" prop="mobile" />
+      <el-table-column label="询价时间" align="center" prop="createTime" />
+<!-- 
       <el-table-column label="客户id" align="center" prop="buyerCompanyId" />
       <el-table-column label="总价格" align="center" prop="price" />
       <el-table-column label="折扣" align="center" prop="discount" />
@@ -87,19 +57,23 @@
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.effectiveDate) }}</span>
         </template>
+      </el-table-column> -->
+      <el-table-column label="状态" align="center" prop="status" >
+         <template slot-scope="scope">
+          <dict-tag :type="DICT_TYPE.PRICE_INQUERY_STATUS" :value="scope.row.status"/>
+        </template>
       </el-table-column>
-      <el-table-column label="状态 1客户询价状态 2老板确认状态 3询价完成状态" align="center" prop="status" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
+      <!-- <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                      v-hasPermi="['pro:price-inqury:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['pro:price-inqury:delete']">删除</el-button>
+          <!-- <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+                     v-hasPermi="['pro:price-inqury:delete']">删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -108,49 +82,217 @@
                 @pagination="getList"/>
 
     <!-- 对话框(添加 / 修改) -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="1200px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="询价表id" prop="priceInquryId">
-          <el-input v-model="form.priceInquryId" placeholder="请输入询价表id" />
+
+        <el-row >
+          <el-col :span="8">
+            <el-form-item label="询价单号"  prop="priceInquryId">
+           <span>{{form.priceInquryId}}</span>
+          </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="报价日期"  prop="priceDate">
+          <span>{{form.priceDate}}</span>
         </el-form-item>
-        <el-form-item label="卖方公司名称" prop="sellerCompanyName">
-          <el-input v-model="form.sellerCompanyName" placeholder="请输入卖方公司名称" />
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="报价有效日期" prop="effectiveDate"  label-width="120px">
+          <el-date-picker clearable v-model="form.effectiveDate" type="date" value-format="yyyy-MM-dd" placeholder="选择报价有效日期" />
         </el-form-item>
-        <el-form-item label="卖方联系地址" prop="sellerCompanyAddress">
-          <el-input v-model="form.sellerCompanyAddress" placeholder="请输入卖方联系地址" />
-        </el-form-item>
-        <el-form-item label="卖方联系人" prop="sellerContact">
-          <el-input v-model="form.sellerContact" placeholder="请输入卖方联系人" />
-        </el-form-item>
-        <el-form-item label="卖方联系电话" prop="sellerTel">
-          <el-input v-model="form.sellerTel" placeholder="请输入卖方联系电话" />
-        </el-form-item>
-        <el-form-item label="客户id" prop="buyerCompanyId">
-          <el-input v-model="form.buyerCompanyId" placeholder="请输入客户id" />
-        </el-form-item>
+          </el-col>
+          
+          
+         
+        </el-row>
+        <el-row >
+          <el-col :span="8">
+            <div class="sub-title">卖方信息</div>
+             <el-form-item label="公司名称" prop="sellerCompanyName">
+              <span>{{form.sellerCompanyName}}</span>
+              <!-- <el-input v-model="form.sellerCompanyName" placeholder="请输入卖方公司名称" /> -->
+            </el-form-item>
+            <el-form-item label="联系地址" prop="sellerCompanyAddress">
+              <span>{{form.sellerCompanyAddress}}</span>
+              <!-- <el-input v-model="form.sellerCompanyAddress" placeholder="请输入卖方联系地址" /> -->
+            </el-form-item>
+            <el-form-item label="联系人" prop="sellerContact">
+              <span>{{form.sellerContact}}</span>
+              <!-- <el-input v-model="form.sellerContact" placeholder="请输入卖方联系人" /> -->
+            </el-form-item>
+            <el-form-item label="联系电话" prop="sellerTel">
+              <span>{{form.sellerTel}}</span>
+              <!-- <el-input v-model="form.sellerTel" placeholder="请输入卖方联系电话" /> -->
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <div class="sub-title">买方信息</div>
+             <el-form-item label="公司名称" prop="buyerCompanyName">
+              <span>{{form.buyerCompanyName}}</span>
+              <!-- <el-input v-model="form.sellerCompanyName" placeholder="请输入卖方公司名称" /> -->
+            </el-form-item>
+            <el-form-item label="联系地址" prop="buyerAddress">
+              <span>{{form.buyerAddress}}</span>
+              <!-- <el-input v-model="form.sellerCompanyAddress" placeholder="请输入卖方联系地址" /> -->
+            </el-form-item>
+            <el-form-item label="联系人" prop="buyerContactName">
+              <span>{{form.buyerContactName}}</span>
+              <!-- <el-input v-model="form.sellerContact" placeholder="请输入卖方联系人" /> -->
+            </el-form-item>
+            <el-form-item label="联系电话" prop="buyerMobile">
+              <span>{{form.buyerMobile}}</span>
+              <!-- <el-input v-model="form.sellerTel" placeholder="请输入卖方联系电话" /> -->
+            </el-form-item>
+          </el-col>
+        </el-row >
+        <el-table  :data="form.childs">
+      <el-table-column label="编号" align="center" prop="productId" />
+      <el-table-column label="HS编号" align="center" prop="hsSerial" />
+      <el-table-column label="货描" align="center" prop="desc" />
+      <el-table-column label="尺寸" align="center" prop="productSize" />
+      <el-table-column label="颜色" align="center" prop="productColor" />
+      <el-table-column label="克重" align="center" prop="productG" />
+      <el-table-column label="包装方式" align="center" prop="packageWay" />
+      <el-table-column label="长" align="center" prop="boxLength" />
+      <el-table-column label="宽" align="center" prop="boxWide" />
+      <el-table-column label="高" align="center" prop="boxHeight" />
+      <el-table-column label="数量" align="center" prop="mount" />
+      <el-table-column label="单价" align="center" prop="unitPrice " >
+        <template slot-scope="scope">
+          <el-input v-model="scope.row.unitPrice " type="number" @input="priceInput(scope.row)" placeholder="请输入价格" />
+        </template>
+      </el-table-column>
+      <el-table-column label="供应商" align="center" prop="supplyName" />
+      <el-table-column label="小计" align="center" prop="price" />
+      <el-table-column label="体积" align="center" prop="volume" />
+      <el-table-column label="毛重" align="center" prop="grossWeight" />
+      <el-table-column label="净重" align="center" prop="netWeight" />
+      <!-- <el-table-column label="交货方式" align="center" prop="deliveryMethodCn" /> -->
+
+    </el-table>
+
+
         <el-form-item label="总价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入总价格" />
+          <span>{{form.price}}</span>
+          <!-- <el-input v-model="form.price" placeholder="请输入总价格" /> -->
         </el-form-item>
         <el-form-item label="折扣" prop="discount">
-          <el-input v-model="form.discount" placeholder="请输入折扣" />
+          <el-input v-model="form.discount" type="number" @input="calcDiscountPrice" placeholder="请输入折扣" />
         </el-form-item>
         <el-form-item label="合计" prop="total">
-          <el-input v-model="form.total" placeholder="请输入合计" />
+          <span>{{form.total}}</span>
+          <!-- <el-input v-model="form.total" placeholder="请输入合计" /> -->
         </el-form-item>
-        <el-form-item label="报价日期" prop="priceDate">
-          <el-date-picker clearable v-model="form.priceDate" type="date" value-format="timestamp" placeholder="选择报价日期" />
+        <el-form-item label="买方理想报价" prop="buyerIdealPrice">
+          <span>{{form.buyerIdealPrice}}</span>
+          <!-- <el-date-picker clearable v-model="form.priceDate" type="date" value-format="timestamp" placeholder="选择报价日期" /> -->
         </el-form-item>
-        <el-form-item label="报价有效日期" prop="effectiveDate">
-          <el-date-picker clearable v-model="form.effectiveDate" type="date" value-format="timestamp" placeholder="选择报价有效日期" />
-        </el-form-item>
-        <el-form-item label="状态 1客户询价状态 2老板确认状态 3询价完成状态" prop="status">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
-        </el-form-item>
+       
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="submitForm">确 定</el-button>
+        <el-button type="danger" @click="reject">拒 绝</el-button>
+        <el-button type="success" @click="success">成 交</el-button>
+        <el-button type="primary" @click="confirm">确 定</el-button>
+        <el-button @click="cancel">取 消</el-button>
+      </div>
+    </el-dialog>
+
+        <!-- 对话框(添加 / 修改) -->
+    <el-dialog :title="title" :visible.sync="commonOpen" width="1200px" v-dialogDrag append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+
+        <el-row >
+          <el-col :span="8">
+            <el-form-item label="询价单号"  prop="priceInquryId">
+           <span>{{form.priceInquryId}}</span>
+          </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <!-- <el-form-item label="报价日期"  prop="priceDate">
+          <span>{{form.priceDate}}</span>
+        </el-form-item> -->
+          </el-col>
+          <el-col :span="8">
+            <!-- <el-form-item label="报价有效日期" prop="effectiveDate"  label-width="120px">
+          <el-date-picker clearable v-model="form.effectiveDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择报价有效日期" />
+        </el-form-item> -->
+          </el-col>
+          
+          
+         
+        </el-row>
+        <el-row >
+          <el-col :span="8">
+            <div class="sub-title">卖方信息</div>
+             <el-form-item label="公司名称" prop="sellerCompanyName">
+              
+              <el-input v-model="form.sellerCompanyName" placeholder="请输入卖方公司名称" />
+            </el-form-item>
+            <el-form-item label="联系地址" prop="sellerCompanyAddress">
+
+              <el-input v-model="form.sellerCompanyAddress" placeholder="请输入卖方联系地址" />
+            </el-form-item>
+            <el-form-item label="联系人" prop="sellerContact">
+
+              <el-input v-model="form.sellerContact" placeholder="请输入卖方联系人" />
+            </el-form-item>
+            <el-form-item label="联系电话" prop="sellerTel">
+
+              <el-input v-model="form.sellerTel" placeholder="请输入卖方联系电话" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <div class="sub-title">买方信息</div>
+             <el-form-item label="公司名称" prop="buyerCompanyName">
+              <span>{{form.buyerCompanyName}}</span>
+              <!-- <el-input v-model="form.sellerCompanyName" placeholder="请输入卖方公司名称" /> -->
+            </el-form-item>
+            <el-form-item label="联系地址" prop="buyerAddress">
+              <span>{{form.buyerAddress}}</span>
+              <!-- <el-input v-model="form.sellerCompanyAddress" placeholder="请输入卖方联系地址" /> -->
+            </el-form-item>
+            <el-form-item label="联系人" prop="buyerContactName">
+              <span>{{form.buyerContactName}}</span>
+              <!-- <el-input v-model="form.sellerContact" placeholder="请输入卖方联系人" /> -->
+            </el-form-item>
+            <el-form-item label="联系电话" prop="buyerMobile">
+              <span>{{form.buyerMobile}}</span>
+              <!-- <el-input v-model="form.sellerTel" placeholder="请输入卖方联系电话" /> -->
+            </el-form-item>
+          </el-col>
+        </el-row >
+        <el-table  :data="form.childs">
+      <el-table-column label="编号" align="center" prop="productId" />
+      <el-table-column label="HS编号" align="center" prop="hsSerial" />
+      <el-table-column label="货描" align="center" prop="desc" />
+      <el-table-column label="尺寸" align="center" prop="productSize" />
+      <el-table-column label="颜色" align="center" prop="productColor" />
+      <el-table-column label="克重" align="center" prop="productG" />
+      <el-table-column label="包装方式" align="center" prop="packageWay" />
+      <el-table-column label="长" align="center" prop="boxLength" />
+      <el-table-column label="宽" align="center" prop="boxWide" />
+      <el-table-column label="高" align="center" prop="boxHeight" />
+      <el-table-column label="数量" align="center" prop="mount" />
+      <el-table-column label="单价" align="center" prop="unitPrice " >
+        <!-- <template slot-scope="scope">
+          <el-input v-model="scope.row.unitPrice " type="number" @input="priceInput(scope.row)" placeholder="请输入价格" />
+        </template> -->
+      </el-table-column>
+      <el-table-column label="供应商" align="center" prop="supplyName" />
+      <el-table-column label="小计" align="center" prop="price" />
+      <el-table-column label="体积" align="center" prop="volume" />
+      <el-table-column label="毛重" align="center" prop="grossWeight" />
+      <el-table-column label="净重" align="center" prop="netWeight" />
+      <!-- <el-table-column label="交货方式" align="center" prop="deliveryMethodCn" /> -->
+
+    </el-table>
+
+
+       
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+
+        <el-button type="primary" @click="confirm">确 定</el-button>
         <el-button @click="cancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -158,8 +300,10 @@
 </template>
 
 <script>
-import { createPriceInqury, updatePriceInqury, deletePriceInqury, getPriceInqury, getPriceInquryPage, exportPriceInquryExcel } from "@/api/pro/priceInqury";
-
+import { createPriceInqury, updatePriceInqury, deletePriceInqury, getPriceInqury, getPriceInquryPage, exportPriceInquryExcel,pageManage,pageCommon,
+update } from "@/api/pro/priceInqury";
+import { mapGetters } from 'vuex'
+import {DICT_TYPE, getDictDatas} from "@/utils/dict";
 export default {
   name: "PriceInqury",
   components: {
@@ -180,6 +324,7 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      commonOpen:false,
       // 查询参数
       queryParams: {
         pageNo: 1,
@@ -202,18 +347,28 @@ export default {
       form: {},
       // 表单校验
       rules: {
-        priceInquryId: [{ required: true, message: "询价表id不能为空", trigger: "blur" }],
-        sellerCompanyName: [{ required: true, message: "卖方公司名称不能为空", trigger: "blur" }],
-        sellerCompanyAddress: [{ required: true, message: "卖方联系地址不能为空", trigger: "blur" }],
-        sellerContact: [{ required: true, message: "卖方联系人不能为空", trigger: "blur" }],
-        sellerTel: [{ required: true, message: "卖方联系电话不能为空", trigger: "blur" }],
-        buyerCompanyId: [{ required: true, message: "客户id不能为空", trigger: "blur" }],
-        priceDate: [{ required: true, message: "报价日期不能为空", trigger: "blur" }],
-        effectiveDate: [{ required: true, message: "报价有效日期不能为空", trigger: "blur" }],
-      }
+        // priceInquryId: [{ required: true, message: "询价表id不能为空", trigger: "blur" }],
+        // sellerCompanyName: [{ required: true, message: "卖方公司名称不能为空", trigger: "blur" }],
+        // sellerCompanyAddress: [{ required: true, message: "卖方联系地址不能为空", trigger: "blur" }],
+        // sellerContact: [{ required: true, message: "卖方联系人不能为空", trigger: "blur" }],
+        // sellerTel: [{ required: true, message: "卖方联系电话不能为空", trigger: "blur" }],
+        // buyerCompanyId: [{ required: true, message: "客户id不能为空", trigger: "blur" }],
+        // priceDate: [{ required: true, message: "报价日期不能为空", trigger: "blur" }],
+        // effectiveDate: [{ required: true, message: "报价有效日期不能为空", trigger: "blur" }],
+        unitPrice: [{ required: true, message: "单价不能为空", trigger: "blur" }],
+      },
+      isAdmin:false,
+      inqueryStatusDict: getDictDatas(DICT_TYPE.PRICE_INQUERY_STATUS),
     };
   },
+  computed: {
+    ...mapGetters([
+      'roles',
+    ]),
+  },
   created() {
+  this.isAdmin = this.roles.findIndex(ele=>ele === 'super_admin')!=-1
+
     this.getList();
   },
   methods: {
@@ -221,11 +376,90 @@ export default {
     getList() {
       this.loading = true;
       // 执行查询
-      getPriceInquryPage(this.queryParams).then(response => {
-        this.list = response.data.list;
-        this.total = response.data.total;
-        this.loading = false;
+      if(this.isAdmin){
+        pageManage(this.queryParams).then(response => {
+                this.list = response.data.list;
+                this.total = response.data.total;
+                this.loading = false;
+              });
+      }else{
+        pageCommon(this.queryParams).then(response => {
+                this.list = response.data.list;
+                this.total = response.data.total;
+                this.loading = false;
+              });
+      }
+      
+    },
+    priceInput(row){
+      console.log("priceInput",row)
+      if(row.unitPrice){
+        row.price = (parseFloat(row.unitPrice)*parseFloat(row.mount)).toFixed(2)
+      }else{
+        row.price = 0
+      }
+     this.form.price =  this.sumChildPrice()
+      this.calcDiscountPrice()
+    },
+    sumChildPrice(){
+      var price = 0
+      this.form.childs.forEach(element => {
+        if(element.unitPrice){
+        price = (parseFloat(price)+ parseFloat(element.unitPrice)*parseFloat(element.mount)).toFixed(2)
+      }else{
+        price = price+ 0
+      }
       });
+      return price
+    },
+    calcDiscountPrice(){
+      if(this.form.discount && this.form.price){
+        this.form.total = (parseFloat(this.form.price)*parseFloat(this.form.discount) / parseFloat(100)).toFixed(2)
+      }else{
+        this.form.total = this.form.price
+      }
+    },
+    confirm(){
+      console.log('confir,',this.isAdmin)
+      if(this.isAdmin){
+        if(!this.form.effectiveDate){
+          this.$modal.msgError("报价有效日期不能为空");
+          return
+        }
+        this.form.priceInquryChilds = this.form.childs
+        this.form.status = '2'
+        console.log('update',this.form)
+        update( this.form).then(result=>{
+        this.open = false
+        this.getList()
+        })
+      }else{
+        this.form.status = '1'
+         update( this.form).then(result=>{
+        this.commonOpen = false
+        this.getList()
+        })
+      }
+    },
+    success(){
+      if(!this.form.effectiveDate){
+          this.$modal.msgError("报价有效日期不能为空");
+          return
+        }
+        this.form.priceInquryChilds = this.form.childs
+        this.form.status = '3'
+        console.log('update',this.form)
+        update( this.form).then(result=>{
+        this.open = false
+        
+        this.getList()
+        })
+    },
+    reject(){
+      update( {id:this.form.id,status:'4'}).then(result=>{
+        this.open = false
+        this.getList()
+        })
     },
     /** 取消按钮 */
     cancel() {
@@ -271,9 +505,14 @@ export default {
     handleUpdate(row) {
       this.reset();
       const id = row.id;
-      getPriceInqury(id).then(response => {
+      getPriceInqury({id}).then(response => {
         this.form = response.data;
-        this.open = true;
+        if(this.isAdmin){
+          this.open = true;
+        }else{
+          this.commonOpen = true
+        }
+        
         this.title = "修改询价";
       });
     },
@@ -327,3 +566,14 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.hor{
+  display: flex;
+  justify-content: space-between;
+}
+.sub-title{
+      font-size: 18px;
+    color: #303133;
+    margin-bottom: 22px;
+}
+</style>

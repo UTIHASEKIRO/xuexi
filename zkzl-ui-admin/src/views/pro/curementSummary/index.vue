@@ -2,66 +2,17 @@
   <div class="app-container">
 
     <!-- 搜索工作栏 -->
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="采购汇总表id" prop="procurementSummaryId">
-        <el-input v-model="queryParams.procurementSummaryId" placeholder="请输入采购汇总表id" clearable @keyup.enter.native="handleQuery"/>
+    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" >
+      <el-form-item label="状态" prop="status">
+       <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small" >
+          <el-option v-for="dict in summaryStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="dict.value"/>
+        </el-select>
       </el-form-item>
-      <el-form-item label="订单编号" prop="orderId">
-        <el-input v-model="queryParams.orderId" placeholder="请输入订单编号" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item label="创建时间" prop="createTime" label-width="68px">
+        <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd" type="daterange"
+                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期"  />
       </el-form-item>
-      <el-form-item label="子订单编号" prop="orderChildId">
-        <el-input v-model="queryParams.orderChildId" placeholder="请输入子订单编号" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="供应商名称" prop="supplyCompany">
-        <el-input v-model="queryParams.supplyCompany" placeholder="请输入供应商名称" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="完成进度" prop="finishPercent">
-        <el-input v-model="queryParams.finishPercent" placeholder="请输入完成进度" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="采购员" prop="buyer">
-        <el-input v-model="queryParams.buyer" placeholder="请输入采购员" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="采购金额" prop="procurementAmount">
-        <el-input v-model="queryParams.procurementAmount" placeholder="请输入采购金额" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="定金金额" prop="depositAmount">
-        <el-input v-model="queryParams.depositAmount" placeholder="请输入定金金额" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="尾款金额" prop="balanceAmount">
-        <el-input v-model="queryParams.balanceAmount" placeholder="请输入尾款金额" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="生产进度-生产日期" prop="produceDate">
-        <el-date-picker v-model="queryParams.produceDate" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
-      <el-form-item label="生产进度-印刷包装确认日期" prop="confirmDate">
-        <el-date-picker v-model="queryParams.confirmDate" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
-      <el-form-item label="生产进度-结束日期" prop="endDate">
-        <el-date-picker v-model="queryParams.endDate" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
-      <el-form-item label="产品测试结果汇报" prop="result">
-        <el-input v-model="queryParams.result" placeholder="请输入产品测试结果汇报" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="物流运输-体积" prop="volume">
-        <el-input v-model="queryParams.volume" placeholder="请输入物流运输-体积" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="物流运输-运费" prop="freight">
-        <el-input v-model="queryParams.freight" placeholder="请输入物流运输-运费" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="物流运输-发货时间" prop="deleveryTime">
-        <el-date-picker v-model="queryParams.deleveryTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
-      <el-form-item label="装柜时间" prop="packTime">
-        <el-date-picker v-model="queryParams.packTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
-      <el-form-item label="备注" prop="remarks">
-        <el-input v-model="queryParams.remarks" placeholder="请输入备注" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -69,7 +20,7 @@
     </el-form>
 
     <!-- 操作工具栏 -->
-    <el-row :gutter="10" class="mb8">
+    <!-- <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
                    v-hasPermi="['pro:curement-summary:create']">新增</el-button>
@@ -79,49 +30,38 @@
                    v-hasPermi="['pro:curement-summary:export']">导出</el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
+    </el-row> -->
+ <el-row :gutter="10" class="mb8">
+      <el-col :span="3">
+        <span class="summary-label">采购单总数: {{orderSummary.totalCount}}</span>
+      </el-col>
+      <el-col :span="3">
+         <span class="summary-label">已经完成: {{orderSummary.finishCount}}</span>
+      </el-col>
+      <el-col :span="3">
+         <span class="summary-label">正在进行: {{orderSummary.afootCount}}</span>
+      </el-col>
+      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
-      <el-table-column label="id" align="center" prop="id" />
-      <el-table-column label="采购汇总表id" align="center" prop="procurementSummaryId" />
+      <el-table-column label="序号" align="center" prop="id" />
       <el-table-column label="订单编号" align="center" prop="orderId" />
-      <el-table-column label="子订单编号" align="center" prop="orderChildId" />
-      <el-table-column label="供应商名称" align="center" prop="supplyCompany" />
-      <el-table-column label="完成进度" align="center" prop="finishPercent" />
-      <el-table-column label="采购员" align="center" prop="buyer" />
+      <el-table-column label="供货单号" align="center" prop="procurementSummaryId" />
+      <el-table-column label="产品名称" align="center" prop="productName" />
+      <el-table-column label="产品数量" align="center" prop="mount" />
+      <el-table-column label="供货商" align="center" prop="supplyCompany" />
       <el-table-column label="采购金额" align="center" prop="procurementAmount" />
-      <el-table-column label="定金金额" align="center" prop="depositAmount" />
-      <el-table-column label="尾款金额" align="center" prop="balanceAmount" />
-      <el-table-column label="生产进度-生产日期" align="center" prop="produceDate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.produceDate) }}</span>
+      <el-table-column label="定金" align="center" prop="depositAmount" />
+      <el-table-column label="尾款" align="center" prop="balanceAmount" />
+      <el-table-column label="状态" align="center" prop="supplyCompany" >
+         <template slot-scope="scope">
+          <dict-tag :type="DICT_TYPE.PROCUREMENT_SUMMARY_STATUS" :value="scope.row.status"/>
         </template>
       </el-table-column>
-      <el-table-column label="生产进度-印刷包装确认日期" align="center" prop="confirmDate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.confirmDate) }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="生产进度-结束日期" align="center" prop="endDate" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.endDate) }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="产品测试结果汇报" align="center" prop="result" />
-      <el-table-column label="物流运输-体积" align="center" prop="volume" />
-      <el-table-column label="物流运输-运费" align="center" prop="freight" />
-      <el-table-column label="物流运输-发货时间" align="center" prop="deleveryTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.deleveryTime) }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="装柜时间" align="center" prop="packTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.packTime) }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="备注" align="center" prop="remarks" />
+      <el-table-column label="操作人" align="center" prop="buyer" />
+
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
@@ -138,26 +78,26 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="采购汇总表id" prop="procurementSummaryId">
-          <el-input v-model="form.procurementSummaryId" placeholder="请输入采购汇总表id" />
+        <el-form-item label="订单id" prop="orderId">
+          <el-input v-model="form.orderId" disabled placeholder="请输入订单id" />
         </el-form-item>
-        <el-form-item label="订单编号" prop="orderId">
-          <el-input v-model="form.orderId" placeholder="请输入订单编号" />
+        <el-form-item label="客户" prop="customer">
+          <el-input v-model="form.customer" placeholder="请输入客户" />
         </el-form-item>
-        <el-form-item label="子订单编号" prop="orderChildId">
-          <el-input v-model="form.orderChildId" placeholder="请输入子订单编号" />
-        </el-form-item>
-        <el-form-item label="供应商名称" prop="supplyCompany">
-          <el-input v-model="form.supplyCompany" placeholder="请输入供应商名称" />
+         <el-form-item label="订单状态" prop="status">
+          <!-- <el-input v-model="form.status" placeholder="请输入客户" /> -->
+          <el-select v-model="form.status" placeholder="请选择状态" clearable size="small" >
+          <el-option v-for="dict in orderStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="dict.value"/>
+        </el-select>
         </el-form-item>
         <el-form-item label="完成进度" prop="finishPercent">
           <el-input v-model="form.finishPercent" placeholder="请输入完成进度" />
         </el-form-item>
-        <el-form-item label="采购员" prop="buyer">
-          <el-input v-model="form.buyer" placeholder="请输入采购员" />
-        </el-form-item>
-        <el-form-item label="采购金额" prop="procurementAmount">
-          <el-input v-model="form.procurementAmount" placeholder="请输入采购金额" />
+        <!-- <el-form-item label="业务员" prop="salesman">
+          <el-input v-model="form.salesman" placeholder="请输入业务员" />
+        </el-form-item> -->
+        <el-form-item label="合同金额" prop="contractAmount">
+          <el-input v-model="form.contractAmount" placeholder="请输入合同金额" />
         </el-form-item>
         <el-form-item label="定金金额" prop="depositAmount">
           <el-input v-model="form.depositAmount" placeholder="请输入定金金额" />
@@ -165,29 +105,29 @@
         <el-form-item label="尾款金额" prop="balanceAmount">
           <el-input v-model="form.balanceAmount" placeholder="请输入尾款金额" />
         </el-form-item>
-        <el-form-item label="生产进度-生产日期" prop="produceDate">
-          <el-date-picker clearable v-model="form.produceDate" type="date" value-format="timestamp" placeholder="选择生产进度-生产日期" />
+        <el-form-item label="生产日期" prop="produceDate">
+          <el-date-picker clearable v-model="form.produceDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择生产日期" />
         </el-form-item>
-        <el-form-item label="生产进度-印刷包装确认日期" prop="confirmDate">
-          <el-date-picker clearable v-model="form.confirmDate" type="date" value-format="timestamp" placeholder="选择生产进度-印刷包装确认日期" />
+        <el-form-item label="印刷包装确认日期" prop="confirmDate">
+          <el-date-picker clearable v-model="form.confirmDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择印刷包装确认日期" />
         </el-form-item>
-        <el-form-item label="生产进度-结束日期" prop="endDate">
-          <el-date-picker clearable v-model="form.endDate" type="date" value-format="timestamp" placeholder="选择生产进度-结束日期" />
+        <el-form-item label="结束日期" prop="endDate">
+          <el-date-picker clearable v-model="form.endDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择结束日期" />
         </el-form-item>
         <el-form-item label="产品测试结果汇报" prop="result">
           <el-input v-model="form.result" placeholder="请输入产品测试结果汇报" />
         </el-form-item>
-        <el-form-item label="物流运输-体积" prop="volume">
-          <el-input v-model="form.volume" placeholder="请输入物流运输-体积" />
-        </el-form-item>
-        <el-form-item label="物流运输-运费" prop="freight">
-          <el-input v-model="form.freight" placeholder="请输入物流运输-运费" />
-        </el-form-item>
-        <el-form-item label="物流运输-发货时间" prop="deleveryTime">
-          <el-date-picker clearable v-model="form.deleveryTime" type="date" value-format="timestamp" placeholder="选择物流运输-发货时间" />
+        <el-form-item label="体积" prop="volume">
+          <el-input v-model="form.volume" placeholder="请输入体积" />
         </el-form-item>
         <el-form-item label="装柜时间" prop="packTime">
-          <el-date-picker clearable v-model="form.packTime" type="date" value-format="timestamp" placeholder="选择装柜时间" />
+          <el-date-picker clearable v-model="form.packTime" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择装柜时间" />
+        </el-form-item>
+        <el-form-item label="发货时间" prop="deleveryTime">
+          <el-date-picker clearable v-model="form.deleveryTime" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择发货时间" />
+        </el-form-item>
+        <el-form-item label="结束时间" prop="endingTime">
+          <el-date-picker clearable v-model="form.endingTime" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择结束时间" />
         </el-form-item>
         <el-form-item label="备注" prop="remarks">
           <el-input v-model="form.remarks" placeholder="请输入备注" />
@@ -202,8 +142,8 @@
 </template>
 
 <script>
-import { createcurementSummary, updatecurementSummary, deletecurementSummary, getcurementSummary, getcurementSummaryPage, exportcurementSummaryExcel } from "@/api/pro/curementSummary";
-
+import { createcurementSummary, updatecurementSummary, deletecurementSummary, getcurementSummary, getcurementSummaryPage, exportcurementSummaryExcel,statistics } from "@/api/pro/curementSummary";
+import {DICT_TYPE, getDictDatas} from "@/utils/dict";
 export default {
   name: "curementSummary",
   components: {
@@ -228,41 +168,30 @@ export default {
       queryParams: {
         pageNo: 1,
         pageSize: 10,
-        procurementSummaryId: null,
-        orderId: null,
-        orderChildId: null,
-        supplyCompany: null,
-        finishPercent: null,
-        buyer: null,
-        procurementAmount: null,
-        depositAmount: null,
-        balanceAmount: null,
-        produceDate: [],
-        confirmDate: [],
-        endDate: [],
-        result: null,
-        volume: null,
-        freight: null,
-        deleveryTime: [],
-        packTime: [],
-        remarks: null,
+        status:undefined,
+        createTime:undefined
+        
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
         procurementSummaryId: [{ required: true, message: "采购汇总表id不能为空", trigger: "blur" }],
-      }
+      },
+      summaryStatusDict: getDictDatas(DICT_TYPE.PROCUREMENT_SUMMARY_STATUS),
+      orderSummary:{}
     };
   },
   created() {
     this.getList();
+    this.statistics()
   },
   methods: {
     /** 查询列表 */
     getList() {
       this.loading = true;
       // 执行查询
+      console.log('getList',this.queryParams)
       getcurementSummaryPage(this.queryParams).then(response => {
         this.list = response.data.list;
         this.total = response.data.total;
@@ -273,6 +202,14 @@ export default {
     cancel() {
       this.open = false;
       this.reset();
+    },
+    statistics(){
+      statistics().then(result=>{
+        console.log('statistics',result)
+        this.orderSummary.afootCount = result.data.afootCount
+        this.orderSummary.finishCount = result.data.finishCount
+        this.orderSummary.totalCount = result.data.totalCount
+      })
     },
     /** 表单重置 */
     reset() {
@@ -307,6 +244,7 @@ export default {
     /** 重置按钮操作 */
     resetQuery() {
       this.resetForm("queryForm");
+      this.queryParams.createTime = undefined
       this.handleQuery();
     },
     /** 新增按钮操作 */
@@ -319,7 +257,7 @@ export default {
     handleUpdate(row) {
       this.reset();
       const id = row.id;
-      getcurementSummary(id).then(response => {
+      getcurementSummary({procurementSummaryId:row.procurementSummaryId}).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改采购汇总";

@@ -135,7 +135,7 @@
 
 <script>
 import { createSupplyInfo, updateSupplyInfo, deleteSupplyInfo, getSupplyInfo, getSupplyInfoPage, exportSupplyInfoExcel } from "@/api/pro/supplyInfo";
-import { getductTypePage } from "@/api/pro/ductType";
+import { getductTypePage,ductTypeList } from "@/api/pro/ductType";
 import {DICT_TYPE, getDictDatas} from "@/utils/dict";
 export default {
   name: "SupplyInfo",
@@ -231,8 +231,8 @@ export default {
       });
     },
     getDuckTypePage(){
-      getductTypePage().then(result=>{
-        this.duckTypeList = result.data.list
+      ductTypeList({typeName:''}).then(result=>{
+        this.duckTypeList = result.data
       })
     },
     /** 取消按钮 */

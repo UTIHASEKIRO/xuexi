@@ -27,10 +27,11 @@ export function deletePriceInqury(id) {
 }
 
 // 获得询价
-export function getPriceInqury(id) {
+export function getPriceInqury(query) {
   return request({
-    url: '/pro/price-inqury/get?id=' + id,
-    method: 'get'
+    url: '/pro/price-inqury/get',
+    method: 'get',
+    params: query
   })
 }
 
@@ -50,5 +51,32 @@ export function exportPriceInquryExcel(query) {
     method: 'get',
     params: query,
     responseType: 'blob'
+  })
+}
+
+export function pageManage(query) {
+  return request({
+    url: '/pro/price-inqury/page-manage',
+    method: 'get',
+    params: query,
+  })
+}
+
+export function pageCommon(query) {
+  return request({
+    url: '/pro/price-inqury/page-common',
+    method: 'get',
+    params: query,
+  })
+}
+
+
+//确定
+
+export function update(query) {
+  return request({
+    url: '/pro/price-inqury/update',
+    method: 'put',
+    data: query,
   })
 }
