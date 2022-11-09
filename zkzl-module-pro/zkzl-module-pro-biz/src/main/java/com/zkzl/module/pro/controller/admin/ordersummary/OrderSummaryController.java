@@ -76,12 +76,20 @@ public class OrderSummaryController {
         return success(OrderSummaryConvert.INSTANCE.convertList(list));
     }
 
-    @GetMapping("/page")
+    @GetMapping("/pageOrderSummary")
     @ApiOperation("获得订单汇总分页")
     @PreAuthorize("@ss.hasPermission('pro:order-summary:query')")
-    public CommonResult<PageResult<OrderSummaryRespVO>> getOrderSummaryPage(@Valid OrderSummaryPageReqVO pageVO) {
-        PageResult<OrderSummaryDO> pageResult = orderSummaryService.getOrderSummaryPage(pageVO);
-        return success(OrderSummaryConvert.INSTANCE.convertPage(pageResult));
+    public CommonResult<PageResult<OrderSummaryPageVO>> pageOrderSummary(@Valid OrderSummaryPageVO pageVO) {
+        PageResult<OrderSummaryPageVO> pageResult = orderSummaryService.pageOrderSummary(pageVO);
+        return success(pageResult);
+    }
+
+    @GetMapping("/pageOrderCount")
+    @ApiOperation("获得订单总数、完成数、正在进行数")
+    @PreAuthorize("@ss.hasPermission('pro:order-summary:query')")
+    public CommonResult<Map<String,Long>> pageOrderCount() {
+        Map<String,Long> mapResult = orderSummaryService.pageOrderCount();
+        return success(mapResult);
     }
 
     @GetMapping("/export-excel")

@@ -31,17 +31,17 @@ public interface ProcurementSummaryService {
     /**
      * 删除采购汇总
      *
-     * @param id 编号
+     * @param procurementSummaryId 编号
      */
-    void deletecurementSummary(Long id);
+    void deletecurementSummary(String procurementSummaryId);
 
     /**
      * 获得采购汇总
      *
-     * @param id 编号
+     * @param procurementSummaryId 编号
      * @return 采购汇总
      */
-    ProcurementSummaryDO getcurementSummary(Long id);
+    ProcurementSummaryRespVO getcurementSummary(String procurementSummaryId);
 
     /**
      * 获得采购汇总列表
@@ -57,7 +57,7 @@ public interface ProcurementSummaryService {
      * @param pageReqVO 分页查询
      * @return 采购汇总分页
      */
-    PageResult<ProcurementSummaryDO> getcurementSummaryPage(ProcurementSummaryPageReqVO pageReqVO);
+    PageResult<ProcurementSummaryRespVO> getcurementSummaryPage(ProcurementSummaryPageReqVO pageReqVO);
 
     /**
      * 获得采购汇总列表, 用于 Excel 导出
@@ -67,4 +67,5 @@ public interface ProcurementSummaryService {
      */
     List<ProcurementSummaryDO> getcurementSummaryList(ProcurementSummaryExportReqVO exportReqVO);
 
+    ProcurementSummaryStatisticsVO getcurementSummaryStatistics();
 }

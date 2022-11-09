@@ -1,11 +1,14 @@
 package com.zkzl.module.system.service.auth;
 
 import cn.hutool.core.util.ObjectUtil;
+import com.google.common.annotations.VisibleForTesting;
 import com.zkzl.framework.common.enums.CommonStatusEnum;
 import com.zkzl.framework.common.enums.UserTypeEnum;
 import com.zkzl.framework.common.util.monitor.TracerUtils;
 import com.zkzl.framework.common.util.servlet.ServletUtils;
 import com.zkzl.framework.common.util.validation.ValidationUtils;
+import com.zkzl.module.pro.api.cususer.CusUserApi;
+import com.zkzl.module.pro.api.cususer.vo.CusUserDTO;
 import com.zkzl.module.system.api.logger.dto.LoginLogCreateReqDTO;
 import com.zkzl.module.system.api.sms.SmsCodeApi;
 import com.zkzl.module.system.api.social.dto.SocialUserBindReqDTO;
@@ -23,7 +26,6 @@ import com.zkzl.module.system.service.member.MemberService;
 import com.zkzl.module.system.service.oauth2.OAuth2TokenService;
 import com.zkzl.module.system.service.social.SocialUserService;
 import com.zkzl.module.system.service.user.AdminUserService;
-import com.google.common.annotations.VisibleForTesting;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +61,8 @@ public class AdminAuthServiceImpl implements AdminAuthService {
 
     @Resource
     private Validator validator;
-
+    @Resource
+    private CusUserApi cusUserApi;
     @Resource
     private SmsCodeApi smsCodeApi;
 
@@ -92,6 +95,14 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         // 使用账号密码，进行登录
         AdminUserDO user = authenticate(reqVO.getUsername(), reqVO.getPassword());
 
+        CusUserDTO cusUserDTO = cusUserApi.getUser(user.getId());
+        // 管理后台与客户端登录分离
+        if ((reqVO.loginType == null || "0".equals(reqVO.loginType)) && cusUserDTO != null) {
+            throw exception(AUTH_PURVIEW_NOT_EXISTS);
+        }
+        if ("1".equals(reqVO.loginType) && cusUserDTO == null) {
+            throw exception(AUTH_PURVIEW_NOT_EXISTS);
+        }
         // 如果 socialType 非空，说明需要绑定社交用户
         if (reqVO.getSocialType() != null) {
             socialUserService.bindSocialUser(new SocialUserBindReqDTO(user.getId(), getUserType().getValue(),

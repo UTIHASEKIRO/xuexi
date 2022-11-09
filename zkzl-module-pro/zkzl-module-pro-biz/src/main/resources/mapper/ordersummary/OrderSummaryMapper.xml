@@ -9,4 +9,23 @@
         文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
      -->
 
+    <select id="pageOrderSummary"
+            resultType="com.zkzl.module.pro.controller.admin.ordersummary.vo.OrderSummaryPageVO">
+        /*订单汇总分页*/
+        select pos.id,pos.price_inqury_id,pos.order_id ,pcu.company_name,su.mobile,
+               pcu.contect_name,pos.create_time,pos.contract_amount,pos.finish_percent,
+               pos.deposit_amount,pos.balance_amount,pos.status,pos.salesman
+        from pro_order_summary pos
+                 left join pro_order po on pos.order_id = po.order_id
+                 left join pro_cus_user pcu on po.user_id = pcu.user_id
+                 left join system_users su on po.user_id = su.id
+        <where>
+            <if test="param.status != null and param.status != ''">
+                and pos.status = #{param.status}
+            </if>
+            <if test="param.signTime != null and param.signTime.length >0">
+                and pos.create_time between #{param.signTime.[0]} and #{param.signTime.[1]}
+            </if>
+        </where>
+    </select>
 </mapper>

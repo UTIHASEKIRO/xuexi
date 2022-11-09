@@ -13,4 +13,9 @@ public class ProcurementSummaryRespVO extends ProcurementSummaryBaseVO {
     @ApiModelProperty(value = "id", required = true)
     private Long id;
 
+    @ApiModelProperty(value = "产品名称", required = true)
+    private String productName;
+
+    @ApiModelProperty(value = "数量")
+    private Integer mount;
 }

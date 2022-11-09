@@ -24,8 +24,8 @@ public class PriceInquryRespVO extends PriceInquryBaseVO {
     private Long buyerCompanyId;
 
     @ApiModelProperty(value = "创建时间", required = true)
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
-    @JsonFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND, timezone = TIME_ZONE_DEFAULT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = TIME_ZONE_DEFAULT)
     private Date createTime;
 
 }

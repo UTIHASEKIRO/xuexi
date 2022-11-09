@@ -67,4 +67,6 @@ public class OrderBaseVO {
     @ApiModelProperty(value = "1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成")
     private String status;
 
+    @ApiModelProperty(value = "操作员")
+    private String operator;
 }

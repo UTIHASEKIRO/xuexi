@@ -22,7 +22,7 @@ public class PriceInquryChildsVO {
     /**
      * 货描
      */
-    private String desc;
+    private String productDesc;
     /**
      * 产品详情-尺寸
      */
@@ -60,6 +60,10 @@ public class PriceInquryChildsVO {
      */
     private BigDecimal price;
     /**
+     * 单价
+     */
+    private BigDecimal unitPrice;
+    /**
      * 毛重
      */
     private BigDecimal grossWeight;
@@ -71,4 +75,8 @@ public class PriceInquryChildsVO {
      * 供应商
      * */
     private String supplyName;
+    /*
+    *  数量
+    * */
+    private Long mount;
 }

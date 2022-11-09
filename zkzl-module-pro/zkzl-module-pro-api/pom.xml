@@ -18,6 +18,12 @@
     <description>
         业务模块 API，暴露给其它模块调用
     </description>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>

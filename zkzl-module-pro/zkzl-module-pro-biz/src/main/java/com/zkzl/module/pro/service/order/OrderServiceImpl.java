@@ -81,4 +81,9 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.selectList(exportReqVO);
     }
 
+    @Override
+    public OrderRespVO getOrderByOrderId(String orderId) {
+        return orderMapper.getOrderByOrderId(orderId);
+    }
+
 }

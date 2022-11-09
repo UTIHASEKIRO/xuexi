@@ -35,12 +35,6 @@ public class ProcurementSummaryController {
     @Resource
     private ProcurementSummaryService curementSummaryService;
 
-    @PostMapping("/create")
-    @ApiOperation("创建采购汇总")
-    @PreAuthorize("@ss.hasPermission('pro:curement-summary:create')")
-    public CommonResult<Long> createcurementSummary(@Valid @RequestBody ProcurementSummaryCreateReqVO createReqVO) {
-        return success(curementSummaryService.createcurementSummary(createReqVO));
-    }
 
     @PutMapping("/update")
     @ApiOperation("更新采购汇总")
@@ -50,51 +44,28 @@ public class ProcurementSummaryController {
         return success(true);
     }
 
-    @DeleteMapping("/delete")
-    @ApiOperation("删除采购汇总")
-    @ApiImplicitParam(name = "id", value = "编号", required = true, dataTypeClass = Long.class)
-    @PreAuthorize("@ss.hasPermission('pro:curement-summary:delete')")
-    public CommonResult<Boolean> deletecurementSummary(@RequestParam("id") Long id) {
-        curementSummaryService.deletecurementSummary(id);
-        return success(true);
-    }
-
     @GetMapping("/get")
     @ApiOperation("获得采购汇总")
-    @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     @PreAuthorize("@ss.hasPermission('pro:curement-summary:query')")
-    public CommonResult<ProcurementSummaryRespVO> getcurementSummary(@RequestParam("id") Long id) {
-        ProcurementSummaryDO curementSummary = curementSummaryService.getcurementSummary(id);
-        return success(ProcurementSummaryConvert.INSTANCE.convert(curementSummary));
-    }
-
-    @GetMapping("/list")
-    @ApiOperation("获得采购汇总列表")
-    @ApiImplicitParam(name = "ids", value = "编号列表", required = true, example = "1024,2048", dataTypeClass = List.class)
-    @PreAuthorize("@ss.hasPermission('pro:curement-summary:query')")
-    public CommonResult<List<ProcurementSummaryRespVO>> getcurementSummaryList(@RequestParam("ids") Collection<Long> ids) {
-        List<ProcurementSummaryDO> list = curementSummaryService.getcurementSummaryList(ids);
-        return success(ProcurementSummaryConvert.INSTANCE.convertList(list));
+    public CommonResult<ProcurementSummaryRespVO> getcurementSummary(@RequestParam("procurementSummaryId") String procurementSummaryId) {
+        ProcurementSummaryRespVO procurementSummaryDO = curementSummaryService.getcurementSummary(procurementSummaryId);
+        return success(procurementSummaryDO);
     }
 
     @GetMapping("/page")
     @ApiOperation("获得采购汇总分页")
     @PreAuthorize("@ss.hasPermission('pro:curement-summary:query')")
     public CommonResult<PageResult<ProcurementSummaryRespVO>> getcurementSummaryPage(@Valid ProcurementSummaryPageReqVO pageVO) {
-        PageResult<ProcurementSummaryDO> pageResult = curementSummaryService.getcurementSummaryPage(pageVO);
-        return success(ProcurementSummaryConvert.INSTANCE.convertPage(pageResult));
+        PageResult<ProcurementSummaryRespVO> pageResult = curementSummaryService.getcurementSummaryPage(pageVO);
+        return success(pageResult);
     }
 
-    @GetMapping("/export-excel")
-    @ApiOperation("导出采购汇总 Excel")
-    @PreAuthorize("@ss.hasPermission('pro:curement-summary:export')")
-    @OperateLog(type = EXPORT)
-    public void exportcurementSummaryExcel(@Valid ProcurementSummaryExportReqVO exportReqVO,
-              HttpServletResponse response) throws IOException {
-        List<ProcurementSummaryDO> list = curementSummaryService.getcurementSummaryList(exportReqVO);
-        // 导出 Excel
-        List<ProcurementSummaryExcelVO> datas = ProcurementSummaryConvert.INSTANCE.convertList02(list);
-        ExcelUtils.write(response, "采购汇总.xls", "数据", ProcurementSummaryExcelVO.class, datas);
+    @GetMapping("/statistics")
+    @ApiOperation("采购汇总统计")
+    @PreAuthorize("@ss.hasPermission('pro:curement-summary:query')")
+    public CommonResult<ProcurementSummaryStatisticsVO> getcurementSummaryStatistics() {
+        ProcurementSummaryStatisticsVO statistics = curementSummaryService.getcurementSummaryStatistics();
+        return success(statistics);
     }
 
 }

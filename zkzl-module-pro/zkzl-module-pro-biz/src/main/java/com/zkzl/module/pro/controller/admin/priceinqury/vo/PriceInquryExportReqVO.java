@@ -46,11 +46,11 @@ public class PriceInquryExportReqVO {
     private BigDecimal total;
 
     @ApiModelProperty(value = "报价日期")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date[] priceDate;
 
     @ApiModelProperty(value = "报价有效日期")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date[] effectiveDate;
 
     @ApiModelProperty("0初始化状态 需要业务员补充卖方信息* 1客户询价后状态  需要管理员即老板报价" +
@@ -61,7 +61,7 @@ public class PriceInquryExportReqVO {
     private String status;
 
     @ApiModelProperty(value = "创建时间")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date[] createTime;
 
 }

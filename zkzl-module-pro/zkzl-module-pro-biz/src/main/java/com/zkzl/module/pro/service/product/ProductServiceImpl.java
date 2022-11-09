@@ -3,8 +3,12 @@ package com.zkzl.module.pro.service.product;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.common.pojo.PageParam;
 import com.zkzl.framework.common.pojo.PageResult;
+import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.module.pro.controller.admin.product.vo.*;
+import com.zkzl.module.pro.controller.app.product.vo.ProductVO;
 import com.zkzl.module.pro.convert.product.ProductConvert;
 import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
 import com.zkzl.module.pro.dal.dataobject.productcertificate.ProductCertificateDO;
@@ -191,5 +195,12 @@ public class ProductServiceImpl implements ProductService {
         return list;
     }
 
+
+    @Override
+    public PageResult<ProductVO> pageApp(PageParam param) {
+        IPage<ProductVO> mPage = MyBatisUtils.buildPage(param);
+        ductMapper.pageApp(mPage);
+        return new PageResult<>(mPage.getRecords(), mPage.getTotal());
+    }
 
 }

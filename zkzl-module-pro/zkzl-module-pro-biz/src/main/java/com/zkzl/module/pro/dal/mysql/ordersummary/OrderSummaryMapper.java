@@ -2,12 +2,14 @@ package com.zkzl.module.pro.dal.mysql.ordersummary;
 
 import java.util.*;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
 import com.zkzl.module.pro.dal.dataobject.ordersummary.OrderSummaryDO;
 import org.apache.ibatis.annotations.Mapper;
 import com.zkzl.module.pro.controller.admin.ordersummary.vo.*;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 订单汇总 Mapper
@@ -35,6 +37,7 @@ public interface OrderSummaryMapper extends BaseMapperX<OrderSummaryDO> {
                 .betweenIfPresent(OrderSummaryDO::getPackTime, reqVO.getPackTime())
                 .betweenIfPresent(OrderSummaryDO::getDeleveryTime, reqVO.getDeleveryTime())
                 .betweenIfPresent(OrderSummaryDO::getEndingTime, reqVO.getEndingTime())
+                .betweenIfPresent(OrderSummaryDO::getCreateTime, reqVO.getSignTime())
                 .eqIfPresent(OrderSummaryDO::getRemarks, reqVO.getRemarks())
                 .orderByDesc(OrderSummaryDO::getId));
     }
@@ -61,4 +64,6 @@ public interface OrderSummaryMapper extends BaseMapperX<OrderSummaryDO> {
                 .orderByDesc(OrderSummaryDO::getId));
     }
 
+    /*订单汇总分页*/
+    IPage<OrderSummaryPageVO> pageOrderSummary(@Param("page") IPage<OrderSummaryPageVO> mPage,@Param("param") OrderSummaryPageVO pageVO);
 }

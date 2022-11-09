@@ -41,6 +41,6 @@ public class PriceInquryPageVO{
     private String status;
 
     @ApiModelProperty(value = "询价时间")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String createTime;
 }

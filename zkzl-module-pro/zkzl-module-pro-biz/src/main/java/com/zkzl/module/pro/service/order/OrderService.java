@@ -67,4 +67,5 @@ public interface OrderService {
      */
     List<OrderDO> getOrderList(OrderExportReqVO exportReqVO);
 
+    OrderRespVO getOrderByOrderId(String orderId);
 }

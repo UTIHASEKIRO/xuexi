@@ -76,4 +76,8 @@ public class OrderSummaryPageReqVO extends PageParam {
     @ApiModelProperty(value = "1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成")
     private String status;
 
+    @ApiModelProperty(value = "签约时间")
+    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    private Date[] signTime;
+
 }
