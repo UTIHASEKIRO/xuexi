@@ -80,7 +80,11 @@
             <groupId>top.code.zkzl</groupId>
             <artifactId>zkzl-spring-boot-starter-biz-operatelog</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>top.code.zkzl</groupId>
+            <artifactId>zkzl-module-pro-api</artifactId>
+            <version>1.6.4-snapshot</version>
+        </dependency>
 
     </dependencies>
 

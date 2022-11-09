@@ -97,4 +97,12 @@ public class OrderController {
         ExcelUtils.write(response, "订单.xls", "数据", OrderExcelVO.class, datas);
     }
 
+    @GetMapping("/getOrder")
+    @ApiOperation("获取单个订单")
+    @PreAuthorize("@ss.hasPermission('pro:order:query')")
+    public CommonResult<OrderRespVO> getOrderByOrderId(@RequestParam("orderId") String orderId) {
+        OrderRespVO orderRespVO = orderService.getOrderByOrderId(orderId);
+        return success(orderRespVO);
+    }
+
 }

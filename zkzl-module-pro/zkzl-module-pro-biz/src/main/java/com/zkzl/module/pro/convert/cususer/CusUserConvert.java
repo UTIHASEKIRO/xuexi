@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.zkzl.framework.common.pojo.PageResult;
 
+import com.zkzl.module.pro.api.cususer.vo.CusUserDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 import com.zkzl.module.pro.controller.admin.cususer.vo.*;
@@ -24,6 +25,8 @@ public interface CusUserConvert {
     CusUserDO convert(CusUserUpdateReqVO bean);
 
     CusUserRespVO convert(CusUserDO bean);
+
+    CusUserDTO convert02(CusUserDO bean);
 
     List<CusUserRespVO> convertList(List<CusUserDO> list);
 

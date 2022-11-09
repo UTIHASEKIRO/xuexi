@@ -49,4 +49,5 @@ public interface ProOrderMapper extends BaseMapperX<OrderDO> {
                 .orderByDesc(OrderDO::getId));
     }
 
+    OrderRespVO getOrderByOrderId(String orderId);
 }

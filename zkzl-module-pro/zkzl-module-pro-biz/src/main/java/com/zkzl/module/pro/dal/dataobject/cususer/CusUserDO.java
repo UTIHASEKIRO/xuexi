@@ -1,6 +1,7 @@
 package com.zkzl.module.pro.dal.dataobject.cususer;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.io.Serializable;
@@ -50,6 +51,11 @@ public class CusUserDO implements Serializable {
      * 租户
      */
     private Integer tenantId;
+
+    /**
+     * 营业执照
+     */
+    private String businessLicense;
 
 
     @TableField(exist = false)

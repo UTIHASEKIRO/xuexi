@@ -17,11 +17,9 @@ public class OrderGoodsBaseVO {
     private String orderChildId;
 
     @ApiModelProperty(value = "订单表id", required = true)
-    @NotNull(message = "订单表id不能为空")
     private String orderId;
 
     @ApiModelProperty(value = "产品id", required = true)
-    @NotNull(message = "产品id不能为空")
     private String productId;
 
     @ApiModelProperty(value = "HS编码")

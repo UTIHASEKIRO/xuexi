@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.zkzl.module.pro.dal.mysql.order.OrderMapper">
+<mapper namespace="com.zkzl.module.pro.dal.mysql.order.ProOrderMapper">
 
     <!--
         一般情况下，尽可能使用 Mapper 进行 CRUD 增删改查即可。
@@ -9,4 +9,60 @@
         文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
      -->
 
+    <resultMap id="orderRespVO" type="com.zkzl.module.pro.controller.admin.order.vo.OrderRespVO">
+        <id column="id" property="id"/>
+        <result column="order_id" property="orderId"/>
+        <result column="price_inqury_id" property="priceInquryId"/>
+        <result column="seller_company_name" property="sellerCompanyName"/>
+        <result column="seller_company_address" property="sellerCompanyAddress"/>
+        <result column="seller_contact" property="sellerContact"/>
+        <result column="seller_tel" property="sellerTel"/>
+        <result column="buy_seller_company_name" property="buySellerCompanyName"/>
+        <result column="buy_seller_company_address" property="buySellerCompanyAddress"/>
+        <result column="buy_seller_contact" property="buySellerContact"/>
+        <result column="buy_seller_tel" property="buySellerTel"/>
+        <result column="price" property="price"/>
+        <result column="discount" property="discount"/>
+        <result column="total" property="total"/>
+        <result column="price_date" property="priceDate"/>
+        <result column="effective_date" property="effectiveDate"/>
+        <result column="remarks" property="remarks"/>
+        <result column="status" property="status"/>
+        <result column="operator" property="operator"/>
+        <collection property="orderGoodsBaseVOS"
+                    ofType="com.zkzl.module.pro.controller.admin.ordergoods.vo.OrderGoodsBaseVO">
+            <result column="order_child_id" property="orderChildId"/>
+            <result column="product_id" property="productId"/>
+            <result column="hs_serial" property="hsSerial"/>
+            <result column="product_desc" property="productDesc"/>
+            <result column="product_size" property="productSize"/>
+            <result column="product_color" property="productColor"/>
+            <result column="product_g" property="productG"/>
+            <result column="package_way" property="packageWay"/>
+            <result column="box_length" property="boxLength"/>
+            <result column="box_height" property="boxHeight"/>
+            <result column="box_wide" property="boxWide"/>
+            <result column="mount" property="mount"/>
+            <result column="unit_price" property="unitPrice"/>
+            <result column="price" property="price"/>
+            <result column="volume" property="volume"/>
+            <result column="gross_weight" property="grossWeight"/>
+            <result column="net_weight" property="netWeight"/>
+            <result column="remark" property="remark"/>
+        </collection>
+    </resultMap>
+    <select id="getOrderByOrderId" resultMap="orderRespVO">
+        select po.*,
+               pcu.company_name buy_seller_company_name,
+               pcu.address      buy_seller_company_address,
+               pcu.contect_name buy_seller_contact,
+               su.mobile        buy_seller_tel,
+               pog.*
+        from pro_order po
+                 left join pro_order_goods pog on po.order_id = pog.order_id
+                 left join system_users su on po.user_id = su.id
+                 left join pro_cus_user pcu on pcu.user_id = po.user_id
+        where po.order_id = #{orderId}
+        group by po.order_id
+    </select>
 </mapper>

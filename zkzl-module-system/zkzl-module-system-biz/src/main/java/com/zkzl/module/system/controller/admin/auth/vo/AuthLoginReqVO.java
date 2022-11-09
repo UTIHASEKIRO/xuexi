@@ -55,6 +55,9 @@ public class AuthLoginReqVO {
     @ApiModelProperty(value = "state", required = true, example = "9b2ffbc1-7425-4155-9894-9d5c08541d62")
     private String socialState;
 
+    @ApiModelProperty(value = "登陆类型（0管理后台1客户端）", required = true)
+    public String loginType;
+
     /**
      * 开启验证码的 Group
      */
