@@ -131,4 +131,20 @@
                  left join pro_product_certificate ppc on pp.product_id = ppc.product_id
         where pp.product_id = #{productId}
     </select>
+
+    <resultMap id="productPic" type="com.zkzl.module.pro.controller.app.product.vo.ProductVO">
+        <id column="id" property="id"/>
+        <result column="product_id" property="productId"/>
+        <result column="product_name_cn" property="productNameCn"/>
+        <result column="product_name_en" property="productNameEn"/>
+        <collection property="urls" ofType="com.zkzl.module.pro.controller.app.product.vo.UrlVO">
+            <result column="url" property="url"/>
+        </collection>
+    </resultMap>
+    <select id="pageApp" resultMap="productPic">
+        /*用户端 获取产品列表*/
+        select pp.id,pp.product_id,pp.product_name_cn,pp.product_name_en,ppp.url  from pro_product pp
+        left join pro_product_pic ppp on pp.product_id = ppp.product_id
+    </select>
+
 </mapper>

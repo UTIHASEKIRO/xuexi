@@ -1,6 +1,5 @@
 package com.zkzl.module.pro.controller.admin.priceinqury.vo;
 
-import com.alibaba.excel.annotation.ExcelProperty;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -9,7 +8,6 @@ import io.swagger.annotations.*;
 import com.zkzl.framework.common.pojo.PageParam;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import static com.zkzl.framework.common.util.date.DateUtils.FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND;
 
 @ApiModel("管理后台 - 询价分页 Request VO")
 @Data
@@ -48,11 +46,11 @@ public class PriceInquryPageReqVO extends PageParam {
     private BigDecimal total;
 
     @ApiModelProperty(value = "报价日期")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date[] priceDate;
 
     @ApiModelProperty(value = "报价有效日期")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date[] effectiveDate;
 
     @ApiModelProperty("0初始化状态 需要业务员补充卖方信息* 1客户询价后状态  需要管理员即老板报价" +
@@ -63,7 +61,7 @@ public class PriceInquryPageReqVO extends PageParam {
     private String status;
 
     @ApiModelProperty(value = "创建时间")
-    @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date[] createTime;
 
     @ApiModelProperty(value = "买方公司名称")

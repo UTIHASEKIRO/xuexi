@@ -60,6 +60,10 @@ public class PriceInquryChildsVO {
      */
     private BigDecimal price;
     /**
+     * 单价
+     */
+    private BigDecimal unitPrice;
+    /**
      * 毛重
      */
     private BigDecimal grossWeight;

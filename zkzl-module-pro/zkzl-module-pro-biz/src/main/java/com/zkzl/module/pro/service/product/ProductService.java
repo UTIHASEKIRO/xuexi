@@ -2,7 +2,10 @@ package com.zkzl.module.pro.service.product;
 
 import java.util.*;
 import javax.validation.*;
+
+import com.zkzl.framework.common.pojo.PageParam;
 import com.zkzl.module.pro.controller.admin.product.vo.*;
+import com.zkzl.module.pro.controller.app.product.vo.ProductVO;
 import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
 import com.zkzl.framework.common.pojo.PageResult;
 
@@ -70,4 +73,9 @@ public interface ProductService {
     ProductRespVO getProduct(String productId);
 
     void updateShipped(String productId);
+
+    /*
+    * 用户端 获取产品列表
+    * */
+    PageResult<ProductVO> pageApp(PageParam param);
 }
