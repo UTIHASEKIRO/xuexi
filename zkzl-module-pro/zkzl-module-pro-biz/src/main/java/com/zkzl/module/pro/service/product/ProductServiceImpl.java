@@ -8,6 +8,7 @@ import com.zkzl.framework.common.pojo.PageParam;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.module.pro.controller.admin.product.vo.*;
+import com.zkzl.module.pro.controller.app.product.vo.ProductDescVO;
 import com.zkzl.module.pro.controller.app.product.vo.ProductVO;
 import com.zkzl.module.pro.convert.product.ProductConvert;
 import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
@@ -201,6 +202,11 @@ public class ProductServiceImpl implements ProductService {
         IPage<ProductVO> mPage = MyBatisUtils.buildPage(param);
         ductMapper.pageApp(mPage);
         return new PageResult<>(mPage.getRecords(), mPage.getTotal());
+    }
+
+    @Override
+    public ProductDescVO getDesc(Long id) {
+        return ductMapper.getDesc(id);
     }
 
 }

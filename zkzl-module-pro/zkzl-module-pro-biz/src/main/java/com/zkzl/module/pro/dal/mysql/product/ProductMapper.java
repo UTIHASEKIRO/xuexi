@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
+import com.zkzl.module.pro.controller.app.product.vo.ProductDescVO;
 import com.zkzl.module.pro.controller.app.product.vo.ProductVO;
 import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
 import org.apache.ibatis.annotations.Mapper;
@@ -81,4 +82,7 @@ public interface ProductMapper extends BaseMapperX<ProductDO> {
 
     /*用户端 获取产品列表*/
     IPage<ProductVO> pageApp(IPage<ProductVO> mPage);
+
+    /*用户端查看产品详情*/
+    ProductDescVO getDesc(Long id);
 }

@@ -146,5 +146,47 @@
         select pp.id,pp.product_id,pp.product_name_cn,pp.product_name_en,ppp.url  from pro_product pp
         left join pro_product_pic ppp on pp.product_id = ppp.product_id
     </select>
+    <resultMap id="productDesc" type="com.zkzl.module.pro.controller.app.product.vo.ProductDescVO">
+        <id column="id" property="id"/>
+        <result column="product_id" property="productId"/>
+        <result column="product_name_cn" property="productNameCn"/>
+        <result column="product_name_en" property="productNameEn"/>
+        <result column="product_model" property="productModel"/>
+        <result column="hs_no" property="hsNo"/>
+        <result column="packaging_method_cn" property="packagingMethodCn"/>
+        <result column="packaging_method_en" property="packagingMethodEn"/>
+        <result column="colour_cn" property="colourCn"/>
+        <result column="colour_en" property="colourEn"/>
+        <result column="use_classification_cn" property="useClassificationCn"/>
+        <result column="use_classification_en" property="useClassificationEn"/>
+        <result column="delivery_method_cn" property="deliveryMethodCn"/>
+        <result column="delivery_method_en" property="deliveryMethodEn"/>
+        <result column="gram_weight" property="gramWeight"/>
+        <result column="size" property="size"/>
+        <result column="box_gauge" property="boxGauge"/>
+        <result column="volume" property="volume"/>
+        <result column="gross_weight" property="grossWeight"/>
+        <result column="net_weight" property="netWeight"/>
+        <collection property="urls" ofType="com.zkzl.module.pro.controller.app.product.vo.UrlVO">
+            <result column="url" property="url"/>
+        </collection>
+        <collection property="certs" ofType="com.zkzl.module.pro.controller.app.product.vo.CertificateVO">
+            <result column="certificate_url" property="url"/>
+        </collection>
+    </resultMap>
+    <select id="getDesc" resultMap="productDesc">
+        /*用户端查看产品详情*/
+        select pp.id,pp.product_id,
+               ppp.url,ppc.certificate_url,
+               pp.product_name_cn,pp.product_name_en,
+               pp.product_model,pp.hs_no,pp.packaging_method_cn,pp.packaging_method_en,
+               pp.colour_cn,pp.colour_en,pp.use_classification_cn,pp.use_classification_en,
+               pp.delivery_method_cn,pp.delivery_method_en,pp.gram_weight,pp.size,
+               pp.box_gauge,pp.volume,pp.gross_weight,pp.net_weight
+        from pro_product pp
+                 left join pro_product_pic ppp on pp.product_id = ppp.product_id
+                 left join pro_product_certificate ppc on pp.product_id = ppc.certificate_url
+        where pp.id = #{0}
+    </select>
 
 </mapper>

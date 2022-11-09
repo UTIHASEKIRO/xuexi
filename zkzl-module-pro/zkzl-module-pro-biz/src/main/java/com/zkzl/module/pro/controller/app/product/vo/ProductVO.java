@@ -34,11 +34,5 @@ public class ProductVO extends PageParam {
 
 }
 
-@Data
-class UrlVO{
-
-    @ApiModelProperty(value = "产品图片")
-    private String url;
-}
 
 
