@@ -71,4 +71,8 @@ public class PriceInquryChildsVO {
      * 供应商
      * */
     private String supplyName;
+    /*
+    *  数量
+    * */
+    private Long mount;
 }

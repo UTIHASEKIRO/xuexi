@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.controller.admin.priceinqury.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -52,10 +53,12 @@ public class PriceInquryAndChildsVO {
 
     @ApiModelProperty(value = "报价日期")
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    @JsonFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date priceDate;
 
     @ApiModelProperty(value = "报价有效日期")
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
+    @JsonFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date effectiveDate;
 
     @ApiModelProperty(value = " 0初始化状态 需要业务员补充卖方信息" +

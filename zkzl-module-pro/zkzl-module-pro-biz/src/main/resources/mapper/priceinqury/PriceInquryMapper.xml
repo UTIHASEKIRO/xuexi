@@ -42,6 +42,7 @@
             <result column="price" property="price" />
             <result column="gross_weight" property="grossWeight" />
             <result column="net_weight" property="netWeight" />
+            <result column="mount" property="mount" />
         </collection>
     </resultMap>
     
@@ -87,7 +88,7 @@
 
                ppic.id,ppic.product_id,ppic.hs_serial,ppic.product_desc,ppic.product_size,ppic.product_color,
                ppic.product_g,ppic.package_way,ppic.box_length,ppic.box_height,ppic.box_wide,
-               ppic.volume,ppic.price,ppic.gross_weight,ppic.net_weight
+               ppic.volume,ppic.price,ppic.gross_weight,ppic.net_weight,ppic.mount
         from pro_price_inqury ppi
                  left join pro_cus_user pcu on ppi.buyer_company_id = pcu.user_id
                  left join system_users su on ppi.buyer_company_id = su.id
