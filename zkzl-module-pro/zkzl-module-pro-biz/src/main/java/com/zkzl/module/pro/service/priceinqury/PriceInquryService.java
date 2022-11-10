@@ -2,7 +2,10 @@ package com.zkzl.module.pro.service.priceinqury;
 
 import java.util.*;
 import javax.validation.*;
+
+import com.zkzl.framework.common.pojo.PageParam;
 import com.zkzl.module.pro.controller.admin.priceinqury.vo.*;
+import com.zkzl.module.pro.controller.app.priceinqury.vo.PriceInquryHistoryVO;
 import com.zkzl.module.pro.dal.dataobject.priceinqury.PriceInquryDO;
 import com.zkzl.framework.common.pojo.PageResult;
 
@@ -76,4 +79,6 @@ public interface PriceInquryService {
     PriceInquryAndChildsVO getPriceInquryAndChilds(Long id);
     /*用户端产品添加询价信息*/
     void addPriceInqury(PriceInquryCreateReqVO param);
+    /*用户询价历史*/
+    PageResult<PriceInquryHistoryVO> inquryHistory(PageParam param);
 }

@@ -96,4 +96,12 @@
                  left join pro_price_inqury_child ppic on ppi.price_inqury_id = ppic.price_inqury_id
         where ppi.id = #{0}
     </select>
+    <select id="inquryHistory"
+            resultType="com.zkzl.module.pro.controller.app.priceinqury.vo.PriceInquryHistoryVO">
+        /*用户询价历史*/
+        select ppi.id,ppi.price_inqury_id,ppi.create_time,ppi.price,
+               ppi.buyer_ideal_price,ppi.price_date,ppi.status
+        from pro_price_inqury ppi
+        where ppi.buyer_company_id = #{loginUserId}
+    </select>
 </mapper>

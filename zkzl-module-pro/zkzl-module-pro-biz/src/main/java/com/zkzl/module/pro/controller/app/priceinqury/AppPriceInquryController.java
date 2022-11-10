@@ -1,8 +1,10 @@
 package com.zkzl.module.pro.controller.app.priceinqury;
 
 import com.zkzl.framework.common.pojo.CommonResult;
+import com.zkzl.framework.common.pojo.PageParam;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.module.pro.controller.admin.priceinqury.vo.*;
+import com.zkzl.module.pro.controller.app.priceinqury.vo.PriceInquryHistoryVO;
 import com.zkzl.module.pro.service.priceinqury.PriceInquryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -38,6 +40,13 @@ public class AppPriceInquryController {
     public CommonResult<PriceInquryAndChildsVO> getPriceInqury(@RequestParam("id") Long id) {
         PriceInquryAndChildsVO priceInqury = priceInquryService.getPriceInquryAndChilds(id);
         return success(priceInqury);
+    }
+
+    @GetMapping("/inquryHistory")
+    @ApiOperation("用户询价历史")
+    public CommonResult<PageResult<PriceInquryHistoryVO>> inquryHistory(PageParam param) {
+        PageResult<PriceInquryHistoryVO> results = priceInquryService.inquryHistory(param);
+        return success(results);
     }
 
     @PutMapping("/update")

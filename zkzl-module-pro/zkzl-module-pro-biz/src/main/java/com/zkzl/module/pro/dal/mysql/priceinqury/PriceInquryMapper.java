@@ -3,9 +3,11 @@ package com.zkzl.module.pro.dal.mysql.priceinqury;
 import java.util.*;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.common.pojo.PageParam;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
+import com.zkzl.module.pro.controller.app.priceinqury.vo.PriceInquryHistoryVO;
 import com.zkzl.module.pro.dal.dataobject.priceinqury.PriceInquryDO;
 import org.apache.ibatis.annotations.Mapper;
 import com.zkzl.module.pro.controller.admin.priceinqury.vo.*;
@@ -63,4 +65,6 @@ public interface PriceInquryMapper extends BaseMapperX<PriceInquryDO> {
 
     /*查看询价表及子表*/
     PriceInquryAndChildsVO getPriceInquryAndChilds(Long id);
+    /*用户询价历史*/
+    IPage<PriceInquryHistoryVO> inquryHistory(@Param("page")IPage<PriceInquryHistoryVO> page, @Param("param") PageParam param,@Param("loginUserId") Long loginUserId);
 }

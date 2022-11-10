@@ -5,13 +5,13 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.zkzl.framework.common.pojo.PageParam;
 import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.framework.security.core.util.SecurityFrameworkUtils;
-import com.zkzl.module.pro.controller.admin.ordersummary.vo.OrderSummaryCreateReqVO;
 import com.zkzl.module.pro.controller.admin.priceinqurychild.vo.PriceInquryChildCreateReqVO;
 import com.zkzl.module.pro.controller.admin.priceinqurychild.vo.PriceInquryChildExportReqVO;
 import com.zkzl.module.pro.controller.admin.priceinqurychild.vo.PriceInquryChildUpdateReqVO;
+import com.zkzl.module.pro.controller.app.priceinqury.vo.PriceInquryHistoryVO;
 import com.zkzl.module.pro.convert.priceinqurychild.PriceInquryChildConvert;
 import com.zkzl.module.pro.dal.dataobject.order.OrderDO;
 import com.zkzl.module.pro.dal.dataobject.ordergoods.OrderGoodsDO;
@@ -265,6 +265,13 @@ public class PriceInquryServiceImpl implements PriceInquryService {
                 .setSupplyInfoId(supplyInfo.getSupplyInfoId());
             priceInquryChildMapper.insert(entity);
         }
+    }
+
+    @Override
+    public PageResult<PriceInquryHistoryVO> inquryHistory(PageParam param) {
+        IPage<PriceInquryHistoryVO> mPage = MyBatisUtils.buildPage(param);
+        priceInquryMapper.inquryHistory(mPage,param,SecurityFrameworkUtils.getLoginUserId());
+        return new PageResult<>(mPage.getRecords(), mPage.getTotal());
     }
 
 
