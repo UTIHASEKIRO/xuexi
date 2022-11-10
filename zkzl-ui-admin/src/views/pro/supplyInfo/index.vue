@@ -238,17 +238,20 @@ export default {
         this.loading = false;
       });
     },
+    /** 商品类别列表 */
     getDuckTypePage(){
       ductTypeList({typeName:''}).then(result=>{
         this.duckTypeList = result.data
       })
     },
+    /** 商品列表 */
     getProductList(typeId){
       getductList({typeId: typeId }).then(result=>{
         this.productList = result.data
         this.form.productId = ''
       })
     },
+    /** 类别树选择 */
     handleNodeClick(val) {
       this.$set(this.form, "typeId", val.typeId);
       this.$set(this.form, "typeNameCn", val.typeNameCn);
