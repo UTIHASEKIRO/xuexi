@@ -4,7 +4,6 @@ import com.zkzl.module.pro.controller.admin.priceinqurychild.vo.PriceInquryChild
 import lombok.*;
 import java.util.*;
 import io.swagger.annotations.*;
-import javax.validation.constraints.*;
 
 @ApiModel("管理后台 - 询价创建 Request VO")
 @Data
@@ -12,8 +11,7 @@ import javax.validation.constraints.*;
 @ToString(callSuper = true)
 public class PriceInquryCreateReqVO extends PriceInquryBaseVO {
 
-    @ApiModelProperty(value = "客户id",required = true)
-    @NotNull(message = "客户id不能为空！")
+    @ApiModelProperty(value = "客户id")
     private Long buyerCompanyId;
 
     private List<PriceInquryChildCreateReqVO> priceInquryChilds;

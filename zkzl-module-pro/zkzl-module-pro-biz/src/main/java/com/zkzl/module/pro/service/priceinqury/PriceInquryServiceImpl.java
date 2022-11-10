@@ -18,6 +18,7 @@ import com.zkzl.module.pro.dal.dataobject.ordergoods.OrderGoodsDO;
 import com.zkzl.module.pro.dal.dataobject.ordersummary.OrderSummaryDO;
 import com.zkzl.module.pro.dal.dataobject.priceinqurychild.PriceInquryChildDO;
 import com.zkzl.module.pro.dal.dataobject.procurementsummary.ProcurementSummaryDO;
+import com.zkzl.module.pro.dal.dataobject.supplyinfo.SupplyInfoDO;
 import com.zkzl.module.pro.dal.mysql.order.ProOrderMapper;
 import com.zkzl.module.pro.dal.mysql.ordergoods.OrderGoodsMapper;
 import com.zkzl.module.pro.dal.mysql.ordersummary.OrderSummaryMapper;
@@ -43,8 +44,7 @@ import com.zkzl.module.pro.convert.priceinqury.PriceInquryConvert;
 import com.zkzl.module.pro.dal.mysql.priceinqury.PriceInquryMapper;
 
 import static com.zkzl.framework.common.exception.util.ServiceExceptionUtil.exception;
-import static com.zkzl.module.system.enums.ErrorCodeConstants.PRICE_INQURY_CHILD_NOT_EXISTS;
-import static com.zkzl.module.system.enums.ErrorCodeConstants.PRICE_INQURY_NOT_EXISTS;
+import static com.zkzl.module.system.enums.ErrorCodeConstants.*;
 
 /**
  * 询价 Service 实现类
@@ -146,6 +146,7 @@ public class PriceInquryServiceImpl implements PriceInquryService {
             }
 
         }
+
         priceInquryMapper.updateById(updateObj);
     }
 
@@ -214,6 +215,57 @@ public class PriceInquryServiceImpl implements PriceInquryService {
         return result;
     }
 
+    @Override
+    public void addPriceInqury(PriceInquryCreateReqVO param) {
+
+        if (ObjectUtil.isEmpty(param.getPriceInquryChilds())){
+            throw exception(PRICE_INQURY_CHILD_NOT_EXISTS);
+        }
+
+        Long LoginUserId = SecurityFrameworkUtils.getLoginUserId();
+        Boolean isNewInqury = false;//是否为新建的询价单-不是新的询价单则需验证子表产品是否已加入询价
+
+        //查询登陆人是否有正在询价的询价单
+        //原则上 询价单每个人只存在一条正在询价的询价单(status=0)
+        PriceInquryDO inquryIng = priceInquryMapper.selectOne(new LambdaQueryWrapper<PriceInquryDO>()
+                .eq(PriceInquryDO::getBuyerCompanyId,LoginUserId)
+                .eq(PriceInquryDO::getStatus,"0"));
+        if (ObjectUtil.isEmpty(inquryIng)){
+            isNewInqury = true;
+            //没有正在创建的询价单则创建
+            inquryIng = PriceInquryConvert.INSTANCE.convert(param);
+            inquryIng.setPriceInquryId(IdUtil.getSnowflakeNextIdStr())
+                    .setBuyerCompanyId(LoginUserId);
+            priceInquryMapper.insert(inquryIng);
+        }
+
+        PriceInquryChildDO entity;
+        List<PriceInquryChildDO> inquryChildsIng = null;
+        for (PriceInquryChildCreateReqVO child : param.getPriceInquryChilds()) {
+
+            if (!isNewInqury){
+                //添加询价子单前查询是否已存在此产品的询价信息
+                inquryChildsIng = priceInquryChildMapper.selectList(new LambdaQueryWrapper<PriceInquryChildDO>()
+                        .eq(PriceInquryChildDO::getPriceInquryId,inquryIng.getPriceInquryId())
+                        .eq(PriceInquryChildDO::getProductId,child.getProductId()));
+            }
+
+            if (ObjectUtil.isNotEmpty(inquryChildsIng)){
+                throw exception(PRODUCT_ALREADY_EXISTS);
+            }
+
+            //查询产品的供应商
+            SupplyInfoDO supplyInfo= supplyInfoMapper.selectOne("product_id",child.getProductId());
+            if (ObjectUtil.isEmpty(supplyInfo)){
+                throw exception(PRODUCT_HAVE_NOT_SUPPLY);
+            }
+
+            entity = PriceInquryChildConvert.INSTANCE.convert(child);
+            entity.setPriceInquryId(inquryIng.getPriceInquryId())
+                .setSupplyInfoId(supplyInfo.getSupplyInfoId());
+            priceInquryChildMapper.insert(entity);
+        }
+    }
 
 
     /**

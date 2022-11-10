@@ -83,6 +83,9 @@ public class ProductDescVO{
      */
     private String netWeight;
 
+    @ApiModelProperty(value = "是否加入询价")
+    private String isInqury;
+
     @ApiModelProperty(value = "产品图片")
     private List<UrlVO> urls;
 
