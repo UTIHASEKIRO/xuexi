@@ -50,10 +50,10 @@ public interface ProductService {
     /**
      * 获得产品列表
      *
-     * @param ids 编号
+     * @param typeId 类别Id
      * @return 产品列表
      */
-    List<ProductDO> getductList(Collection<Long> ids);
+    List<ProductDO> getductList(String typeId);
 
     /**
      * 获得产品分页

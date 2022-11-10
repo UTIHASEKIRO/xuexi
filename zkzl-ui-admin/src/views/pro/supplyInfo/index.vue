@@ -5,15 +5,15 @@
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
       <el-form-item label="产品类别" prop="typeId">
         <el-select v-model="queryParams.typeId" placeholder="请选择产品类别" clearable size="small" style="width: 240px">
-          <el-option v-for="dict in duckTypeList" :key="parseInt(dict.id)" :label="dict.typeNameCn" :value="parseInt(dict.typeId)"/>
+          <el-option v-for="dict in duckTypeList" :key="parseInt(dict.id)" :label="dict.typeNameCn" :value="dict.typeId"/>
         </el-select>
         <!-- <el-input v-model="queryParams.sortId" placeholder="请选择产品类别" clearable @keyup.enter.native="handleQuery"/> -->
       </el-form-item>
       <el-form-item label="公司名称" prop="name">
         <el-input v-model="queryParams.name" placeholder="请输入公司名称" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-     
-      
+
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -41,7 +41,7 @@
       <el-table-column label="联系人" align="center" prop="contact" />
       <el-table-column label="联系电话" align="center" prop="phone" />
       <el-table-column label="公司评级" align="center" prop="evaluation" />
-      <el-table-column label="主要产品" align="center" prop="product" />
+      <el-table-column label="主要产品" align="center" prop="productNameCn" />
       <el-table-column label="推荐理由-价格" align="center" prop="reasonPrice" >
         <template slot-scope="scope">
           <dict-tag :type="DICT_TYPE.REASON_PRICE" :value="scope.row.reasonPrice"/>
@@ -59,17 +59,17 @@
       </el-table-column>
 
       <!-- <el-table-column label="公司地址" align="center" prop="address" />
-      
-      
+
+
       <el-table-column label="email" align="center" prop="email" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column> -->
-      
-     
-      
+
+
+
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
@@ -86,9 +86,11 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="产品类别" prop="typeId">
-          <el-select v-model="form.typeId" placeholder="请选择产品类别" clearable size="small" style="width: 240px">
-            <el-option v-for="dict in duckTypeList" :key="parseInt(dict.id)" :label="dict.typeNameCn" :value="parseInt(dict.typeId)"/>
+        <el-form-item label="产品类别：" prop="typeId">
+          <el-select ref="selectReport" v-model="form.typeId" placeholder="请选择">
+            <el-option :value="form.typeId" :label="form.typeNameCn" style="height: auto">
+              <el-tree :data="duckTypeList" :props="{ value: 'typeId',  label: 'typeNameCn' ,children: 'productTypeDOS'}" @node-click="handleNodeClick"></el-tree>
+            </el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="公司名称" prop="name">
@@ -103,12 +105,14 @@
         <el-form-item label="公司评价" prop="evaluation">
           <el-input v-model="form.evaluation" placeholder="请输入公司评价" />
         </el-form-item>
-        
-        
+
+
         <el-form-item label="主要产品" prop="product">
-          <el-input v-model="form.product" placeholder="请输入主要产品" />
+          <el-select v-model="form.productId" placeholder="请选择主要产品" clearable size="small" style="width: 240px">
+            <el-option v-for="dict in productList" :key="parseInt(dict.id)" :label="dict.productNameCn" :value="dict.productId"/>
+          </el-select>
         </el-form-item>
-        
+
         <el-form-item label="推荐理由-价格" prop="reasonPrice">
           <el-select v-model="form.reasonPrice" placeholder="请选择推荐理由" clearable size="small" style="width: 240px">
             <el-option v-for="dict in reasonServiceDict" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
@@ -136,6 +140,7 @@
 <script>
 import { createSupplyInfo, updateSupplyInfo, deleteSupplyInfo, getSupplyInfo, getSupplyInfoPage, exportSupplyInfoExcel } from "@/api/pro/supplyInfo";
 import { getductTypePage,ductTypeList } from "@/api/pro/ductType";
+import { getductList } from "@/api/pro/duct";
 import {DICT_TYPE, getDictDatas} from "@/utils/dict";
 export default {
   name: "SupplyInfo",
@@ -175,6 +180,7 @@ export default {
       },
       // 表单参数
       form: {},
+      addForm: {},
       // 表单校验
       rules: {
          typeId: [
@@ -196,7 +202,7 @@ export default {
         evaluation: [
           { required: true, message: "公司评价不能为空", trigger: "blur" }
         ],
-        product: [
+        productId: [
           { required: true, message: "主要产品不能为空", trigger: "blur" }
         ],
         reasonPrice: [
@@ -210,14 +216,16 @@ export default {
         ],
       },
       duckTypeList:[],
-      reasonServiceDict: getDictDatas(DICT_TYPE.REASON_SERVICE), 
-      reasonQualityDict: getDictDatas(DICT_TYPE.REASON_QUALITY), 
-      reasonPriceDict: getDictDatas(DICT_TYPE.REASON_PRICE), 
+      productList:[],
+      reasonServiceDict: getDictDatas(DICT_TYPE.REASON_SERVICE),
+      reasonQualityDict: getDictDatas(DICT_TYPE.REASON_QUALITY),
+      reasonPriceDict: getDictDatas(DICT_TYPE.REASON_PRICE),
     };
   },
   created() {
     this.getList();
-    this.getDuckTypePage()
+    this.getDuckTypePage();
+    this.getProductList(null)
   },
   methods: {
     /** 查询列表 */
@@ -234,6 +242,20 @@ export default {
       ductTypeList({typeName:''}).then(result=>{
         this.duckTypeList = result.data
       })
+    },
+    getProductList(typeId){
+      getductList({typeId: typeId }).then(result=>{
+        this.productList = result.data
+        this.form.productId = ''
+      })
+    },
+    handleNodeClick(val) {
+      this.$set(this.form, "typeId", val.typeId);
+      this.$set(this.form, "typeNameCn", val.typeNameCn);
+      if (!val.productTypeDOS || val.productTypeDOS.length == 0) {
+        this.$refs.selectReport.blur();
+      }
+      this.getProductList(val.typeId)
     },
     /** 取消按钮 */
     cancel() {
@@ -278,7 +300,7 @@ export default {
       this.reset();
       const id = row.id;
       getSupplyInfo(id).then(response => {
-        response.data.typeId = parseInt(response.data.typeId)
+        response.data.typeId = response.data.typeId
         response.data.reasonPrice = parseInt(response.data.reasonPrice)
         response.data.reasonQuality = parseInt(response.data.reasonQuality)
         response.data.reasonService = parseInt(response.data.reasonService)

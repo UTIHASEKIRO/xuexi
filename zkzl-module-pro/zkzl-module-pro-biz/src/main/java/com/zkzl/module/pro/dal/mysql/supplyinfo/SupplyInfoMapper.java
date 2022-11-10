@@ -64,4 +64,6 @@ public interface SupplyInfoMapper extends BaseMapperX<SupplyInfoDO> {
 
     /*根据产品id查询供应商列表*/
     List<PriceInquryChildsSupplyerVO> getSupplyByProductId(String productId);
+
+    SupplyInfoDO selectSupplyInfoById(Long id);
 }

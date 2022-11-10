@@ -16,4 +16,6 @@ public class SupplyInfoRespVO extends SupplyInfoBaseVO {
     @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
+    @ApiModelProperty(value = "类别名称", required = true)
+    private String typeNameCn;
 }

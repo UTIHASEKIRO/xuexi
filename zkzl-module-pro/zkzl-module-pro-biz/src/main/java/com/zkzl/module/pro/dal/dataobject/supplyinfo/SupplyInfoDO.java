@@ -72,4 +72,10 @@ public class SupplyInfoDO extends BaseDO {
      */
     private String evaluation;
 
+    /**
+     * 类别名称-中文
+     */
+    @TableField(exist = false)
+    private String typeNameCn;
+
 }

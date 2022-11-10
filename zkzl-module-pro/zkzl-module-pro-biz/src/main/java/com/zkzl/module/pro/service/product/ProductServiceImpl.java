@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.common.pojo.PageParam;
 import com.zkzl.framework.common.pojo.PageResult;
+import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.module.pro.controller.admin.product.vo.*;
 import com.zkzl.module.pro.controller.app.product.vo.ProductDescVO;
@@ -129,8 +130,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDO> getductList(Collection<Long> ids) {
-        return ductMapper.selectBatchIds(ids);
+    public List<ProductDO> getductList(String typeId) {
+        if("".equals(typeId)) typeId = null;
+        return ductMapper.selectList(new LambdaQueryWrapperX<ProductDO>().eqIfPresent(ProductDO::getTypeId,typeId));
     }
 
     @Override

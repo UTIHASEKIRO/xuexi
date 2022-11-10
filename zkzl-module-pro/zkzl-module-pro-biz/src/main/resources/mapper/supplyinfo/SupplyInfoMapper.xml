@@ -11,14 +11,14 @@
 
     <select id="getProductType" resultType="com.zkzl.module.pro.dal.dataobject.producttype.ProductTypeDO">
         /*获得供货商信息-产品类别*/
-        select distinct ppt.id,ppt.parent_id,ppt.type_id,ppt.type_name_cn,ppt.type_name_en,ppt.sort
+        select distinct ppt.id, ppt.parent_id, ppt.type_id, ppt.type_name_cn, ppt.type_name_en, ppt.sort
         from pro_supply_info psi
-        left join pro_product_type ppt on psi.type_id = ppt.type_id
+                 left join pro_product_type ppt on psi.type_id = ppt.type_id
     </select>
     <select id="pageSupplyInfo" resultType="com.zkzl.module.pro.controller.admin.supplyinfo.vo.SupplyInfoPageVO">
         /*供货商信息分页查询*/
         select psi.id,psi.name,ppt.type_name_cn,ppt.type_name_en,psi.contact,psi.phone,psi.reason_price,
-                psi.reason_quality,psi.reason_service,pp.product_name_cn,psi.evaluation
+        psi.reason_quality,psi.reason_service,pp.product_name_cn,psi.evaluation
         from pro_supply_info psi
         left join pro_product_type ppt on psi.type_id = ppt.type_id
         left join pro_product pp on psi.product_id = pp.product_id
@@ -30,19 +30,27 @@
                 and psi.name like concat('%',#{param.name},'%')
             </if>
         </where>
+        where psi.deleted = '0'
+        order by ppt.type_name_cn asc,psi.create_time desc
     </select>
     <select id="getSupplyInfoName"
             resultType="com.zkzl.module.pro.controller.admin.supplyinfo.vo.SupplyInfoNameVO">
         /*获得供货商名称*/
-        select psi.id,psi.name
+        select psi.id, psi.name
         from pro_supply_info psi
         where deleted = '0'
     </select>
     <select id="getSupplyByProductId"
             resultType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryChildsSupplyerVO">
-        select psi.supply_info_id,psi.name
+        select psi.supply_info_id, psi.name
         from pro_supply_info psi
         where psi.deleted = '0'
-        and psi.product_id = #{0}
+          and psi.product_id = #{0}
+    </select>
+    <select id="selectSupplyInfoById" resultType="com.zkzl.module.pro.dal.dataobject.supplyinfo.SupplyInfoDO">
+        select psi.*, ppt.type_name_cn
+        from pro_supply_info psi
+                 left join pro_product_type ppt on psi.type_id = ppt.type_id
+        where psi.id = #{id}
     </select>
 </mapper>

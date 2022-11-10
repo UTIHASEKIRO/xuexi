@@ -50,6 +50,14 @@ public class ProductController {
         return success(ProductConvert.INSTANCE.convertPage(pageResult));
     }
 
+    @GetMapping("/list")
+    @ApiOperation("获得产品列表")
+    @PreAuthorize("@ss.hasPermission('pro:duct:query')")
+    public CommonResult<List<ProductRespVO>> getProductList(String typeId) {
+        List<ProductDO> productDOS = ductService.getductList(typeId);
+        return success(ProductConvert.INSTANCE.convertList(productDOS));
+    }
+
     @GetMapping("/get")
     @ApiOperation("获得产品")
     @PreAuthorize("@ss.hasPermission('pro:duct:query')")

@@ -36,6 +36,7 @@ public class SupplyInfoServiceImpl implements SupplyInfoService {
 
     @Override
     public Long createSupplyInfo(SupplyInfoCreateReqVO createReqVO) {
+        createReqVO.setSupplyInfoId(IdUtil.getSnowflakeNextIdStr());
         // 插入
         SupplyInfoDO supplyInfo = SupplyInfoConvert.INSTANCE.convert(createReqVO);
 //        supplyInfo.setTypeId(IdUtil.getSnowflakeNextIdStr());
@@ -69,7 +70,7 @@ public class SupplyInfoServiceImpl implements SupplyInfoService {
 
     @Override
     public SupplyInfoDO getSupplyInfo(Long id) {
-        return supplyInfoMapper.selectById(id);
+        return supplyInfoMapper.selectSupplyInfoById(id);
     }
 
     @Override

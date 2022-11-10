@@ -43,6 +43,15 @@ export function getductPage(query) {
   })
 }
 
+// 获得产品分页
+export function getductList(query) {
+  return request({
+    url: '/pro/duct/list',
+    method: 'get',
+    params: query
+  })
+}
+
 // 导出产品 Excel
 export function exportductExcel(query) {
   return request({
