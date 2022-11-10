@@ -74,4 +74,6 @@ public interface PriceInquryService {
     PageResult<PriceInquryPageVO> pageCommon(PriceInquryPageReqVO pageVO);
     /*查看询价表及子表*/
     PriceInquryAndChildsVO getPriceInquryAndChilds(Long id);
+    /*用户端产品添加询价信息*/
+    void addPriceInqury(PriceInquryCreateReqVO param);
 }

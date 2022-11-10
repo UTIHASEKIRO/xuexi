@@ -26,6 +26,9 @@ public class ProductVO extends PageParam {
     @ApiModelProperty(value = "产品名称")
     private String productNameCn;
 
+    @ApiModelProperty(value = "是否加入询价")
+    private String isInqury;
+
     @ApiModelProperty(value = "产品名称")
     private String productNameEn;
 

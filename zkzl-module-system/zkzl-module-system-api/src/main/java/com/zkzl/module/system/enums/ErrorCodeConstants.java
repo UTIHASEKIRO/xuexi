@@ -153,6 +153,7 @@ public interface ErrorCodeConstants {
     ErrorCode ORDER_SUMMARY_NOT_EXISTS = new ErrorCode(1002023005, "订单汇总 不存在");
     ErrorCode PRICE_INQURY_NOT_EXISTS = new ErrorCode(1002023006, "询价单 不存在");
     ErrorCode PRICE_INQURY_CHILD_NOT_EXISTS = new ErrorCode(1002023007, "子询价单 不存在");
+
     ErrorCode CUREMENT_SUMMARY_NOT_EXISTS = new ErrorCode(1002023008, "采购汇总单 不存在");
     ErrorCode PRODUCT_NOT_EXISTS = new ErrorCode(1002023009, "商品 不存在");
     ErrorCode PRODUCT_FINAL_PARAMETERS_NOT_EXISTS = new ErrorCode(1002023010, "固定参数 不存在");
@@ -163,4 +164,6 @@ public interface ErrorCodeConstants {
     ErrorCode SUPPLY_INFO_NOT_EXISTS = new ErrorCode(1002023015, "供货商信息 不存在");
     ErrorCode DUCT_FINAL_PARAMETERS_NAME_NOT_EXISTS = new ErrorCode(1002023016, "产品参数名 不存在");
     ErrorCode DUCT_CERTIFICATE_NOT_EXISTS = new ErrorCode(1002023017, "证书 不存在");
+    ErrorCode PRODUCT_ALREADY_EXISTS = new ErrorCode(1002023018,"产品已经在询价列表中！");
+    ErrorCode PRODUCT_HAVE_NOT_SUPPLY = new ErrorCode(1002023018,"产品没有供应商！");
 }
