@@ -97,20 +97,20 @@ public class AdminAuthServiceImpl implements AdminAuthService {
 
         CusUserDTO cusUserDTO = cusUserApi.getUser(user.getId());
         // 管理后台与客户端登录分离
-        if ((reqVO.loginType == null || "0".equals(reqVO.loginType)) && cusUserDTO != null) {
+        if ((reqVO.getLoginType() == null || "0".equals(reqVO.getLoginType())) && cusUserDTO != null) {
             throw exception(AUTH_PURVIEW_NOT_EXISTS);
         }
-        if ("1".equals(reqVO.loginType) && cusUserDTO == null) {
+        if ("1".equals(reqVO.getLoginType()) && cusUserDTO == null) {
             throw exception(AUTH_PURVIEW_NOT_EXISTS);
         }
         // 如果 socialType 非空，说明需要绑定社交用户
         if (reqVO.getSocialType() != null) {
-            socialUserService.bindSocialUser(new SocialUserBindReqDTO(user.getId(), getUserType().getValue(),
+            socialUserService.bindSocialUser(new SocialUserBindReqDTO(user.getId(), getUserType(reqVO.getLoginType()).getValue(),
                     reqVO.getSocialType(), reqVO.getSocialCode(), reqVO.getSocialState()));
         }
 
         // 创建 Token 令牌，记录登录日志
-        return createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME);
+        return createTokenAfterLoginSuccess(user.getId(), reqVO.getUsername(), LoginLogTypeEnum.LOGIN_USERNAME,reqVO.getLoginType());
     }
 
     @Override
@@ -135,7 +135,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         }
 
         // 创建 Token 令牌，记录登录日志
-        return createTokenAfterLoginSuccess(user.getId(), reqVO.getMobile(), LoginLogTypeEnum.LOGIN_MOBILE);
+        return createTokenAfterLoginSuccess(user.getId(), reqVO.getMobile(), LoginLogTypeEnum.LOGIN_MOBILE,null);
     }
 
     @VisibleForTesting
@@ -171,7 +171,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         reqDTO.setLogType(logTypeEnum.getType());
         reqDTO.setTraceId(TracerUtils.getTraceId());
         reqDTO.setUserId(userId);
-        reqDTO.setUserType(getUserType().getValue());
+        reqDTO.setUserType(getUserType(null).getValue());
         reqDTO.setUsername(username);
         reqDTO.setUserAgent(ServletUtils.getUserAgent());
         reqDTO.setUserIp(ServletUtils.getClientIP());
@@ -199,7 +199,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         }
 
         // 创建 Token 令牌，记录登录日志
-        return createTokenAfterLoginSuccess(user.getId(), user.getUsername(), LoginLogTypeEnum.LOGIN_SOCIAL);
+        return createTokenAfterLoginSuccess(user.getId(), user.getUsername(), LoginLogTypeEnum.LOGIN_SOCIAL,null);
     }
 
     @Override
@@ -208,11 +208,11 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         return AuthConvert.INSTANCE.convert(accessTokenDO);
     }
 
-    private AuthLoginRespVO createTokenAfterLoginSuccess(Long userId, String username, LoginLogTypeEnum logType) {
+    private AuthLoginRespVO createTokenAfterLoginSuccess(Long userId, String username, LoginLogTypeEnum logType, String userType) {
         // 插入登陆日志
         createLoginLog(userId, username, logType, LoginResultEnum.SUCCESS);
         // 创建访问令牌
-        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType().getValue(),
+        OAuth2AccessTokenDO accessTokenDO = oauth2TokenService.createAccessToken(userId, getUserType(userType).getValue(),
                 OAuth2ClientConstants.CLIENT_ID_DEFAULT, null);
         // 构建返回结果
         return AuthConvert.INSTANCE.convert(accessTokenDO);
@@ -235,7 +235,7 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         reqDTO.setTraceId(TracerUtils.getTraceId());
         reqDTO.setUserId(userId);
         reqDTO.setUserType(userType);
-        if (ObjectUtil.equal(getUserType().getValue(), userType)) {
+        if (ObjectUtil.equal(getUserType(null).getValue(), userType)) {
             reqDTO.setUsername(getUsername(userId));
         } else {
             reqDTO.setUsername(memberService.getMemberUserMobile(userId));
@@ -254,8 +254,12 @@ public class AdminAuthServiceImpl implements AdminAuthService {
         return user != null ? user.getUsername() : null;
     }
 
-    private UserTypeEnum getUserType() {
-        return UserTypeEnum.ADMIN;
+    private UserTypeEnum getUserType(String userType) {
+        if("1".equals(userType)){
+            return UserTypeEnum.MEMBER;
+        }else {
+            return UserTypeEnum.ADMIN;
+        }
     }
 
 }
