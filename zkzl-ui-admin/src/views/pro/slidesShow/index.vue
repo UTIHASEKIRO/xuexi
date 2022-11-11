@@ -3,9 +3,6 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="图片" prop="picUrl">
-        <el-input v-model="queryParams.picUrl" placeholder="请输入图片" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
       <el-form-item label="创建时间" prop="createTime">
         <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
                         range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
@@ -32,7 +29,11 @@
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
       <el-table-column label="序号id" align="center" prop="id" />
-      <el-table-column label="图片" align="center" prop="picUrl" />
+      <el-table-column label="图片" align="center" prop="picUrl" >
+        <template slot-scope="scope">
+          <image-preview :src="scope.row.picUrl" :width="'100px'"/>
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -55,7 +56,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="图片" prop="picUrl">
-          <el-input v-model="form.picUrl" placeholder="请输入图片" />
+          <imageUpload v-model="form.picUrl" :limit="20"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -68,10 +69,14 @@
 
 <script>
 import { createSlidesShow, updateSlidesShow, deleteSlidesShow, getSlidesShow, getSlidesShowPage, exportSlidesShowExcel } from "@/api/pro/slidesShow";
+import ImageUpload from '@/components/ImageUpload';
+import ImagePreview from '@/components/ImagePreview';
 
 export default {
   name: "SlidesShow",
   components: {
+    ImageUpload,
+    ImagePreview
   },
   data() {
     return {

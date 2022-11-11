@@ -3,14 +3,8 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="图片" prop="picUrl">
-        <el-input v-model="queryParams.picUrl" placeholder="请输入图片" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="合作伙伴名称" prop="name">
+      <el-form-item label="伙伴名称" prop="name">
         <el-input v-model="queryParams.name" placeholder="请输入合作伙伴名称" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="介绍" prop="introduce">
-        <el-input v-model="queryParams.introduce" placeholder="请输入介绍" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="创建时间" prop="createTime">
         <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
@@ -38,7 +32,11 @@
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
       <el-table-column label="序号id" align="center" prop="id" />
-      <el-table-column label="图片" align="center" prop="picUrl" />
+      <el-table-column label="图片" align="center" prop="picUrl" >
+        <template  slot-scope="scope">
+          <image-preview :src="scope.row.picUrl" :width="'100px'"/>
+        </template>
+      </el-table-column>
       <el-table-column label="合作伙伴名称" align="center" prop="name" />
       <el-table-column label="介绍" align="center" prop="introduce" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
@@ -63,7 +61,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="图片" prop="picUrl">
-          <el-input v-model="form.picUrl" placeholder="请输入图片" />
+          <imageUpload v-model="form.picUrl" :limit="20"/>
         </el-form-item>
         <el-form-item label="合作伙伴名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入合作伙伴名称" />
@@ -82,10 +80,14 @@
 
 <script>
 import { createPartners, updatePartners, deletePartners, getPartners, getPartnersPage, exportPartnersExcel } from "@/api/pro/partners";
+import ImageUpload from '@/components/ImageUpload';
+import ImagePreview from '@/components/ImagePreview';
 
 export default {
   name: "Partners",
   components: {
+    ImageUpload,
+    ImagePreview
   },
   data() {
     return {

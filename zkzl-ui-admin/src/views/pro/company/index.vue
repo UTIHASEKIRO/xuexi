@@ -3,23 +3,11 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="图片" prop="picUrl">
-        <el-input v-model="queryParams.picUrl" placeholder="请输入图片" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
       <el-form-item label="公司名称" prop="name">
         <el-input v-model="queryParams.name" placeholder="请输入公司名称" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="公司介绍" prop="introduce">
-        <el-input v-model="queryParams.introduce" placeholder="请输入公司介绍" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="公司地址" prop="address">
-        <el-input v-model="queryParams.address" placeholder="请输入公司地址" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
       <el-form-item label="电话" prop="mobile">
         <el-input v-model="queryParams.mobile" placeholder="请输入电话" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input v-model="queryParams.email" placeholder="请输入邮箱" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="创建时间" prop="createTime">
         <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
@@ -47,7 +35,7 @@
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
       <el-table-column label="序号id" align="center" prop="id" />
-      <el-table-column label="图片" align="center" prop="picUrl" />
+      <!-- <el-table-column label="图片" align="center" prop="picUrl" /> -->
       <el-table-column label="公司名称" align="center" prop="name" />
       <el-table-column label="公司介绍" align="center" prop="introduce" />
       <el-table-column label="公司地址" align="center" prop="address" />
@@ -75,8 +63,10 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="图片" prop="picUrl">
-          <el-input v-model="form.picUrl" placeholder="请输入图片" />
+          <!-- <el-input v-model="form.picUrl" placeholder="请输入图片" /> -->
+          <imageUpload v-model="form.picUrl" :limit="20"/>
         </el-form-item>
+        
         <el-form-item label="公司名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入公司名称" />
         </el-form-item>
@@ -103,10 +93,12 @@
 
 <script>
 import { createCompany, updateCompany, deleteCompany, getCompany, getCompanyPage, exportCompanyExcel } from "@/api/pro/company";
+import ImageUpload from '@/components/ImageUpload';
 
 export default {
   name: "Company",
   components: {
+    ImageUpload
   },
   data() {
     return {
