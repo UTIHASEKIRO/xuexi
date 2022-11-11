@@ -73,6 +73,9 @@
         <el-form-item label="公司介绍" prop="introduce">
           <el-input v-model="form.introduce" placeholder="请输入公司介绍" />
         </el-form-item>
+        <el-form-item label="业务介绍" prop="businessIntroduce">
+          <el-input v-model="form.businessIntroduce" placeholder="请输入业务介绍" />
+        </el-form-item>
         <el-form-item label="公司地址" prop="address">
           <el-input v-model="form.address" placeholder="请输入公司地址" />
         </el-form-item>

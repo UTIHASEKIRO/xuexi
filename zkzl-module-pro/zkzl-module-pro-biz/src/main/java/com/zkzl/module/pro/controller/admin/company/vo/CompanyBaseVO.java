@@ -21,6 +21,9 @@ public class CompanyBaseVO {
     @ApiModelProperty(value = "公司介绍")
     private String introduce;
 
+    @ApiModelProperty(value = "业务介绍")
+    private String businessIntroduce;
+
     @ApiModelProperty(value = "公司地址")
     private String address;
 

@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.dal.dataobject.company;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import java.util.*;
 import com.baomidou.mybatisplus.annotation.*;
@@ -37,6 +38,10 @@ public class CompanyDO extends BaseDO {
      * 公司介绍
      */
     private String introduce;
+    /**
+     * 业务介绍
+     */
+    private String businessIntroduce;
     /**
      * 公司地址
      */
