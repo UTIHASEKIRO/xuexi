@@ -1,14 +1,14 @@
 package com.zkzl.module.pro.service.product;
 
-import java.util.*;
-import javax.validation.*;
-
-import com.zkzl.framework.common.pojo.PageParam;
+import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.module.pro.controller.admin.product.vo.*;
 import com.zkzl.module.pro.controller.app.product.vo.ProductDescVO;
+import com.zkzl.module.pro.controller.app.product.vo.ProductReqVO;
 import com.zkzl.module.pro.controller.app.product.vo.ProductVO;
 import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
-import com.zkzl.framework.common.pojo.PageResult;
+
+import javax.validation.Valid;
+import java.util.List;
 
 /**
  * 产品 Service 接口
@@ -78,7 +78,7 @@ public interface ProductService {
     /*
     * 用户端 获取产品列表
     * */
-    PageResult<ProductVO> pageApp(PageParam param);
+    PageResult<ProductVO> pageApp(ProductReqVO productReqVO);
 
     /*
     * 用户端查看产品详情

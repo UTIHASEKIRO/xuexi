@@ -143,8 +143,19 @@
     </resultMap>
     <select id="pageApp" resultMap="productPic">
         /*用户端 获取产品列表*/
-        select pp.id,pp.product_id,pp.product_name_cn,pp.product_name_en,ppp.url  from pro_product pp
+        select pp.id,pp.product_id,pp.product_name_cn,pp.product_name_en,ppp.url from pro_product pp
         left join pro_product_pic ppp on pp.product_id = ppp.product_id
+        <where>
+            <if test="productReqVO.typeId != null and productReqVO.typeId != '' ">
+                and pp.type_id = #{productReqVO.typeId}
+            </if>
+            <if test="productReqVO.productName != null and productReqVO.productName != '' ">
+                and (pp.product_name_cn like concat('%',#{productReqVO.productName},'%')
+                or
+                pp.product_name_en like concat('%',#{productReqVO.productName},'%')
+                )
+            </if>
+        </where>
     </select>
     <resultMap id="productDesc" type="com.zkzl.module.pro.controller.app.product.vo.ProductDescVO">
         <id column="id" property="id"/>

@@ -1,18 +1,21 @@
 package com.zkzl.module.pro.dal.mysql.product;
 
-import java.util.*;
-
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zkzl.framework.common.pojo.PageResult;
-import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
+import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.zkzl.module.pro.controller.admin.product.vo.ProductExportReqVO;
+import com.zkzl.module.pro.controller.admin.product.vo.ProductPageReqVO;
+import com.zkzl.module.pro.controller.admin.product.vo.ProductRespVO;
 import com.zkzl.module.pro.controller.app.product.vo.ProductDescVO;
+import com.zkzl.module.pro.controller.app.product.vo.ProductReqVO;
 import com.zkzl.module.pro.controller.app.product.vo.ProductVO;
 import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
 import org.apache.ibatis.annotations.Mapper;
-import com.zkzl.module.pro.controller.admin.product.vo.*;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 产品 Mapper
@@ -81,7 +84,7 @@ public interface ProductMapper extends BaseMapperX<ProductDO> {
     ProductRespVO getProduct(String productId);
 
     /*用户端 获取产品列表*/
-    IPage<ProductVO> pageApp(IPage<ProductVO> mPage);
+    IPage<ProductVO> pageApp(IPage<ProductVO> mPage,@Param("productReqVO") ProductReqVO productReqVO);
 
     /*用户端查看产品详情*/
     ProductDescVO getDesc(Long id);
