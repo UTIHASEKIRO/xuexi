@@ -49,38 +49,47 @@ public class ProductDescVO{
     /**
      * 用途分类-英文
      */
+    @ApiModelProperty(value = "用途分类-英文")
     private String useClassificationEn;
     /**
      * 交货方式-中文
      */
+    @ApiModelProperty(value = "交货方式-中文")
     private String deliveryMethodCn;
     /**
      * 交货方式-英文
      */
+    @ApiModelProperty(value = "交货方式-英文")
     private String deliveryMethodEn;
     /**
      * 克重
      */
+    @ApiModelProperty(value = "克重")
     private String gramWeight;
     /**
      * 尺寸
      */
+    @ApiModelProperty(value = "尺寸")
     private String size;
     /**
      * 箱规
      */
+    @ApiModelProperty(value = "箱规")
     private String boxGauge;
     /**
      * 体积
      */
+    @ApiModelProperty(value = "体积")
     private String volume;
     /**
      * 毛重
      */
+    @ApiModelProperty(value = "毛重")
     private String grossWeight;
     /**
      * 净重
      */
+    @ApiModelProperty(value = "净重")
     private String netWeight;
 
     @ApiModelProperty(value = "是否加入询价")

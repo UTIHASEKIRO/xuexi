@@ -42,14 +42,14 @@ public class AppProductController {
 
     @GetMapping("/getDesc")
     @ApiOperation("获得产品详情")
-    public CommonResult<ProductDescVO> getDesc(Long id) {
+    public CommonResult<ProductDescVO> getDesc(@RequestParam(value = "id")  Long id) {
         ProductDescVO result = productService.getDesc(id);
         return success(result);
     }
 
     @GetMapping("/product-list")
     @ApiOperation("获得商品类别列表")
-    public CommonResult<List<ProductTypeDO>> getductTypeList(@RequestParam("typeName") String typeName) {
+    public CommonResult<List<ProductTypeDO>> getductTypeList(@RequestParam(value = "typeName", required = false) String typeName) {
         return success(ductTypeService.getductTypeList(typeName));
     }
 }

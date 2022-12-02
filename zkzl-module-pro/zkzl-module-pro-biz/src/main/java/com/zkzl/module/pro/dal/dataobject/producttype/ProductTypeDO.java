@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.dal.dataobject.producttype;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import java.util.*;
 import com.baomidou.mybatisplus.annotation.*;
@@ -28,25 +29,31 @@ public class ProductTypeDO extends BaseDO {
     /**
      * 父id
      */
+    @ApiModelProperty(value = "父id")
     private String parentId;
     /**
      * 类别业务id
      */
+    @ApiModelProperty(value = "类别业务id")
     private String typeId;
     /**
      * 类别名称-中文
      */
+    @ApiModelProperty(value = "类别名称-中文")
     private String typeNameCn;
     /**
      * 类别名称-英文
      */
+    @ApiModelProperty(value = "类别名称-英文")
     private String typeNameEn;
     /**
      * 排序
      */
+    @ApiModelProperty(value = "排序")
     private Integer sort;
 
     @TableField(exist = false)
+    @ApiModelProperty(value = "子节点")
     private List<ProductTypeDO> productTypeDOS;
 
 }
