@@ -99,5 +99,12 @@ public class PurchaseHistoryDO extends BaseDO {
      * "总价"
      */
     private BigDecimal price;
-
+    /**
+     * 打包方式
+     */
+    private String packingWay;
+    /**
+     * 商品ID
+     */
+    private String productId;
 }

@@ -23,14 +23,17 @@
         left join pro_product_type ppt on psi.type_id = ppt.type_id
         left join pro_product pp on psi.product_id = pp.product_id
         <where>
+            psi.deleted = '0'
             <if test="param.typeId != null and param.typeId != ''">
                 and ppt.type_id = #{param.typeId}
             </if>
             <if test="param.name != null and param.name != ''">
                 and psi.name like concat('%',#{param.name},'%')
             </if>
+            <if test="param.productId != null and param.productId != ''">
+                and psi.product_id = #{param.productId}
+            </if>
         </where>
-        where psi.deleted = '0'
         order by ppt.type_name_cn asc,psi.create_time desc
     </select>
     <select id="getSupplyInfoName"

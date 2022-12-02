@@ -60,14 +60,15 @@
           <dict-tag :type="DICT_TYPE.PROCUREMENT_SUMMARY_STATUS" :value="scope.row.status"/>
         </template>
       </el-table-column>
+      <el-table-column label="完成进度" align="center" prop="finishPercent" />
       <el-table-column label="操作人" align="center" prop="buyer" />
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                      v-hasPermi="['pro:curement-summary:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['pro:curement-summary:delete']">删除</el-button>
+<!--          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+                     v-hasPermi="['pro:curement-summary:delete']">删除</el-button>-->
         </template>
       </el-table-column>
     </el-table>
@@ -76,28 +77,28 @@
                 @pagination="getList"/>
 
     <!-- 对话框(添加 / 修改) -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
+    <el-dialog :title="title" :visible.sync="open" width="800px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="订单id" prop="orderId">
-          <el-input v-model="form.orderId" disabled placeholder="请输入订单id" />
+        <el-form-item label="订单号" prop="orderId">
+          <span>{{ form.orderId }}</span>
         </el-form-item>
-        <el-form-item label="客户" prop="customer">
-          <el-input v-model="form.customer" placeholder="请输入客户" />
+        <el-form-item label="供货商" prop="orderId">
+          <span>{{ form.orderId }}</span>
         </el-form-item>
-         <el-form-item label="订单状态" prop="status">
+        <el-form-item label="产品名称" prop="orderId">
+          <span>{{ form.orderId }}</span>
+        </el-form-item>
+        <el-form-item label="订单状态" prop="status">
           <!-- <el-input v-model="form.status" placeholder="请输入客户" /> -->
           <el-select v-model="form.status" placeholder="请选择状态" clearable size="small" >
-          <el-option v-for="dict in orderStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="dict.value"/>
-        </el-select>
+            <el-option v-for="dict in orderStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="dict.value"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="完成进度" prop="finishPercent">
           <el-input v-model="form.finishPercent" placeholder="请输入完成进度" />
         </el-form-item>
-        <!-- <el-form-item label="业务员" prop="salesman">
-          <el-input v-model="form.salesman" placeholder="请输入业务员" />
-        </el-form-item> -->
-        <el-form-item label="合同金额" prop="contractAmount">
-          <el-input v-model="form.contractAmount" placeholder="请输入合同金额" />
+        <el-form-item label="采购金额" prop="contractAmount">
+          <span>{{ form.contractAmount }}</span>
         </el-form-item>
         <el-form-item label="定金金额" prop="depositAmount">
           <el-input v-model="form.depositAmount" placeholder="请输入定金金额" />
@@ -105,6 +106,7 @@
         <el-form-item label="尾款金额" prop="balanceAmount">
           <el-input v-model="form.balanceAmount" placeholder="请输入尾款金额" />
         </el-form-item>
+
         <el-form-item label="生产日期" prop="produceDate">
           <el-date-picker clearable v-model="form.produceDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择生产日期" />
         </el-form-item>
@@ -120,6 +122,11 @@
         <el-form-item label="体积" prop="volume">
           <el-input v-model="form.volume" placeholder="请输入体积" />
         </el-form-item>
+
+        <el-form-item label="运费" prop="volume">
+          <el-input v-model="form.volume" placeholder="请输入体积" />
+        </el-form-item>
+
         <el-form-item label="装柜时间" prop="packTime">
           <el-date-picker clearable v-model="form.packTime" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择装柜时间" />
         </el-form-item>
@@ -170,7 +177,7 @@ export default {
         pageSize: 10,
         status:undefined,
         createTime:undefined
-        
+
       },
       // 表单参数
       form: {},
