@@ -135,11 +135,11 @@
             </dependency>
 
             <!-- 消息队列相关 -->
-            <dependency>
-                <groupId>top.code.zkzl</groupId>
-                <artifactId>zkzl-spring-boot-starter-rabbitmq</artifactId>
-                <version>${revision}</version>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>top.code.zkzl</groupId>-->
+<!--                <artifactId>zkzl-spring-boot-starter-rabbitmq</artifactId>-->
+<!--                <version>${revision}</version>-->
+<!--            </dependency>-->
 
             <!-- Spring 核心 -->
             <dependency>
