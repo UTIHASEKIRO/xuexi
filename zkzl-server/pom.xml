@@ -69,11 +69,11 @@
             <version>${revision}</version>
         </dependency>-->
 
-<!--        <dependency>
+        <dependency>
             <groupId>top.code.zkzl</groupId>
             <artifactId>zkzl-module-minio-biz</artifactId>
             <version>${revision}</version>
-        </dependency>-->
+        </dependency>
 
         <dependency>
         <groupId>top.code.zkzl</groupId>

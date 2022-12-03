@@ -3,13 +3,13 @@ spring:
     name: zkzl-server
 
   profiles:
-    active: shardingSphere
+    active: prod
 #    local
   minio:
-    access-key: fsp-manage
-    secret-key: springboot-fsp-manage
-    url: http://192.168.31.63:9002
-    bucket-name: mnio
+    access-key: minioadmin
+    secret-key: minioadmin1qa
+    url: http://112.243.253.73:8094
+    bucket-name: procure
 
   main:
     allow-circular-references: true # 允许循环依赖，因为项目是三层架构，无法避免这个情况。
