@@ -21,16 +21,16 @@
     <url>https://github.com/YunaiV/ruoyi-vue-pro</url>
 
     <dependencies>
-        <dependency>
-            <groupId>top.code.zkzl</groupId>
-            <artifactId>zkzl-module-test-biz</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>top.code.zkzl</groupId>
-            <artifactId>zkzl-module-member-biz</artifactId>
-            <version>${revision}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>top.code.zkzl</groupId>-->
+<!--            <artifactId>zkzl-module-test-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>top.code.zkzl</groupId>-->
+<!--            <artifactId>zkzl-module-member-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>top.code.zkzl</groupId>
             <artifactId>zkzl-module-system-biz</artifactId>
@@ -46,16 +46,16 @@
             <artifactId>zkzl-module-pay-biz</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
-            <groupId>top.code.zkzl</groupId>
-            <artifactId>zkzl-module-market-biz</artifactId>
-            <version>${revision}</version>
-        </dependency>
-        <dependency>
-            <groupId>top.code.zkzl</groupId>
-            <artifactId>zkzl-module-product-biz</artifactId>
-            <version>${revision}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>top.code.zkzl</groupId>-->
+<!--            <artifactId>zkzl-module-market-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>top.code.zkzl</groupId>-->
+<!--            <artifactId>zkzl-module-product-biz</artifactId>-->
+<!--            <version>${revision}</version>-->
+<!--        </dependency>-->
         <!-- 数据报表 -->
 <!--        <dependency>-->
 <!--            <groupId>top.code.zkzl</groupId>-->
