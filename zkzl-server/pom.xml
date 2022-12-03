@@ -41,11 +41,11 @@
             <artifactId>zkzl-module-infra-biz</artifactId>
             <version>${revision}</version>
         </dependency>
-        <dependency>
+       <!-- <dependency>
             <groupId>top.code.zkzl</groupId>
             <artifactId>zkzl-module-pay-biz</artifactId>
             <version>${revision}</version>
-        </dependency>
+        </dependency>-->
 <!--        <dependency>-->
 <!--            <groupId>top.code.zkzl</groupId>-->
 <!--            <artifactId>zkzl-module-market-biz</artifactId>-->
