@@ -84,4 +84,7 @@ public interface ProductService {
     * 用户端查看产品详情
     * */
     ProductDescVO getDesc(Long id);
+
+    /*根据产品id 查询相关产品*/
+    PageResult<ProductVO> recommend(Long id);
 }

@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -208,6 +209,24 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDescVO getDesc(Long id) {
         return ductMapper.getDesc(id);
+    }
+
+    @Override
+    public PageResult<ProductVO> recommend(Long id) {
+        ProductDO product = ductMapper.selectById(id);
+
+        ProductReqVO pageParam = new ProductReqVO();
+        pageParam.setTypeId(product.getTypeId())
+                .setId(id);
+
+        IPage<ProductVO> mPage = MyBatisUtils.buildPage(pageParam);
+        ductMapper.recommend(mPage,pageParam);
+
+        if (mPage.getRecords().size() == 0){
+            ductMapper.pageApp(mPage,new ProductReqVO());
+        }
+
+        return new PageResult<>(mPage.getRecords(), mPage.getTotal());
     }
 
 }

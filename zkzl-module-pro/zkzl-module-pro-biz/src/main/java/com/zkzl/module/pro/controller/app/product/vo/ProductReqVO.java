@@ -15,6 +15,9 @@ public class ProductReqVO extends PageParam {
     @ApiModelProperty(value = "产品类别id")
     private String typeId;
 
+    @ApiModelProperty(value = "产品id")
+    private Long id;
+
     @ApiModelProperty(value = "产品名称")
     private String productName;
 }

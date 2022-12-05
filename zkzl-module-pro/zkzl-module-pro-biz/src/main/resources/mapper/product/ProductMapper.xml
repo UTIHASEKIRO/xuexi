@@ -199,5 +199,10 @@
                  left join pro_product_certificate ppc on pp.product_id = ppc.certificate_url
         where pp.id = #{0}
     </select>
+    <select id="recommend" resultType="com.zkzl.module.pro.controller.app.product.vo.ProductVO">
+        select pp.id,pp.product_id,pp.product_name_cn,pp.product_name_en,ppp.url from pro_product pp
+        left join pro_product_pic ppp on pp.product_id = ppp.product_id
+        where pp.type_id = #{productReqVO.typeId} and pp.id != #{productReqVO.id}
+    </select>
 
 </mapper>

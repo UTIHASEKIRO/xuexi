@@ -47,6 +47,13 @@ public class AppProductController {
         return success(result);
     }
 
+    @GetMapping("/recommend")
+    @ApiOperation("产品推荐")
+    public CommonResult<PageResult<ProductVO>> pageApp(Long id) {
+        PageResult<ProductVO> pageResult = productService.recommend(id);
+        return success(pageResult);
+    }
+
     @GetMapping("/product-list")
     @ApiOperation("获得商品类别列表")
     public CommonResult<List<ProductTypeDO>> getductTypeList(@RequestParam(value = "typeName", required = false) String typeName) {

@@ -88,4 +88,7 @@ public interface ProductMapper extends BaseMapperX<ProductDO> {
 
     /*用户端查看产品详情*/
     ProductDescVO getDesc(Long id);
+
+    /*产品推荐*/
+    IPage<ProductVO> recommend(IPage<ProductVO> mPage,@Param("productReqVO") ProductReqVO pageParam);
 }
