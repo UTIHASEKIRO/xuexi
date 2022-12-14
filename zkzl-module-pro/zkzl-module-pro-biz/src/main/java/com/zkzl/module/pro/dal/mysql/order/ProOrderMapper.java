@@ -5,6 +5,7 @@ import java.util.*;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
+import com.zkzl.module.pro.controller.app.order.vo.OrderDescVO;
 import com.zkzl.module.pro.dal.dataobject.order.OrderDO;
 import org.apache.ibatis.annotations.Mapper;
 import com.zkzl.module.pro.controller.admin.order.vo.*;
@@ -50,4 +51,7 @@ public interface ProOrderMapper extends BaseMapperX<OrderDO> {
     }
 
     OrderRespVO getOrderByOrderId(String orderId);
+
+    /*用户端-订单详情*/
+    OrderDescVO orderDesc(String orderId);
 }

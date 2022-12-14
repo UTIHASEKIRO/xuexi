@@ -1,6 +1,7 @@
 package com.zkzl.module.pro.service.order;
 
 import cn.hutool.core.util.IdUtil;
+import com.zkzl.module.pro.controller.app.order.vo.OrderDescVO;
 import com.zkzl.module.pro.dal.mysql.order.ProOrderMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
@@ -84,6 +85,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderRespVO getOrderByOrderId(String orderId) {
         return orderMapper.getOrderByOrderId(orderId);
+    }
+
+    @Override
+    public OrderDescVO orderDesc(OrderPageReqVO param) {
+        return orderMapper.orderDesc(param.getOrderId());
     }
 
 }

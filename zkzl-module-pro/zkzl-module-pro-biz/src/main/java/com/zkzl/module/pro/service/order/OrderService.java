@@ -3,6 +3,7 @@ package com.zkzl.module.pro.service.order;
 import java.util.*;
 import javax.validation.*;
 import com.zkzl.module.pro.controller.admin.order.vo.*;
+import com.zkzl.module.pro.controller.app.order.vo.OrderDescVO;
 import com.zkzl.module.pro.dal.dataobject.order.OrderDO;
 import com.zkzl.framework.common.pojo.PageResult;
 
@@ -68,4 +69,7 @@ public interface OrderService {
     List<OrderDO> getOrderList(OrderExportReqVO exportReqVO);
 
     OrderRespVO getOrderByOrderId(String orderId);
+
+    /*订单详情*/
+    OrderDescVO orderDesc(OrderPageReqVO param);
 }
