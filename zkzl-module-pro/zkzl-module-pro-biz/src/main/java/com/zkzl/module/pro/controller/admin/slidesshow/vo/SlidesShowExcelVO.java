@@ -23,4 +23,10 @@ public class SlidesShowExcelVO {
     @ExcelProperty("创建时间")
     private Date createTime;
 
+    @ExcelProperty("排序")
+    private Integer sort;
+
+    @ExcelProperty("1上架 0下架")
+    private String isShelf;
+
 }

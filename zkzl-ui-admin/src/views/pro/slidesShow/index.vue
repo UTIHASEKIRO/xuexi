@@ -7,6 +7,12 @@
         <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
                         range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
       </el-form-item>
+      <el-form-item label="是否上架" prop="isShelf">
+        <el-select v-model="queryParams.isShelf" placeholder="请选择是否上架" clearable size="small">
+          <el-option v-for="dict in this.getDictDatas(DICT_TYPE.IS_SHELF)"
+                       :key="dict.value" :label="dict.label" :value="dict.value"/>
+        </el-select>
+      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -19,24 +25,25 @@
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
                    v-hasPermi="['pro:slides-show:create']">新增</el-button>
       </el-col>
-      <el-col :span="1.5">
-        <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
-                   v-hasPermi="['pro:slides-show:export']">导出</el-button>
-      </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
-      <el-table-column label="序号id" align="center" prop="id" />
       <el-table-column label="图片" align="center" prop="picUrl" >
-        <template slot-scope="scope">
-          <image-preview :src="scope.row.picUrl" :width="'100px'"/>
+        <template  slot-scope="scope">
+          <img :src="scope.row.picUrl" :height="'50px'"/>
         </template>
       </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="排序" align="center" prop="sort" />
+      <el-table-column label="是否上架" align="center" prop="isShelf">
+        <template slot-scope="scope">
+          <dict-tag :type="DICT_TYPE.IS_SHELF" :value="scope.row.isShelf" />
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -55,8 +62,17 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="图片" prop="picUrl">
-          <imageUpload v-model="form.picUrl" :limit="20"/>
+        <el-form-item label="图片">
+          <imageUpload v-model="form.picUrl" :limit="1"/>
+        </el-form-item>
+        <el-form-item label="排序" prop="sort">
+          <el-input v-model="form.sort" placeholder="请输入排序" />
+        </el-form-item>
+        <el-form-item label="是否上架" prop="isShelf">
+          <el-select v-model="form.isShelf" placeholder="请选择是否上架">
+            <el-option v-for="dict in this.getDictDatas(DICT_TYPE.IS_SHELF)"
+                       :key="dict.value" :label="dict.label" :value="dict.value" />
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -70,13 +86,11 @@
 <script>
 import { createSlidesShow, updateSlidesShow, deleteSlidesShow, getSlidesShow, getSlidesShowPage, exportSlidesShowExcel } from "@/api/pro/slidesShow";
 import ImageUpload from '@/components/ImageUpload';
-import ImagePreview from '@/components/ImagePreview';
 
 export default {
   name: "SlidesShow",
   components: {
     ImageUpload,
-    ImagePreview
   },
   data() {
     return {
@@ -98,13 +112,16 @@ export default {
       queryParams: {
         pageNo: 1,
         pageSize: 10,
-        picUrl: null,
         createTime: [],
+        isShelf: null,
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        picUrl: [{ required: true, message: "图片不能为空", trigger: "blur" }],
+        sort: [{ required: true, message: "排序不能为空", trigger: "blur" }],
+        isShelf: [{ required: true, message: "1上架 0下架不能为空", trigger: "change" }],
       }
     };
   },
@@ -130,8 +147,9 @@ export default {
     /** 表单重置 */
     reset() {
       this.form = {
-        id: undefined,
         picUrl: undefined,
+        sort: undefined,
+        isShelf: undefined,
       };
       this.resetForm("form");
     },

@@ -21,6 +21,8 @@ public interface SlidesShowMapper extends BaseMapperX<SlidesShowDO> {
         return selectPage(reqVO, new LambdaQueryWrapperX<SlidesShowDO>()
                 .eqIfPresent(SlidesShowDO::getPicUrl, reqVO.getPicUrl())
                 .betweenIfPresent(SlidesShowDO::getCreateTime, reqVO.getCreateTime())
+                .eqIfPresent(SlidesShowDO::getSort, reqVO.getSort())
+                .eqIfPresent(SlidesShowDO::getIsShelf, reqVO.getIsShelf())
                 .orderByDesc(SlidesShowDO::getId));
     }
 
@@ -28,6 +30,8 @@ public interface SlidesShowMapper extends BaseMapperX<SlidesShowDO> {
         return selectList(new LambdaQueryWrapperX<SlidesShowDO>()
                 .eqIfPresent(SlidesShowDO::getPicUrl, reqVO.getPicUrl())
                 .betweenIfPresent(SlidesShowDO::getCreateTime, reqVO.getCreateTime())
+                .eqIfPresent(SlidesShowDO::getSort, reqVO.getSort())
+                .eqIfPresent(SlidesShowDO::getIsShelf, reqVO.getIsShelf())
                 .orderByDesc(SlidesShowDO::getId));
     }
 

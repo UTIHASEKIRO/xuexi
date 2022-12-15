@@ -67,4 +67,5 @@ public interface SlidesShowService {
      */
     List<SlidesShowDO> getSlidesShowList(SlidesShowExportReqVO exportReqVO);
 
+    List<SlidesShowDO> getSlidesList();
 }

@@ -67,7 +67,7 @@ export const DICT_TYPE = {
   USER_STATUS: 'user_status', // 订单状态
 
   REASON_SERVICE: 'reason_service', // 选择原因 价格
-
+  IS_SHELF: 'is_shelf', //是否上架
   REASON_QUALITY: 'reason_quality', // 选择原因-质量
   REASON_PRICE: 'reason_price', // 选择原因-价格
   SHIPPED: 'shipped', // 商品状态 上下架

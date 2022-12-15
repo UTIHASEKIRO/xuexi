@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.service.slidesshow;
 
+import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -77,6 +78,13 @@ public class SlidesShowServiceImpl implements SlidesShowService {
     @Override
     public List<SlidesShowDO> getSlidesShowList(SlidesShowExportReqVO exportReqVO) {
         return slidesShowMapper.selectList(exportReqVO);
+    }
+
+    @Override
+    public List<SlidesShowDO> getSlidesList() {
+        return slidesShowMapper.selectList(new LambdaQueryWrapperX<SlidesShowDO>()
+                .eq(SlidesShowDO::getIsShelf,"1")
+                .orderByAsc(SlidesShowDO::getSort));
     }
 
 }
