@@ -60,6 +60,8 @@ public interface OrderService {
      */
     PageResult<OrderDO> getOrderPage(OrderPageReqVO pageReqVO);
 
+    PageResult<OrderDO> appGetOrderPage(OrderPageReqVO pageReqVO);
+
     /**
      * 获得订单列表, 用于 Excel 导出
      *

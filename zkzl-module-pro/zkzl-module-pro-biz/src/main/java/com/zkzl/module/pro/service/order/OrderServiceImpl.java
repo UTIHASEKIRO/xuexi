@@ -1,8 +1,11 @@
 package com.zkzl.module.pro.service.order;
 
 import cn.hutool.core.util.IdUtil;
+import com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryBaseVO;
 import com.zkzl.module.pro.controller.app.order.vo.OrderDescVO;
+import com.zkzl.module.pro.dal.dataobject.priceinqury.PriceInquryDO;
 import com.zkzl.module.pro.dal.mysql.order.ProOrderMapper;
+import com.zkzl.module.pro.dal.mysql.priceinqury.PriceInquryMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -28,6 +31,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Resource
     private ProOrderMapper orderMapper;
+
+    @Resource
+    private PriceInquryMapper priceInquryMapper;
 
     @Override
     public Long createOrder(OrderCreateReqVO createReqVO) {
@@ -75,6 +81,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public PageResult<OrderDO> getOrderPage(OrderPageReqVO pageReqVO) {
         return orderMapper.selectPage(pageReqVO);
+    }
+
+    @Override
+    public PageResult<OrderDO> appGetOrderPage(OrderPageReqVO pageReqVO) {
+        PageResult<OrderDO> result = orderMapper.selectPage(pageReqVO);
+        List<OrderDO> list = result.getList();
+        for (OrderDO orderDO : list) {
+            PriceInquryDO price = priceInquryMapper.selectOne("price_inqury_id",orderDO.getPriceInquryId());
+            orderDO.setRemarks(price.getBuyerIdealPrice());//买方理想价格
+        }
+        return result;
     }
 
     @Override

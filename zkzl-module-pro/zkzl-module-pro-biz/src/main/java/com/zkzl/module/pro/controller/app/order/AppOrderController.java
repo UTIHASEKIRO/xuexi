@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 import static com.zkzl.framework.common.pojo.CommonResult.error;
 import static com.zkzl.framework.common.pojo.CommonResult.success;
@@ -35,16 +36,17 @@ public class AppOrderController {
     @ApiOperation("用户端订单列表")
     public CommonResult<PageResult<OrderDO>> pageOrder(OrderPageReqVO param) {
         param.setUserId(119L);
-        return success(orderService.getOrderPage(param));
+        return success(orderService.appGetOrderPage(param));
     }
 
 
-    @GetMapping("/upload")
+    @PostMapping("/upload")
     @ApiOperation("上传凭证")
-    public CommonResult<Long> pageOrder(EvidenceCreateReqVO param) {
+    public CommonResult<Long> pageOrder(@Valid @RequestBody EvidenceCreateReqVO param) {
         if (null == param || null == param.getBalancePic()){
             ServiceException mes = new ServiceException();
-            return error(mes.setMessage("缺少参数！"));
+            return error(mes.setCode(500)
+                    .setMessage("缺少参数！"));
         }
         return success(evidenceService.createEvidence(param));
     }
