@@ -97,6 +97,31 @@
             <result property="grossWeight" column="gross_weight" />
             <result property="netWeight" column="net_weight" />
         </collection>
+        <collection property="productBaseVOList" ofType="com.zkzl.module.pro.controller.admin.product.vo.ProductBaseVO">
+            <result column="product_id" property="productId"/>
+            <result column="type_id" property="typeId"/>
+            <result column="product_name_cn" property="productNameCn"/>
+            <result column="product_name_en" property="productNameEn"/>
+            <result column="product_model" property="productModel"/>
+            <result column="hs_no" property="hsNo"/>
+            <result column="packaging_method_cn" property="packagingMethodCn"/>
+            <result column="packaging_method_en" property="packagingMethodEn"/>
+            <result column="colour_cn" property="colourCn"/>
+            <result column="colour_en" property="colourEn"/>
+            <result column="use_classification_cn" property="useClassificationCn"/>
+            <result column="use_classification_en" property="useClassificationEn"/>
+            <result column="delivery_method_cn" property="deliveryMethodCn"/>
+            <result column="delivery_method_en" property="deliveryMethodEn"/>
+            <result column="gram_weight" property="gramWeight"/>
+            <result column="size" property="size"/>
+            <result column="box_gauge" property="boxGauge"/>
+            <result column="volume" property="volume"/>
+            <result column="gross_weight" property="grossWeight"/>
+            <result column="net_weight" property="netWeight"/>
+            <result column="shipped" property="shipped"/>
+            <result column="mount" property="mount" />
+        </collection>
+
     </resultMap>
     <select id="orderDesc" resultMap="orderDescResult">
         select
@@ -105,7 +130,7 @@
 
             pcu.contect_name,pcu.address,pcu.company_name,su.mobile,
 
-            pp.product_id,pp.product_name_cn,pp.product_name_en,
+            pp.*,
             pog.id,pog.hs_serial,pog.product_desc,pog.product_size,pog.product_color,
             pog.product_g,pog.package_way,pog.box_length,pog.box_height,pog.box_wide,
             pog.mount,pog.unit_price,pog.price,pog.volume,pog.gross_weight,pog.net_weight

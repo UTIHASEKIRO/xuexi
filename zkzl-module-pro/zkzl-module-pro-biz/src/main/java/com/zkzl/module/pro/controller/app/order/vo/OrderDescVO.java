@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.controller.app.order.vo;
 
+import com.zkzl.module.pro.controller.admin.product.vo.ProductBaseVO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -41,5 +42,8 @@ public class OrderDescVO {
 
     @ApiModelProperty(value = "goods")
     private List<OrderDescGoodsVO> goods;
+
+    @ApiModelProperty(value = "子表")
+    private List<ProductBaseVO> productBaseVOList;
 
 }
