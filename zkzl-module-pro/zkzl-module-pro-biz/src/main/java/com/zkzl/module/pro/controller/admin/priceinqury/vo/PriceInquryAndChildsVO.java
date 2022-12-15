@@ -1,6 +1,8 @@
 package com.zkzl.module.pro.controller.admin.priceinqury.vo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.zkzl.module.pro.controller.admin.product.vo.ProductBaseVO;
+import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -80,6 +82,9 @@ public class PriceInquryAndChildsVO {
 
     @ApiModelProperty(value = "子表")
     private List<PriceInquryChildsVO> childs;
+
+    @ApiModelProperty(value = "子表")
+    private List<ProductBaseVO> productBaseVOList;
 }
 
 

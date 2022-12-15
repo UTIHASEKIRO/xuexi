@@ -84,11 +84,13 @@ public interface ProductMapper extends BaseMapperX<ProductDO> {
     ProductRespVO getProduct(String productId);
 
     /*用户端 获取产品列表*/
-    IPage<ProductVO> pageApp(IPage<ProductVO> mPage,@Param("productReqVO") ProductReqVO productReqVO);
+    IPage<ProductDescVO> pageApp(IPage<ProductDescVO> mPage,@Param("productReqVO") ProductReqVO productReqVO);
 
     /*用户端查看产品详情*/
     ProductDescVO getDesc(Long id);
 
     /*产品推荐*/
-    IPage<ProductVO> recommend(IPage<ProductVO> mPage,@Param("productReqVO") ProductReqVO pageParam);
+    IPage<ProductDescVO> recommend(IPage<ProductDescVO> mPage,@Param("productReqVO") ProductReqVO pageParam);
+
+    String getIsInqury(@Param("productId") String productId,@Param("userId") Long userId);
 }

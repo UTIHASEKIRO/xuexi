@@ -46,6 +46,13 @@ public class ProductTypeDO extends BaseDO {
      */
     @ApiModelProperty(value = "类别名称-英文")
     private String typeNameEn;
+
+    /**
+     * 类别图片
+     */
+    @ApiModelProperty(value = "类别图片")
+    private String typePic;
+
     /**
      * 排序
      */
@@ -54,6 +61,6 @@ public class ProductTypeDO extends BaseDO {
 
     @TableField(exist = false)
     @ApiModelProperty(value = "子节点")
-    private List<ProductTypeDO> productTypeDOS;
+    private List<ProductTypeDO> productTypeDOS = null;
 
 }

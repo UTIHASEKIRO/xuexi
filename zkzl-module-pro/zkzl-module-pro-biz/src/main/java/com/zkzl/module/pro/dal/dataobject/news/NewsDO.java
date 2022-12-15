@@ -37,5 +37,17 @@ public class NewsDO extends BaseDO {
      * 内容
      */
     private String content;
+    /**
+     * 概要
+     */
+    private String summary;
+    /**
+     * 1公司新闻2行业新闻3通知通告
+     */
+    private Integer newsType;
+    /**
+     * 是否上架 1上架0下架
+     */
+    private String shelves;
 
 }

@@ -6,24 +6,28 @@ import cn.hutool.core.util.ObjectUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.common.pojo.PageParam;
+import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.framework.security.core.util.SecurityFrameworkUtils;
 import com.zkzl.module.pro.controller.admin.priceinqurychild.vo.PriceInquryChildCreateReqVO;
 import com.zkzl.module.pro.controller.admin.priceinqurychild.vo.PriceInquryChildExportReqVO;
 import com.zkzl.module.pro.controller.admin.priceinqurychild.vo.PriceInquryChildUpdateReqVO;
 import com.zkzl.module.pro.controller.app.priceinqury.vo.PriceInquryHistoryVO;
+import com.zkzl.module.pro.controller.app.product.vo.ProductDescVO;
 import com.zkzl.module.pro.convert.priceinqurychild.PriceInquryChildConvert;
 import com.zkzl.module.pro.dal.dataobject.order.OrderDO;
 import com.zkzl.module.pro.dal.dataobject.ordergoods.OrderGoodsDO;
 import com.zkzl.module.pro.dal.dataobject.ordersummary.OrderSummaryDO;
 import com.zkzl.module.pro.dal.dataobject.priceinqurychild.PriceInquryChildDO;
 import com.zkzl.module.pro.dal.dataobject.procurementsummary.ProcurementSummaryDO;
+import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
 import com.zkzl.module.pro.dal.dataobject.supplyinfo.SupplyInfoDO;
 import com.zkzl.module.pro.dal.mysql.order.ProOrderMapper;
 import com.zkzl.module.pro.dal.mysql.ordergoods.OrderGoodsMapper;
 import com.zkzl.module.pro.dal.mysql.ordersummary.OrderSummaryMapper;
 import com.zkzl.module.pro.dal.mysql.priceinqurychild.PriceInquryChildMapper;
 import com.zkzl.module.pro.dal.mysql.procurementsummary.ProcurementSummaryMapper;
+import com.zkzl.module.pro.dal.mysql.product.ProductMapper;
 import com.zkzl.module.pro.dal.mysql.supplyinfo.SupplyInfoMapper;
 import com.zkzl.module.system.dal.mysql.user.AdminUserMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +37,7 @@ import javax.annotation.Resource;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -64,6 +69,9 @@ public class PriceInquryServiceImpl implements PriceInquryService {
 
     @Resource
     private SupplyInfoMapper supplyInfoMapper;
+
+    @Resource
+    private ProductMapper productMapper;
 
     @Resource
     private ProOrderMapper proOrderMapper;
@@ -216,20 +224,18 @@ public class PriceInquryServiceImpl implements PriceInquryService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void addPriceInqury(PriceInquryCreateReqVO param) {
-
-        if (ObjectUtil.isEmpty(param.getPriceInquryChilds())){
-            throw exception(PRICE_INQURY_CHILD_NOT_EXISTS);
-        }
 
         Long LoginUserId = SecurityFrameworkUtils.getLoginUserId();
         Boolean isNewInqury = false;//是否为新建的询价单-不是新的询价单则需验证子表产品是否已加入询价
 
+        int[] status = new int[]{0,1,2,5};
         //查询登陆人是否有正在询价的询价单
-        //原则上 询价单每个人只存在一条正在询价的询价单(status=0)
+        //原则上 询价单每个人只存在一条正在询价的询价单(status=0,1,2,5)
         PriceInquryDO inquryIng = priceInquryMapper.selectOne(new LambdaQueryWrapper<PriceInquryDO>()
                 .eq(PriceInquryDO::getBuyerCompanyId,LoginUserId)
-                .eq(PriceInquryDO::getStatus,"0"));
+                .in(PriceInquryDO::getStatus,status));
         if (ObjectUtil.isEmpty(inquryIng)){
             isNewInqury = true;
             //没有正在创建的询价单则创建
@@ -237,9 +243,15 @@ public class PriceInquryServiceImpl implements PriceInquryService {
             inquryIng.setPriceInquryId(IdUtil.getSnowflakeNextIdStr())
                     .setBuyerCompanyId(LoginUserId);
             priceInquryMapper.insert(inquryIng);
+        }else {
+            throw exception(PRICE_INQURY_INQUIRY_UNFINISHED);
         }
 
-        PriceInquryChildDO entity;
+        if (ObjectUtil.isEmpty(param.getPriceInquryChilds())){
+            throw exception(PRICE_INQURY_CHILD_NOT_EXISTS);
+        }
+
+        List<PriceInquryChildDO> priceInquryChildDOList = new ArrayList<>();
         List<PriceInquryChildDO> inquryChildsIng = null;
         for (PriceInquryChildCreateReqVO child : param.getPriceInquryChilds()) {
 
@@ -253,9 +265,38 @@ public class PriceInquryServiceImpl implements PriceInquryService {
             if (ObjectUtil.isNotEmpty(inquryChildsIng)){
                 throw exception(PRODUCT_ALREADY_EXISTS);
             }
+            // 查询产品详情
+            ProductDO productDO = productMapper.selectOne(new LambdaQueryWrapperX<ProductDO>().eq(ProductDO::getProductId, child.getProductId()));
+            if (ObjectUtil.isEmpty(productDO)){
+                throw exception(PRODUCT_NOT_EXISTS);
+            }
+            // 将产品信息添加到子询价单
+            PriceInquryChildDO priceInquryChildDO = new PriceInquryChildDO();
+            priceInquryChildDO.setPriceInquryId(inquryIng.getPriceInquryId());
+            priceInquryChildDO.setProductId(child.getProductId());
+            priceInquryChildDO.setHsSerial(productDO.getHsNo());
+            priceInquryChildDO.setProductSize(productDO.getSize());
+            priceInquryChildDO.setProductColor(productDO.getColourCn());
+            priceInquryChildDO.setProductG(productDO.getGramWeight());
+            priceInquryChildDO.setPackageWay(productDO.getPackagingMethodCn());
+            String[] boxGauge = productDO.getBoxGauge().split("\\*");
+            if(boxGauge.length ==3){
+                priceInquryChildDO.setBoxLength(new BigDecimal(boxGauge[0]));
+                priceInquryChildDO.setBoxWide(new BigDecimal(boxGauge[1]));
+                priceInquryChildDO.setBoxHeight(new BigDecimal(boxGauge[2]));
+            }else {
+                priceInquryChildDO.setBoxLength(BigDecimal.valueOf(0));
+                priceInquryChildDO.setBoxWide(BigDecimal.valueOf(0));
+                priceInquryChildDO.setBoxHeight(BigDecimal.valueOf(0));
+            }
+            priceInquryChildDO.setVolume(productDO.getVolume());
+            priceInquryChildDO.setGrossWeight(productDO.getGrossWeight());
+            priceInquryChildDO.setNetWeight(productDO.getNetWeight());
+            priceInquryChildDO.setMount(child.getMount());
 
+            priceInquryChildDOList.add(priceInquryChildDO);
             //查询产品的供应商
-            SupplyInfoDO supplyInfo= supplyInfoMapper.selectOne("product_id",child.getProductId());
+            /*SupplyInfoDO supplyInfo= supplyInfoMapper.selectOne("product_id",child.getProductId());
             if (ObjectUtil.isEmpty(supplyInfo)){
                 throw exception(PRODUCT_HAVE_NOT_SUPPLY);
             }
@@ -263,8 +304,10 @@ public class PriceInquryServiceImpl implements PriceInquryService {
             entity = PriceInquryChildConvert.INSTANCE.convert(child);
             entity.setPriceInquryId(inquryIng.getPriceInquryId())
                 .setSupplyInfoId(supplyInfo.getSupplyInfoId());
-            priceInquryChildMapper.insert(entity);
+            priceInquryChildMapper.insert(entity);*/
         }
+        // 批处理插入
+        priceInquryChildMapper.insertBatch(priceInquryChildDOList);
     }
 
     @Override

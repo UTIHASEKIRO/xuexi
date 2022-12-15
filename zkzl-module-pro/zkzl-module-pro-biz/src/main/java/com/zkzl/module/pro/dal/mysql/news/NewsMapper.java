@@ -23,7 +23,10 @@ public interface NewsMapper extends BaseMapperX<NewsDO> {
                 .eqIfPresent(NewsDO::getTitle, reqVO.getTitle())
                 .eqIfPresent(NewsDO::getContent, reqVO.getContent())
                 .betweenIfPresent(NewsDO::getCreateTime, reqVO.getCreateTime())
-                .orderByDesc(NewsDO::getCreateTime));
+                .eqIfPresent(NewsDO::getSummary, reqVO.getSummary())
+                .eqIfPresent(NewsDO::getNewsType, reqVO.getNewsType())
+                .eqIfPresent(NewsDO::getShelves, reqVO.getShelves())
+                .orderByDesc(NewsDO::getId));
     }
 
     default List<NewsDO> selectList(NewsExportReqVO reqVO) {
@@ -32,6 +35,9 @@ public interface NewsMapper extends BaseMapperX<NewsDO> {
                 .eqIfPresent(NewsDO::getTitle, reqVO.getTitle())
                 .eqIfPresent(NewsDO::getContent, reqVO.getContent())
                 .betweenIfPresent(NewsDO::getCreateTime, reqVO.getCreateTime())
+                .eqIfPresent(NewsDO::getSummary, reqVO.getSummary())
+                .eqIfPresent(NewsDO::getNewsType, reqVO.getNewsType())
+                .eqIfPresent(NewsDO::getShelves, reqVO.getShelves())
                 .orderByDesc(NewsDO::getId));
     }
 

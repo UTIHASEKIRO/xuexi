@@ -45,8 +45,32 @@
             <result column="net_weight" property="netWeight" />
             <result column="mount" property="mount" />
         </collection>
+        <collection property="productBaseVOList" ofType="com.zkzl.module.pro.controller.admin.product.vo.ProductBaseVO">
+            <result column="product_id" property="productId"/>
+            <result column="type_id" property="typeId"/>
+            <result column="product_name_cn" property="productNameCn"/>
+            <result column="product_name_en" property="productNameEn"/>
+            <result column="product_model" property="productModel"/>
+            <result column="hs_no" property="hsNo"/>
+            <result column="packaging_method_cn" property="packagingMethodCn"/>
+            <result column="packaging_method_en" property="packagingMethodEn"/>
+            <result column="colour_cn" property="colourCn"/>
+            <result column="colour_en" property="colourEn"/>
+            <result column="use_classification_cn" property="useClassificationCn"/>
+            <result column="use_classification_en" property="useClassificationEn"/>
+            <result column="delivery_method_cn" property="deliveryMethodCn"/>
+            <result column="delivery_method_en" property="deliveryMethodEn"/>
+            <result column="gram_weight" property="gramWeight"/>
+            <result column="size" property="size"/>
+            <result column="box_gauge" property="boxGauge"/>
+            <result column="volume" property="volume"/>
+            <result column="gross_weight" property="grossWeight"/>
+            <result column="net_weight" property="netWeight"/>
+            <result column="shipped" property="shipped"/>
+            <result column="mount" property="mount" />
+        </collection>
     </resultMap>
-    
+
 
     <select id="pageManage" resultType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryPageVO">
         /*管理员查看询价表*/
@@ -89,17 +113,19 @@
 
                ppic.id ppicid,ppic.product_id,ppic.hs_serial,ppic.product_desc,ppic.product_size,ppic.product_color,
                ppic.product_g,ppic.package_way,ppic.box_length,ppic.box_height,ppic.box_wide,
-               ppic.volume,ppic.price,ppic.gross_weight,ppic.net_weight,ppic.mount,ppic.unit_price
+               ppic.volume,ppic.price,ppic.gross_weight,ppic.net_weight,ppic.mount,ppic.unit_price,
+               pp.*
         from pro_price_inqury ppi
                  left join pro_cus_user pcu on ppi.buyer_company_id = pcu.user_id
                  left join system_users su on ppi.buyer_company_id = su.id
                  left join pro_price_inqury_child ppic on ppi.price_inqury_id = ppic.price_inqury_id
+        left join pro_product pp on ppic.product_id = pp.product_id
         where ppi.id = #{0}
     </select>
     <select id="inquryHistory"
             resultType="com.zkzl.module.pro.controller.app.priceinqury.vo.PriceInquryHistoryVO">
         /*用户询价历史*/
-        select ppi.id,ppi.price_inqury_id,ppi.create_time,ppi.price,
+        select ppi.id,ppi.price_inqury_id,ppi.create_time,ppi.price,ppi.discount,ppi.total,
                ppi.buyer_ideal_price,ppi.price_date,ppi.status
         from pro_price_inqury ppi
         where ppi.buyer_company_id = #{loginUserId}

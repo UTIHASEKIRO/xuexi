@@ -31,6 +31,15 @@ public class PriceInquryBaseVO {
     @ApiModelProperty(value = "卖方联系电话")
     private String sellerTel;
 
+    @ApiModelProperty(value = "买方公司名称")
+    private String buyerCompanyName;
+
+    @ApiModelProperty(value = "买方联系地址")
+    private String buyerCompanyAddress;
+
+    @ApiModelProperty(value = "买方联系人")
+    private String buyerContact;
+
     @ApiModelProperty(value = "客户理想价格")
     private String buyerIdealPrice;
 

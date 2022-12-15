@@ -78,7 +78,7 @@ public interface ProductService {
     /*
     * 用户端 获取产品列表
     * */
-    PageResult<ProductVO> pageApp(ProductReqVO productReqVO);
+    PageResult<ProductDescVO> pageApp(ProductReqVO productReqVO);
 
     /*
     * 用户端查看产品详情
@@ -86,5 +86,5 @@ public interface ProductService {
     ProductDescVO getDesc(Long id);
 
     /*根据产品id 查询相关产品*/
-    PageResult<ProductVO> recommend(Long id);
+    PageResult<ProductDescVO> recommend(Long id);
 }

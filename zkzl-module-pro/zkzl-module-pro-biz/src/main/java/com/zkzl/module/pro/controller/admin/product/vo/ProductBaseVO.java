@@ -4,6 +4,8 @@ import com.zkzl.module.pro.dal.dataobject.productcertificate.ProductCertificateD
 import com.zkzl.module.pro.dal.dataobject.productparameters.ProductParametersDO;
 import com.zkzl.module.pro.dal.dataobject.productpic.ProductPicDO;
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.util.*;
 import io.swagger.annotations.*;
 import javax.validation.constraints.*;
@@ -67,13 +69,13 @@ public class ProductBaseVO {
     private String boxGauge;
 
     @ApiModelProperty(value = "体积", required = true)
-    private String volume;
+    private BigDecimal volume;
 
     @ApiModelProperty(value = "毛重", required = true)
-    private String grossWeight;
+    private BigDecimal grossWeight;
 
     @ApiModelProperty(value = "净重", required = true)
-    private String netWeight;
+    private BigDecimal netWeight;
 
     @ApiModelProperty(value = "1上架0下架", required = true)
     private String shipped;
@@ -86,4 +88,9 @@ public class ProductBaseVO {
 
     @ApiModelProperty(value = "证书", required = true)
     private List<ProductCertificateDO> productCertificateDOS;
+
+    /*
+     *  数量
+     * */
+    private Long mount;
 }

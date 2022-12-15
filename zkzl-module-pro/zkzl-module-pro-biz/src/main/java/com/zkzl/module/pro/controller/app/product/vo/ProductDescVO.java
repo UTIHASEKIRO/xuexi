@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @ApiModel("app - 产品详情 返回 VO")
@@ -76,23 +77,38 @@ public class ProductDescVO{
      */
     @ApiModelProperty(value = "箱规")
     private String boxGauge;
+
+    /**
+     * 箱规-长
+     */
+    private BigDecimal boxLength;
+    /**
+     * 箱规-高
+     */
+    private BigDecimal boxHeight;
+    /**
+     * 箱规-宽
+     */
+    private BigDecimal boxWide;
+
+
     /**
      * 体积
      */
     @ApiModelProperty(value = "体积")
-    private String volume;
+    private BigDecimal volume;
     /**
      * 毛重
      */
     @ApiModelProperty(value = "毛重")
-    private String grossWeight;
+    private BigDecimal grossWeight;
     /**
      * 净重
      */
     @ApiModelProperty(value = "净重")
-    private String netWeight;
+    private BigDecimal netWeight;
 
-    @ApiModelProperty(value = "是否加入询价")
+    @ApiModelProperty(value = "是否加入询价 1已加入 0未加入")
     private String isInqury;
 
     @ApiModelProperty(value = "产品图片")

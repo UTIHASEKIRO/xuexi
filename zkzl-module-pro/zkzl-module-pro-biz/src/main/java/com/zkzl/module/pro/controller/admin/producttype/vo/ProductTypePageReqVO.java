@@ -26,6 +26,9 @@ public class ProductTypePageReqVO extends PageParam {
     @ApiModelProperty(value = "类别名称-英文")
     private String typeNameEn;
 
+    @ApiModelProperty(value = "类别图片")
+    private String typePic;
+
     @ApiModelProperty(value = "排序")
     private Integer sort;
 

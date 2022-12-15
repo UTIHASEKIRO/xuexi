@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.service.producttype;
 
+import cn.hutool.core.collection.ListUtil;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
@@ -82,10 +83,24 @@ public class ProductTypeServiceImpl implements ProductTypeService {
                 .likeIfPresent(ProductTypeDO::getTypeNameCn,typeName)
                 .orX()
                 .likeIfPresent(ProductTypeDO::getTypeNameEn,typeName)
+                .orderByAsc(ProductTypeDO::getSort)
         );
-        return streamMethod("0",productTypeDOS);
+        return productTypeDOS;
+        //return streamMethod("0",productTypeDOS);
     }
 
+    @Override
+    public List<ProductTypeDO> getHeaderDuctTypeList(String typeName) {
+        List<ProductTypeDO> productTypeDOS = ductTypeMapper.selectList(new LambdaQueryWrapperX<ProductTypeDO>()
+                .likeIfPresent(ProductTypeDO::getTypeNameCn,typeName)
+                .orX()
+                .likeIfPresent(ProductTypeDO::getTypeNameEn,typeName)
+                .orderByAsc(ProductTypeDO::getSort)
+                .last("limit 16")
+        );
+        return productTypeDOS;
+        //return streamMethod("0",productTypeDOS);
+    }
     @Override
     public PageResult<ProductTypeDO> getductTypePage(ProductTypePageReqVO pageReqVO) {
         return ductTypeMapper.selectPage(pageReqVO);
@@ -111,6 +126,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
                     return item;
                 })
                 .collect(Collectors.toList());
+        if(list.size() == 0) list = null;
         return list;
     }
 }

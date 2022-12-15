@@ -66,4 +66,5 @@ public interface ProductTypeService {
      */
     List<ProductTypeDO> getductTypeList(ProductTypeExportReqVO exportReqVO);
 
+    List<ProductTypeDO> getHeaderDuctTypeList(String typeName);
 }

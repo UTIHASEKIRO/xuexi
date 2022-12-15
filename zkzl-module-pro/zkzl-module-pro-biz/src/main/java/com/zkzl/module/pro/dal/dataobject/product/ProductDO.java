@@ -1,6 +1,8 @@
 package com.zkzl.module.pro.dal.dataobject.product;
 
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.util.*;
 import com.baomidou.mybatisplus.annotation.*;
 import com.zkzl.framework.mybatis.core.dataobject.BaseDO;
@@ -96,15 +98,15 @@ public class ProductDO extends BaseDO {
     /**
      * 体积
      */
-    private String volume;
+    private BigDecimal volume;
     /**
      * 毛重
      */
-    private String grossWeight;
+    private BigDecimal grossWeight;
     /**
      * 净重
      */
-    private String netWeight;
+    private BigDecimal netWeight;
     /**
      * 1上架0下架
      */

@@ -5,6 +5,7 @@ import com.zkzl.framework.common.pojo.CommonResult;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.common.util.servlet.ServletUtils;
 import com.zkzl.framework.operatelog.core.annotations.OperateLog;
+import com.zkzl.framework.security.core.annotations.PreAuthenticated;
 import com.zkzl.module.infra.controller.admin.file.vo.file.FilePageReqVO;
 import com.zkzl.module.infra.controller.admin.file.vo.file.FileRespVO;
 import com.zkzl.module.infra.convert.file.FileConvert;
@@ -40,11 +41,12 @@ public class FileController {
 
     @PostMapping("/upload")
     @ApiOperation("上传文件")
+    @PermitAll
     @ApiImplicitParams({
             @ApiImplicitParam(name = "file", value = "文件附件", required = true, dataTypeClass = MultipartFile.class),
             @ApiImplicitParam(name = "path", value = "文件路径", example = "zkzlyuanma.png", dataTypeClass = String.class)
     })
-    @OperateLog(logArgs = false) // 上传文件，没有记录操作日志的必要
+    @OperateLog(enable = false) // 上传文件，没有记录操作日志的必要
     public CommonResult<String> uploadFile(@RequestParam("file") MultipartFile file,
                                            @RequestParam(value = "path", required = false) String path) throws Exception {
         return success(fileService.createFile(file.getOriginalFilename(), path, IoUtil.readBytes(file.getInputStream())));
