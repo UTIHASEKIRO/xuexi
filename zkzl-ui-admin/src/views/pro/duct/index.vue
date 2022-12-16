@@ -378,8 +378,8 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      const id = row.id;
-      getduct(id).then(response => {
+      const id = row.productId;
+      getduct({productId:id}).then(response => {
         this.form = response.data;
         this.open = true;
         this.title = "修改产品";

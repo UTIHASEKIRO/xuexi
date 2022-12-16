@@ -27,10 +27,11 @@ export function deleteduct(id) {
 }
 
 // 获得产品
-export function getduct(id) {
+export function getduct(params) {
   return request({
-    url: '/pro/duct/get?id=' + id,
-    method: 'get'
+    url: '/pro/duct/get'  ,
+    method: 'get',
+    params
   })
 }
 
