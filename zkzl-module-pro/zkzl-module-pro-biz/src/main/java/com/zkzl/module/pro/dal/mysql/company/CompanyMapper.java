@@ -19,25 +19,11 @@ public interface CompanyMapper extends BaseMapperX<CompanyDO> {
 
     default PageResult<CompanyDO> selectPage(CompanyPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<CompanyDO>()
-                .eqIfPresent(CompanyDO::getPicUrl, reqVO.getPicUrl())
-                .likeIfPresent(CompanyDO::getName, reqVO.getName())
-                .eqIfPresent(CompanyDO::getIntroduce, reqVO.getIntroduce())
-                .eqIfPresent(CompanyDO::getAddress, reqVO.getAddress())
-                .eqIfPresent(CompanyDO::getMobile, reqVO.getMobile())
-                .eqIfPresent(CompanyDO::getEmail, reqVO.getEmail())
-                .betweenIfPresent(CompanyDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(CompanyDO::getId));
     }
 
     default List<CompanyDO> selectList(CompanyExportReqVO reqVO) {
         return selectList(new LambdaQueryWrapperX<CompanyDO>()
-                .eqIfPresent(CompanyDO::getPicUrl, reqVO.getPicUrl())
-                .likeIfPresent(CompanyDO::getName, reqVO.getName())
-                .eqIfPresent(CompanyDO::getIntroduce, reqVO.getIntroduce())
-                .eqIfPresent(CompanyDO::getAddress, reqVO.getAddress())
-                .eqIfPresent(CompanyDO::getMobile, reqVO.getMobile())
-                .eqIfPresent(CompanyDO::getEmail, reqVO.getEmail())
-                .betweenIfPresent(CompanyDO::getCreateTime, reqVO.getCreateTime())
                 .orderByDesc(CompanyDO::getId));
     }
 

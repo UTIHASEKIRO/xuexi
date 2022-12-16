@@ -2,56 +2,21 @@
   <div class="app-container">
 
     <!-- 搜索工作栏 -->
-    <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="公司名称" prop="name">
-        <el-input v-model="queryParams.name" placeholder="请输入公司名称" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="电话" prop="mobile">
-        <el-input v-model="queryParams.mobile" placeholder="请输入电话" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
-        <el-date-picker v-model="queryParams.createTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
-        <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
-      </el-form-item>
-    </el-form>
 
     <!-- 操作工具栏 -->
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-                   v-hasPermi="['pro:company:create']">新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
-                   v-hasPermi="['pro:company:export']">导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
 
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
-      <el-table-column label="序号id" align="center" prop="id" />
-      <!-- <el-table-column label="图片" align="center" prop="picUrl" /> -->
-      <el-table-column label="公司名称" align="center" prop="name" />
-      <el-table-column label="公司介绍" align="center" prop="introduce" />
-      <el-table-column label="公司地址" align="center" prop="address" />
       <el-table-column label="电话" align="center" prop="mobile" />
       <el-table-column label="邮箱" align="center" prop="email" />
-      <el-table-column label="创建时间" align="center" prop="createTime" width="180">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.createTime) }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column label="公司名称-中" align="center" prop="nameCn" />
+      <el-table-column label="公司名称-英" align="center" prop="nameEn" />
+      <el-table-column label="公司地址-中" align="center" prop="addressCn" />
+      <el-table-column label="公司地址-英" align="center" prop="addressEn" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                      v-hasPermi="['pro:company:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['pro:company:delete']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -62,28 +27,38 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="图片" prop="picUrl">
-          <!-- <el-input v-model="form.picUrl" placeholder="请输入图片" /> -->
-          <imageUpload v-model="form.picUrl" :limit="20"/>
-        </el-form-item>
-        
-        <el-form-item label="公司名称" prop="name">
-          <el-input v-model="form.name" placeholder="请输入公司名称" />
-        </el-form-item>
-        <el-form-item label="公司介绍" prop="introduce">
-          <el-input v-model="form.introduce" placeholder="请输入公司介绍" />
-        </el-form-item>
-        <el-form-item label="业务介绍" prop="businessIntroduce">
-          <el-input v-model="form.businessIntroduce" placeholder="请输入业务介绍" />
-        </el-form-item>
-        <el-form-item label="公司地址" prop="address">
-          <el-input v-model="form.address" placeholder="请输入公司地址" />
+        <el-form-item label="图片">
+          <imageUpload v-model="form.picUrl"/>
         </el-form-item>
         <el-form-item label="电话" prop="mobile">
           <el-input v-model="form.mobile" placeholder="请输入电话" />
         </el-form-item>
         <el-form-item label="邮箱" prop="email">
           <el-input v-model="form.email" placeholder="请输入邮箱" />
+        </el-form-item>
+        <el-form-item label="公司名称-中" prop="nameCn">
+          <el-input v-model="form.nameCn" placeholder="请输入公司名称-中" />
+        </el-form-item>
+        <el-form-item label="公司名称-英" prop="nameEn">
+          <el-input v-model="form.nameEn" placeholder="请输入公司名称-英" />
+        </el-form-item>
+        <el-form-item label="公司介绍-中">
+          <editor v-model="form.introduceCn" :min-height="192"/>
+        </el-form-item>
+        <el-form-item label="公司介绍-英">
+          <editor v-model="form.introduceEn" :min-height="192"/>
+        </el-form-item>
+        <el-form-item label="业务介绍-中">
+          <editor v-model="form.businessIntroduceCn" :min-height="192"/>
+        </el-form-item>
+        <el-form-item label="业务介绍-英">
+          <editor v-model="form.businessIntroduceEn" :min-height="192"/>
+        </el-form-item>
+        <el-form-item label="公司地址-中" prop="addressCn">
+          <el-input v-model="form.addressCn" placeholder="请输入公司地址-中" />
+        </el-form-item>
+        <el-form-item label="公司地址-英" prop="addressEn">
+          <el-input v-model="form.addressEn" placeholder="请输入公司地址-英" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -97,11 +72,13 @@
 <script>
 import { createCompany, updateCompany, deleteCompany, getCompany, getCompanyPage, exportCompanyExcel } from "@/api/pro/company";
 import ImageUpload from '@/components/ImageUpload';
+import Editor from '@/components/Editor';
 
 export default {
   name: "Company",
   components: {
-    ImageUpload
+    ImageUpload,
+    Editor,
   },
   data() {
     return {
@@ -123,18 +100,22 @@ export default {
       queryParams: {
         pageNo: 1,
         pageSize: 10,
-        picUrl: null,
-        name: null,
-        introduce: null,
-        address: null,
-        mobile: null,
-        email: null,
-        createTime: [],
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
+        picUrl: [{ required: true, message: "图片不能为空", trigger: "blur" }],
+        mobile: [{ required: true, message: "电话不能为空", trigger: "blur" }],
+        email: [{ required: true, message: "邮箱不能为空", trigger: "blur" }],
+        nameCn: [{ required: true, message: "公司名称-中不能为空", trigger: "blur" }],
+        nameEn: [{ required: true, message: "公司名称-英不能为空", trigger: "blur" }],
+        introduceCn: [{ required: true, message: "公司介绍-中不能为空", trigger: "blur" }],
+        introduceEn: [{ required: true, message: "公司介绍-英不能为空", trigger: "blur" }],
+        businessIntroduceCn: [{ required: true, message: "业务介绍-中不能为空", trigger: "blur" }],
+        businessIntroduceEn: [{ required: true, message: "业务介绍-英不能为空", trigger: "blur" }],
+        addressCn: [{ required: true, message: "公司地址-中不能为空", trigger: "blur" }],
+        addressEn: [{ required: true, message: "公司地址-英不能为空", trigger: "blur" }],
       }
     };
   },
@@ -160,13 +141,17 @@ export default {
     /** 表单重置 */
     reset() {
       this.form = {
-        id: undefined,
         picUrl: undefined,
-        name: undefined,
-        introduce: undefined,
-        address: undefined,
         mobile: undefined,
         email: undefined,
+        nameCn: undefined,
+        nameEn: undefined,
+        introduceCn: undefined,
+        introduceEn: undefined,
+        businessIntroduceCn: undefined,
+        businessIntroduceEn: undefined,
+        addressCn: undefined,
+        addressEn: undefined,
       };
       this.resetForm("form");
     },

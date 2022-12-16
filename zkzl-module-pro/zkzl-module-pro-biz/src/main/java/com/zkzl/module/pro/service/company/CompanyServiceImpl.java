@@ -1,9 +1,6 @@
 package com.zkzl.module.pro.service.company;
 
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
-import com.zkzl.module.pro.controller.admin.slidesshow.vo.SlidesShowRespVO;
-import com.zkzl.module.pro.convert.slidesshow.SlidesShowConvert;
-import com.zkzl.module.pro.dal.dataobject.slidesshow.SlidesShowDO;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;

@@ -12,25 +12,47 @@ import javax.validation.constraints.*;
 @Data
 public class CompanyBaseVO {
 
-    @ApiModelProperty(value = "图片")
+    @ApiModelProperty(value = "图片", required = true)
+    @NotNull(message = "图片不能为空")
     private String picUrl;
 
-    @ApiModelProperty(value = "公司名称")
-    private String name;
-
-    @ApiModelProperty(value = "公司介绍")
-    private String introduce;
-
-    @ApiModelProperty(value = "业务介绍")
-    private String businessIntroduce;
-
-    @ApiModelProperty(value = "公司地址")
-    private String address;
-
-    @ApiModelProperty(value = "电话")
+    @ApiModelProperty(value = "电话", required = true)
+    @NotNull(message = "电话不能为空")
     private String mobile;
 
-    @ApiModelProperty(value = "邮箱")
+    @ApiModelProperty(value = "邮箱", required = true)
+    @NotNull(message = "邮箱不能为空")
     private String email;
 
+    @ApiModelProperty(value = "公司名称_中文", required = true)
+    @NotNull(message = "公司名称_中文不能为空")
+    private String nameCn;
+
+    @ApiModelProperty(value = "公司名称_英文", required = true)
+    @NotNull(message = "公司名称_英文不能为空")
+    private String nameEn;
+
+    @ApiModelProperty(value = "公司地址_中文", required = true)
+    @NotNull(message = "公司地址_中文不能为空")
+    private String addressCn;
+
+    @ApiModelProperty(value = "公司地址_英文", required = true)
+    @NotNull(message = "公司地址_英文不能为空")
+    private String addressEn;
+
+    @ApiModelProperty(value = "公司介绍_中文", required = true)
+    @NotNull(message = "公司介绍_中文不能为空")
+    private String introduceCn;
+
+    @ApiModelProperty(value = "公司介绍_英文", required = true)
+    @NotNull(message = "公司介绍_英文不能为空")
+    private String introduceEn;
+
+    @ApiModelProperty(value = "业务介绍_中文", required = true)
+    @NotNull(message = "业务介绍_中文不能为空")
+    private String businessIntroduceCn;
+
+    @ApiModelProperty(value = "业务介绍_英文", required = true)
+    @NotNull(message = "业务介绍_英文不能为空")
+    private String businessIntroduceEn;
 }

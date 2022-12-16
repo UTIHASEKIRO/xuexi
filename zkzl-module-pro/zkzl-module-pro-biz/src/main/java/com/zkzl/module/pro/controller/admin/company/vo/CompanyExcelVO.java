@@ -14,28 +14,22 @@ import com.alibaba.excel.annotation.ExcelProperty;
 @Data
 public class CompanyExcelVO {
 
-    @ExcelProperty("序号id")
-    private Long id;
-
-    @ExcelProperty("图片")
-    private String picUrl;
-
-    @ExcelProperty("公司名称")
-    private String name;
-
-    @ExcelProperty("公司介绍")
-    private String introduce;
-
-    @ExcelProperty("公司地址")
-    private String address;
-
     @ExcelProperty("电话")
     private String mobile;
 
     @ExcelProperty("邮箱")
     private String email;
 
-    @ExcelProperty("创建时间")
-    private Date createTime;
+    @ExcelProperty("公司名称_中文")
+    private String nameCn;
+
+    @ExcelProperty("公司名称_英文")
+    private String nameEn;
+
+    @ExcelProperty("公司地址_中文")
+    private String addressCn;
+
+    @ExcelProperty("公司地址_英文")
+    private String addressEn;
 
 }
