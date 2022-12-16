@@ -16,4 +16,7 @@ public class CompanyRespVO extends CompanyBaseVO {
     @ApiModelProperty(value = "创建时间", required = true)
     private Date createTime;
 
+    @ApiModelProperty(value = "图片列表")
+    private List<String> picUrlList;
+
 }

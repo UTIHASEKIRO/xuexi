@@ -1,10 +1,16 @@
 package com.zkzl.module.pro.service.company;
 
+import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.zkzl.module.pro.controller.admin.slidesshow.vo.SlidesShowRespVO;
+import com.zkzl.module.pro.convert.slidesshow.SlidesShowConvert;
+import com.zkzl.module.pro.dal.dataobject.slidesshow.SlidesShowDO;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 import com.zkzl.module.pro.controller.admin.company.vo.*;
 import com.zkzl.module.pro.dal.dataobject.company.CompanyDO;
 import com.zkzl.framework.common.pojo.PageResult;
@@ -77,6 +83,14 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public List<CompanyDO> getCompanyList(CompanyExportReqVO exportReqVO) {
         return companyMapper.selectList(exportReqVO);
+    }
+
+    @Override
+    public CompanyRespVO getCompanyIntroduction() {
+        CompanyDO companyDO = companyMapper.selectOne(new LambdaQueryWrapperX<>());
+        CompanyRespVO companyRespVO = CompanyConvert.INSTANCE.convert(companyDO);
+        companyRespVO.setPicUrlList(Arrays.stream(companyRespVO.getPicUrl().split(",")).collect(Collectors.toList()));
+        return companyRespVO;
     }
 
 }

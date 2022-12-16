@@ -3,8 +3,10 @@ package com.zkzl.module.pro.service.company;
 import java.util.*;
 import javax.validation.*;
 import com.zkzl.module.pro.controller.admin.company.vo.*;
+import com.zkzl.module.pro.controller.admin.slidesshow.vo.SlidesShowRespVO;
 import com.zkzl.module.pro.dal.dataobject.company.CompanyDO;
 import com.zkzl.framework.common.pojo.PageResult;
+import com.zkzl.module.pro.dal.dataobject.slidesshow.SlidesShowDO;
 
 /**
  * 公司信息维护 Service 接口
@@ -67,4 +69,5 @@ public interface CompanyService {
      */
     List<CompanyDO> getCompanyList(CompanyExportReqVO exportReqVO);
 
+    CompanyRespVO getCompanyIntroduction();
 }
