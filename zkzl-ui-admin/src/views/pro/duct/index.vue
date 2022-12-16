@@ -57,7 +57,7 @@
                      v-hasPermi="['pro:duct:update']">修改</el-button>
 
           <el-button size="mini" type="text" icon="el-icon-delete" @click="updateShipped(scope.row)"
-                     v-hasPermi="['pro:duct:update']">{{ row.shipped=== '0'?'上架':'下架'}}</el-button>
+                     v-hasPermi="['pro:duct:update']">{{ scope.row.shipped=== '0'?'上架':'下架'}}</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -282,7 +282,8 @@ export default {
       });
     },
     updateShipped(row){
-var status = row.shipped=== '0'?'上架':'下架'
+      console.log('updateShipped',row)
+      var status = row.shipped=== '0'?'上架':'下架'
       this.$modal.confirm('是否确认'+status+'产品名称为"' + row.productNameCn + '"的数据项?').then(function() {
           return updateShipped({productId:row.productId});
         }).then(() => {
