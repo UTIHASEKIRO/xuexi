@@ -141,4 +141,26 @@
                  left join pro_product pp on pog.product_id = pp.product_id
         where po.order_id = #{0}
     </select>
+    <select id="getPage" resultType="com.zkzl.module.pro.dal.dataobject.order.OrderDO">
+        select po.*,su.userName
+        from pro_order po
+        left join system_users su on po.user_id = su.id
+        <where>
+            <if test="req.username != null and req.username != ''">
+                and su.username like concat('%',#{req.username},'%')
+            </if>
+            <if test="req.priceDate !=null and req.priceDate.length>0">
+                and po.price_date between #{req.priceDate.[0]} and #{req.priceDate.[1]}
+            </if>
+            <if test="req.effectiveDate !=null and req.effectiveDate.length>0">
+                and po.effective_date between #{req.effectiveDate.[0]} and #{req.effectiveDate.[1]}
+            </if>
+            <if test="req.status != '' and req.status != null">
+                and po.status = #{req.status}
+            </if>
+            <if test="req.createTime!=null and req.createTime.length>0">
+                and po.create_time between #{req.effectiveDate.[0]} and #{req.effectiveDate.[1]}
+            </if>
+        </where>
+    </select>
 </mapper>
