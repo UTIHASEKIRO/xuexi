@@ -29,4 +29,13 @@ public class NewsExcelVO {
     @ExcelProperty("创建时间")
     private Date createTime;
 
+    @ExcelProperty("概要")
+    private String summary;
+
+    @ExcelProperty("1公司新闻2行业新闻3通知通告")
+    private Integer newsType;
+
+    @ExcelProperty("是否上架 1上架0下架")
+    private String shelves;
+
 }

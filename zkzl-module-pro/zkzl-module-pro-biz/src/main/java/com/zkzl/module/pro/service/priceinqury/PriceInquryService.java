@@ -78,7 +78,7 @@ public interface PriceInquryService {
     /*查看询价表及子表*/
     PriceInquryAndChildsVO getPriceInquryAndChilds(Long id);
     /*用户端产品添加询价信息*/
-    void addPriceInqury(PriceInquryCreateReqVO param);
+    void addPriceInqury(PriceInquryCreateReqVO productId);
     /*用户询价历史*/
     PageResult<PriceInquryHistoryVO> inquryHistory(PageParam param);
 }

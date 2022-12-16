@@ -37,6 +37,12 @@ public class PriceInquryHistoryVO extends PageParam{
     @ApiModelProperty(value = "总价格")
     private BigDecimal price;
 
+    @ApiModelProperty(value = "折扣")
+    private BigDecimal discount;
+
+    @ApiModelProperty(value = "合计")
+    private BigDecimal total;
+
     @ApiModelProperty(value = " 0初始化状态 需要业务员补充卖方信息" +
             "    * 1客户询价后状态  需要管理员即老板报价" +
             "    * 2老板确认后状态  待签约" +

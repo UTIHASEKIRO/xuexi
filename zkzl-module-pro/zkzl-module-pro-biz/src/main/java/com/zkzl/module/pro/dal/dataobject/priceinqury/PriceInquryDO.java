@@ -52,6 +52,22 @@ public class PriceInquryDO extends BaseDO {
      */
     private Long buyerCompanyId;
     /**
+     * 买方公司名称
+     */
+    private String buyerCompanyName;
+    /**
+     * 买方联系地址
+     */
+    private String buyerCompanyAddress;
+    /**
+     * 买方联系人
+     */
+    private String buyerContact;
+    /**
+     * 买方联系电话
+     */
+    private String buyerTel;
+    /**
      * "客户理想价格"
      */
     private String buyerIdealPrice;

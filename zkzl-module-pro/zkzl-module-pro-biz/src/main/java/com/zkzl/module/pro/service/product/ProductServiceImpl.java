@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
+import com.zkzl.framework.security.core.util.SecurityFrameworkUtils;
 import com.zkzl.module.pro.controller.admin.product.vo.*;
 import com.zkzl.module.pro.controller.app.product.vo.ProductDescVO;
 import com.zkzl.module.pro.controller.app.product.vo.ProductReqVO;
@@ -20,11 +21,13 @@ import com.zkzl.module.pro.dal.mysql.product.ProductMapper;
 import com.zkzl.module.pro.dal.mysql.productcertificate.ProductCertificateMapper;
 import com.zkzl.module.pro.dal.mysql.productparameters.ProductParametersMapper;
 import com.zkzl.module.pro.dal.mysql.productpic.ProductPicMapper;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -200,31 +203,66 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public PageResult<ProductVO> pageApp(ProductReqVO productReqVO) {
-        IPage<ProductVO> mPage = MyBatisUtils.buildPage(productReqVO);
+    public PageResult<ProductDescVO> pageApp(ProductReqVO productReqVO) {
+        IPage<ProductDescVO> mPage = MyBatisUtils.buildPage(productReqVO);
         ductMapper.pageApp(mPage,productReqVO);
-        return new PageResult<>(mPage.getRecords(), mPage.getTotal());
+        // 设置产品长宽高
+        return getProductDescVOPageResult(mPage);
     }
 
     @Override
     public ProductDescVO getDesc(Long id) {
-        return ductMapper.getDesc(id);
+        ProductDescVO productDescVO = ductMapper.getDesc(id);
+
+        String[] split = productDescVO.getBoxGauge().split("\\*");
+        if(split.length ==3){
+            productDescVO.setBoxLength(new BigDecimal(split[0]));
+            productDescVO.setBoxWide(new BigDecimal(split[1]));
+            productDescVO.setBoxHeight(new BigDecimal(split[2]));
+        }else {
+            productDescVO.setBoxLength(BigDecimal.valueOf(0));
+            productDescVO.setBoxWide(BigDecimal.valueOf(0));
+            productDescVO.setBoxHeight(BigDecimal.valueOf(0));
+        }
+
+        // 设置是否已加入询价标志
+        /*Long userId = SecurityFrameworkUtils.getLoginUserId();
+        productDescVO.setIsInqury(ductMapper.getIsInqury(productDescVO.getProductId(),userId));*/
+        return productDescVO;
     }
 
     @Override
-    public PageResult<ProductVO> recommend(Long id) {
+    public PageResult<ProductDescVO> recommend(Long id) {
         ProductDO product = ductMapper.selectById(id);
 
         ProductReqVO pageParam = new ProductReqVO();
         pageParam.setTypeId(product.getTypeId())
                 .setId(id);
 
-        IPage<ProductVO> mPage = MyBatisUtils.buildPage(pageParam);
+        IPage<ProductDescVO> mPage = MyBatisUtils.buildPage(pageParam);
         ductMapper.recommend(mPage,pageParam);
 
         if (mPage.getRecords().size() == 0){
             ductMapper.pageApp(mPage,new ProductReqVO());
         }
+        // 设置产品长宽高
+        return getProductDescVOPageResult(mPage);
+    }
+
+    @NotNull
+    private PageResult<ProductDescVO> getProductDescVOPageResult(IPage<ProductDescVO> mPage) {
+        mPage.getRecords().forEach(ProductDescVO->{
+            String[] split = ProductDescVO.getBoxGauge().split("\\*");
+            if(split.length ==3){
+                ProductDescVO.setBoxLength(new BigDecimal(split[0]));
+                ProductDescVO.setBoxWide(new BigDecimal(split[1]));
+                ProductDescVO.setBoxHeight(new BigDecimal(split[2]));
+            }else {
+                ProductDescVO.setBoxLength(BigDecimal.valueOf(0));
+                ProductDescVO.setBoxWide(BigDecimal.valueOf(0));
+                ProductDescVO.setBoxHeight(BigDecimal.valueOf(0));
+            }
+        });
 
         return new PageResult<>(mPage.getRecords(), mPage.getTotal());
     }

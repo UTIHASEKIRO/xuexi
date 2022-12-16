@@ -29,5 +29,13 @@ public class SlidesShowDO extends BaseDO {
      * 图片
      */
     private String picUrl;
+    /**
+     * 排序
+     */
+    private Integer sort;
+    /**
+     * 1上架 0下架
+     */
+    private String isShelf;
 
 }

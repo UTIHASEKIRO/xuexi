@@ -3,6 +3,7 @@ package com.zkzl.module.pro.controller.app.priceinqury;
 import com.zkzl.framework.common.pojo.CommonResult;
 import com.zkzl.framework.common.pojo.PageParam;
 import com.zkzl.framework.common.pojo.PageResult;
+import com.zkzl.framework.security.core.annotations.PreAuthenticated;
 import com.zkzl.module.pro.controller.admin.priceinqury.vo.*;
 import com.zkzl.module.pro.controller.app.priceinqury.vo.PriceInquryHistoryVO;
 import com.zkzl.module.pro.service.priceinqury.PriceInquryService;
@@ -29,6 +30,7 @@ public class AppPriceInquryController {
 
     @PostMapping("/add")
     @ApiOperation("用户端产品添加询价信息")
+    @PreAuthenticated
     public CommonResult<Boolean> addPriceInqury(@Valid @RequestBody PriceInquryCreateReqVO param) {
         priceInquryService.addPriceInqury(param);
         return success(true);
@@ -36,6 +38,7 @@ public class AppPriceInquryController {
 
     @GetMapping("/get")
     @ApiOperation("用户端获得询价")
+    @PreAuthenticated
     @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
     public CommonResult<PriceInquryAndChildsVO> getPriceInqury(@RequestParam("id") Long id) {
         PriceInquryAndChildsVO priceInqury = priceInquryService.getPriceInquryAndChilds(id);
@@ -44,6 +47,7 @@ public class AppPriceInquryController {
 
     @GetMapping("/inquryHistory")
     @ApiOperation("用户询价历史")
+    @PreAuthenticated
     public CommonResult<PageResult<PriceInquryHistoryVO>> inquryHistory(PageParam param) {
         PageResult<PriceInquryHistoryVO> results = priceInquryService.inquryHistory(param);
         return success(results);
@@ -51,10 +55,10 @@ public class AppPriceInquryController {
 
     @PutMapping("/update")
     @ApiOperation("更新询价")
+    @PreAuthenticated
     public CommonResult<Boolean> updatePriceInqury(@Valid @RequestBody PriceInquryUpdateReqVO updateReqVO) {
         priceInquryService.updatePriceInqury(updateReqVO);
         return success(true);
     }
-
 
 }

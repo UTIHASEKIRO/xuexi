@@ -16,7 +16,6 @@ public class CusUserCreateReqVO extends UserCreateReqVO {
     private Long userId;
 
     @ApiModelProperty(value = "联系地址", required = true)
-    @NotNull(message = "联系地址不能为空")
     private String address;
 
     @ApiModelProperty(value = "公司名称", required = true)
@@ -28,5 +27,6 @@ public class CusUserCreateReqVO extends UserCreateReqVO {
     private String contectName;
 
     @ApiModelProperty(value = "营业执照")
+    @NotNull(message = "营业执照不能为空")
     private String businessLicense;
 }

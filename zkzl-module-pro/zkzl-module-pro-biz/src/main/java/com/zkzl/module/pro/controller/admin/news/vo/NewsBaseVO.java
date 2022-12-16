@@ -21,4 +21,14 @@ public class NewsBaseVO {
     @ApiModelProperty(value = "内容")
     private String content;
 
+    @ApiModelProperty(value = "概要")
+    private String summary;
+
+    @ApiModelProperty(value = "1公司新闻2行业新闻3通知通告", required = true)
+    @NotNull(message = "1公司新闻2行业新闻3通知通告不能为空")
+    private Integer newsType;
+
+    @ApiModelProperty(value = "是否上架 1上架0下架")
+    private String shelves;
+
 }

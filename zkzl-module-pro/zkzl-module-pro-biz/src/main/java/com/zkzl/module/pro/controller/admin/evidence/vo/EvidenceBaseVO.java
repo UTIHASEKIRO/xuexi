@@ -22,8 +22,7 @@ public class EvidenceBaseVO {
     @NotNull(message = "订单id不能为空")
     private String orderId;
 
-    @ApiModelProperty(value = "定金截图", required = true)
-    @NotNull(message = "定金截图不能为空")
+    @ApiModelProperty(value = "定金截图")
     private String depositPic;
 
     @ApiModelProperty(value = "尾款截图")

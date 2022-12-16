@@ -15,4 +15,10 @@ public class SlidesShowBaseVO {
     @ApiModelProperty(value = "图片")
     private String picUrl;
 
+    @ApiModelProperty(value = "排序")
+    private Integer sort;
+
+    @ApiModelProperty(value = "1上架 0下架")
+    private String isShelf;
+
 }

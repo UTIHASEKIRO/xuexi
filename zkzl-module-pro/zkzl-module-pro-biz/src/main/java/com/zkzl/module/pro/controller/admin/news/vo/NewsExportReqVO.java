@@ -25,4 +25,13 @@ public class NewsExportReqVO {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date[] createTime;
 
+    @ApiModelProperty(value = "概要")
+    private String summary;
+
+    @ApiModelProperty(value = "1公司新闻2行业新闻3通知通告")
+    private Integer newsType;
+
+    @ApiModelProperty(value = "是否上架 1上架0下架")
+    private String shelves;
+
 }

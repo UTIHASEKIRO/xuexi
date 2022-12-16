@@ -1,6 +1,8 @@
 package com.zkzl.module.pro.controller.admin.product.vo;
 
 import lombok.*;
+
+import java.math.BigDecimal;
 import java.util.*;
 import io.swagger.annotations.*;
 
@@ -72,13 +74,13 @@ public class ProductExcelVO {
     private String volume;
 
     @ExcelProperty("毛重")
-    private String grossWeight;
+    private BigDecimal grossWeight;
 
     @ExcelProperty("净重")
-    private String netWeight;
+    private BigDecimal netWeight;
 
     @ExcelProperty("1上架0下架")
-    private String shipped;
+    private BigDecimal shipped;
 
     @ExcelProperty("创建时间")
     private Date createTime;
