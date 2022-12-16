@@ -1,7 +1,10 @@
 package com.zkzl.module.pro.service.order;
 
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryBaseVO;
+import com.zkzl.module.pro.controller.admin.supplyinfo.vo.SupplyInfoNameVO;
 import com.zkzl.module.pro.controller.app.order.vo.OrderDescVO;
 import com.zkzl.module.pro.dal.dataobject.priceinqury.PriceInquryDO;
 import com.zkzl.module.pro.dal.mysql.order.ProOrderMapper;
@@ -80,7 +83,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public PageResult<OrderDO> getOrderPage(OrderPageReqVO pageReqVO) {
-        return orderMapper.selectPage(pageReqVO);
+        IPage<OrderDO> mPage = MyBatisUtils.buildPage(pageReqVO);
+        orderMapper.getPage(mPage,pageReqVO);
+        return new PageResult<>(mPage.getRecords(), mPage.getTotal());
     }
 
     @Override

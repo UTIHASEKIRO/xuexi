@@ -2,6 +2,7 @@ package com.zkzl.module.pro.dal.mysql.order;
 
 import java.util.*;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
@@ -9,6 +10,7 @@ import com.zkzl.module.pro.controller.app.order.vo.OrderDescVO;
 import com.zkzl.module.pro.dal.dataobject.order.OrderDO;
 import org.apache.ibatis.annotations.Mapper;
 import com.zkzl.module.pro.controller.admin.order.vo.*;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 订单 Mapper
@@ -54,4 +56,6 @@ public interface ProOrderMapper extends BaseMapperX<OrderDO> {
 
     /*用户端-订单详情*/
     OrderDescVO orderDesc(String orderId);
+
+    IPage<OrderDO> getPage(@Param("page")IPage<OrderDO> page, @Param("req") OrderPageReqVO pageReqVO);
 }

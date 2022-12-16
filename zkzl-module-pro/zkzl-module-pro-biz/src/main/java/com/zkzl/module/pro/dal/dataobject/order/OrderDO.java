@@ -84,4 +84,7 @@ public class OrderDO extends BaseDO {
      */
     private String status;
 
+    @TableField(exist = false)
+    private String username;
+
 }

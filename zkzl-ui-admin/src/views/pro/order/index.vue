@@ -3,32 +3,8 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="订单id" prop="orderId">
-        <el-input v-model="queryParams.orderId" placeholder="请输入订单id" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="卖方公司名称" prop="sellerCompanyName">
-        <el-input v-model="queryParams.sellerCompanyName" placeholder="请输入卖方公司名称" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="卖方联系地址" prop="sellerCompanyAddress">
-        <el-input v-model="queryParams.sellerCompanyAddress" placeholder="请输入卖方联系地址" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="卖方联系人" prop="sellerContact">
-        <el-input v-model="queryParams.sellerContact" placeholder="请输入卖方联系人" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="卖方联系电话" prop="sellerTel">
-        <el-input v-model="queryParams.sellerTel" placeholder="请输入卖方联系电话" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="客户id" prop="userId">
-        <el-input v-model="queryParams.userId" placeholder="请输入客户id" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="总价格" prop="price">
-        <el-input v-model="queryParams.price" placeholder="请输入总价格" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="折扣" prop="discount">
-        <el-input v-model="queryParams.discount" placeholder="请输入折扣" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="合计" prop="total">
-        <el-input v-model="queryParams.total" placeholder="请输入合计" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item label="客户名称" prop="username">
+        <el-input v-model="queryParams.username" placeholder="请输入客户名称" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
       <el-form-item label="报价日期" prop="priceDate">
         <el-date-picker v-model="queryParams.priceDate" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
@@ -38,12 +14,9 @@
         <el-date-picker v-model="queryParams.effectiveDate" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
                         range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
       </el-form-item>
-      <el-form-item label="说明" prop="remarks">
-        <el-input v-model="queryParams.remarks" placeholder="请输入说明" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成" prop="status">
-        <el-select v-model="queryParams.status" placeholder="请选择1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成" clearable size="small">
-          <el-option label="请选择字典生成" value="" />
+      <el-form-item label="订单状态" prop="status">
+        <el-select v-model="queryParams.status" placeholder="请选择订单状态" clearable size="small">
+          <el-option v-for="dict in orderStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="dict.value"/>
         </el-select>
       </el-form-item>
       <el-form-item label="创建时间" prop="createTime">
@@ -77,7 +50,7 @@
       <el-table-column label="卖方联系地址" align="center" prop="sellerCompanyAddress" />
       <el-table-column label="卖方联系人" align="center" prop="sellerContact" />
       <el-table-column label="卖方联系电话" align="center" prop="sellerTel" />
-      <el-table-column label="客户id" align="center" prop="userId" />
+      <el-table-column label="客户名称" align="center" prop="username" />
       <el-table-column label="总价格" align="center" prop="price" />
       <el-table-column label="折扣" align="center" prop="discount" />
       <el-table-column label="合计" align="center" prop="total" />
@@ -92,7 +65,11 @@
         </template>
       </el-table-column>
       <el-table-column label="说明" align="center" prop="remarks" />
-      <el-table-column label="1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成" align="center" prop="status" />
+      <el-table-column label="状态" align="center" prop="status" >
+        <template slot-scope="scope">
+          <dict-tag :type="DICT_TYPE.ORDER_STATUS" :value="scope.row.status"/>
+        </template>
+      </el-table-column>
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -129,8 +106,8 @@
         <el-form-item label="卖方联系电话" prop="sellerTel">
           <el-input v-model="form.sellerTel" placeholder="请输入卖方联系电话" />
         </el-form-item>
-        <el-form-item label="客户id" prop="userId">
-          <el-input v-model="form.userId" placeholder="请输入客户id" />
+        <el-form-item label="客户名称" prop="username">
+          <el-input v-model="form.username" placeholder="请输入客户id" />
         </el-form-item>
         <el-form-item label="总价格" prop="price">
           <el-input v-model="form.price" placeholder="请输入总价格" />
@@ -150,10 +127,11 @@
         <el-form-item label="说明" prop="remarks">
           <el-input v-model="form.remarks" placeholder="请输入说明" />
         </el-form-item>
-        <el-form-item label="1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成" prop="status">
-          <el-radio-group v-model="form.status">
-            <el-radio label="1">请选择字典生成</el-radio>
-          </el-radio-group>
+        <el-form-item label="订单状态" prop="status">
+          <!-- <el-input v-model="form.status" placeholder="请输入客户" /> -->
+          <el-select v-model="form.status" placeholder="请选择状态" clearable size="small" >
+          <el-option v-for="dict in orderStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
+        </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -166,13 +144,15 @@
 
 <script>
 import { createOrder, updateOrder, deleteOrder, getOrder, getOrderPage, exportOrderExcel } from "@/api/pro/order";
-
+import {DICT_TYPE, getDictDatas} from "@/utils/dict";
 export default {
   name: "Order",
   components: {
   },
   data() {
     return {
+      //字典
+      orderStatusDict: getDictDatas(DICT_TYPE.ORDER_STATUS),
       // 遮罩层
       loading: true,
       // 导出遮罩层

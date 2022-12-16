@@ -34,6 +34,9 @@ public class OrderPageReqVO extends PageParam {
     @ApiModelProperty(value = "客户id")
     private Long userId;
 
+    @ApiModelProperty(value = "客户名称")
+    private String username;
+
     @ApiModelProperty(value = "总价格")
     private BigDecimal price;
 
