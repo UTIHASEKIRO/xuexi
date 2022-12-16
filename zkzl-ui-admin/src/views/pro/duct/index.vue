@@ -77,9 +77,17 @@
         </el-form-item>
         <el-form-item label="产品类型" prop="typeId">
           <!-- <el-input v-model="form.typeId" placeholder="请输入产品类型" /> -->
-          <el-select v-model="form.typeId" placeholder="请输入产品类型" clearable size="small" style="width: 240px">
+          <el-cascader
+            v-model="form.typeId"
+            :options="ductTypeList"
+            placeholder="请输入产品类型"
+            clearable size="small" style="width: 240px"
+            :props="{children:'productTypeDOS',value:'typeId',label:'typeNameCn'}"
+            >
+          </el-cascader>
+          <!-- <el-select v-model="form.typeId" placeholder="请输入产品类型" clearable size="small" style="width: 240px">
             <el-option v-for="dict in ductTypeList" :key="parseInt(dict.id)" :label="dict.typeNameCn" :value="dict.typeId"/>
-          </el-select>
+          </el-select> -->
         </el-form-item>
         <el-form-item label="产品型号" prop="productModel">
           <el-input v-model="form.productModel" placeholder="请输入产品型号" />

@@ -111,13 +111,21 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="产品类别：" prop="typeId">
-          <el-select ref="selectReport" v-model="form.typeId" placeholder="请选择">
+          <el-cascader
+            v-model="form.typeId"
+            :options="duckTypeList"
+            placeholder="请输入产品类别"
+            clearable size="small" style="width: 240px"
+            :props="{children:'productTypeDOS',value:'typeId',label:'typeNameCn'}"
+            >
+          </el-cascader>
+          <!-- <el-select ref="selectReport" v-model="form.typeId" placeholder="请选择">
             <el-option :value="form.typeId" :label="form.typeNameCn" style="height: auto">
               <el-tree :data="duckTypeList"
                        :props="{ value: 'typeId',  label: 'typeNameCn' ,children: 'productTypeDOS'}"
                        @node-click="handleNodeClick"></el-tree>
             </el-option>
-          </el-select>
+          </el-select> -->
         </el-form-item>
         <el-form-item label="产品" prop="product">
           <el-select v-model="form.productId" placeholder="请选择产品" clearable size="small" style="width: 240px" @change="getSupplyInfoPage(null,$event)">
