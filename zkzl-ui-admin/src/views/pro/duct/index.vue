@@ -68,7 +68,7 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="800px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        
+
         <el-form-item label="产品名称"  prop="productNameCn">
           <el-input v-model="form.productNameCn" placeholder="请输入产品中文名称" />
         </el-form-item>
@@ -77,17 +77,17 @@
         </el-form-item>
         <el-form-item label="产品类型" prop="typeId">
           <!-- <el-input v-model="form.typeId" placeholder="请输入产品类型" /> -->
-          <el-cascader
+<!--          <el-cascader
             v-model="form.typeId"
             :options="ductTypeList"
             placeholder="请输入产品类型"
             clearable size="small" style="width: 240px"
             :props="{children:'productTypeDOS',value:'typeId',label:'typeNameCn'}"
             >
-          </el-cascader>
-          <!-- <el-select v-model="form.typeId" placeholder="请输入产品类型" clearable size="small" style="width: 240px">
-            <el-option v-for="dict in ductTypeList" :key="parseInt(dict.id)" :label="dict.typeNameCn" :value="dict.typeId"/>
-          </el-select> -->
+          </el-cascader>-->
+           <el-select v-model="form.typeId" placeholder="请输入产品类型" clearable size="small" style="width: 240px">
+            <el-option v-for="dict in ductTypeList" :key="parseInt(dict.typeId)" :label="dict.typeNameCn" :value="dict.typeId"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="产品型号" prop="productModel">
           <el-input v-model="form.productModel" placeholder="请输入产品型号" />
@@ -139,11 +139,11 @@
         </el-form-item>
         <el-form-item label="图片" prop="picDOS">
           <!-- <el-input v-model="form.typeId" placeholder="请输入产品类别id" /> -->
-          <imageUpload v-model="form.picDOSTemp" :limit="20"/>
+          <imageUpload v-model="form.picDOSTemp" :limit="8"/>
         </el-form-item>
         <el-form-item label="证书" prop="productCertificateDOS">
           <!-- <el-input v-model="form.productCertificateDOS" placeholder="请输入产品类别id" /> -->
-          <imageUpload v-model="form.productCertificateDOSTemp" :limit="20"/>
+          <imageUpload v-model="form.productCertificateDOSTemp" :limit="5"/>
         </el-form-item>
         <el-form-item label="其他参数" >
          <el-button type="primary" @click="openDyanicDialog">添 加</el-button>
@@ -176,7 +176,7 @@
          <el-form-item label="值-英文" prop="valueEn">
           <el-input v-model="dynamicParamForm.valueEn" placeholder="请输入值-英文" />
         </el-form-item>
-        
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitDynamicForm">确 定</el-button>
@@ -312,7 +312,7 @@ export default {
         this.form.productParametersDOS.push(this.dynamicParamForm)
         this.resetDynamicParamsForm()
         this.dynamicParamDialogFlag = false
-       
+
       });
     },
     deleteDynamic(index){
@@ -381,6 +381,24 @@ export default {
       const id = row.productId;
       getduct({productId:id}).then(response => {
         this.form = response.data;
+        if(this.form.picDOS) {
+          var pictemp = this.form.picDOS
+          var picDosTemp = ''
+          pictemp.forEach(ele => {
+            picDosTemp = picDosTemp + ele.url + ","
+          })
+          this.form.picDOSTemp = picDosTemp
+          this.form.picDOSTemp = this.form.picDOSTemp.substr(0,this.form.picDOSTemp.length-1);
+        }
+        if(this.form.productCertificateDOS) {
+          var certTemp = this.form.productCertificateDOS
+          var certDosTemp = ''
+          certTemp.forEach(ele => {
+            certDosTemp = certDosTemp + ele.url + ","
+          })
+          this.form.productCertificateDOSTemp = certDosTemp
+          this.form.productCertificateDOSTemp = this.form.productCertificateDOSTemp.substr(0,this.form.productCertificateDOSTemp.length-1);
+        }
         this.open = true;
         this.title = "修改产品";
       });
@@ -424,7 +442,7 @@ export default {
           this.form.picDOS = []
         }
        if(this.form.productCertificateDOSTemp){
-        var temp =this.form.productCertificateDOSTemp 
+        var temp =this.form.productCertificateDOSTemp
         this.form.productCertificateDOS = []
         temp = temp.split(',')
         temp.forEach(ele=>{
