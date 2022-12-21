@@ -71,7 +71,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public PageResult<NewsDO> getNewsPage(NewsPageReqVO pageReqVO) {
-        return newsMapper.selectPage(pageReqVO);
+        return newsMapper.selectPageNew(pageReqVO);
     }
 
     @Override

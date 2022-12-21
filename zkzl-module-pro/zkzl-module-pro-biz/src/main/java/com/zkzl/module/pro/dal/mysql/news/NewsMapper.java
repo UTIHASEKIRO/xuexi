@@ -32,6 +32,20 @@ public interface NewsMapper extends BaseMapperX<NewsDO> {
                 .orderByDesc(NewsDO::getId));
     }
 
+    default PageResult<NewsDO> selectPageNew(NewsPageReqVO reqVO) {
+        return selectPage(reqVO, new LambdaQueryWrapperX<NewsDO>()
+                .likeIfPresent(NewsDO::getTitleCn,reqVO.getTitleCn())
+                .orX()
+                .likeIfPresent(NewsDO::getTitleEn, reqVO.getTitleCn())
+                .likeIfPresent(NewsDO::getSummaryCn, reqVO.getSummaryCn())
+                .orX()
+                .likeIfPresent(NewsDO::getSummaryEn, reqVO.getSummaryCn())
+                .eqIfPresent(NewsDO::getNewsType, reqVO.getNewsType())
+                .eqIfPresent(NewsDO::getShelves, reqVO.getShelves())
+                .betweenIfPresent(NewsDO::getCreateTime, reqVO.getCreateTime())
+                .orderByDesc(NewsDO::getId));
+    }
+
     default List<NewsDO> selectList(NewsExportReqVO reqVO) {
         return selectList(new LambdaQueryWrapperX<NewsDO>()
                 .eqIfPresent(NewsDO::getPicUrl, reqVO.getPicUrl())
