@@ -12,23 +12,40 @@ import javax.validation.constraints.*;
 @Data
 public class NewsBaseVO {
 
-    @ApiModelProperty(value = "图片")
+    @ApiModelProperty(value = "图片", required = true)
+    @NotNull(message = "图片不能为空")
     private String picUrl;
 
-    @ApiModelProperty(value = "标题")
-    private String title;
+    @ApiModelProperty(value = "标题_中文", required = true)
+    @NotNull(message = "标题_中文不能为空")
+    private String titleCn;
 
-    @ApiModelProperty(value = "内容")
-    private String content;
+    @ApiModelProperty(value = "标题_英文", required = true)
+    @NotNull(message = "标题_英文不能为空")
+    private String titleEn;
 
-    @ApiModelProperty(value = "概要")
-    private String summary;
+    @ApiModelProperty(value = "概要_中文", required = true)
+    @NotNull(message = "概要_中文不能为空")
+    private String summaryCn;
+
+    @ApiModelProperty(value = "概要_英文", required = true)
+    @NotNull(message = "概要_英文不能为空")
+    private String summaryEn;
+
+    @ApiModelProperty(value = "内容_中文", required = true)
+    @NotNull(message = "内容_中文不能为空")
+    private String contentCn;
+
+    @ApiModelProperty(value = "内容_英文", required = true)
+    @NotNull(message = "内容_英文不能为空")
+    private String contentEn;
 
     @ApiModelProperty(value = "1公司新闻2行业新闻3通知通告", required = true)
     @NotNull(message = "1公司新闻2行业新闻3通知通告不能为空")
     private Integer newsType;
 
-    @ApiModelProperty(value = "是否上架 1上架0下架")
+    @ApiModelProperty(value = "是否上架 1上架0下架", required = true)
+    @NotNull(message = "是否上架 1上架0下架不能为空")
     private String shelves;
 
 }

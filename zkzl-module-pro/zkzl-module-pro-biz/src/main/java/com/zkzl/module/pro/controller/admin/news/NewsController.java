@@ -71,7 +71,7 @@ public class NewsController {
     @GetMapping("/list")
     @ApiOperation("获得新闻列表")
     @ApiImplicitParam(name = "ids", value = "编号列表", required = true, example = "1024,2048", dataTypeClass = List.class)
-    //@PreAuthorize("@ss.hasPermission('pro:news:query')")
+    @PreAuthorize("@ss.hasPermission('pro:news:query')")
     public CommonResult<List<NewsRespVO>> getNewsList(@RequestParam("ids") Collection<Long> ids) {
         List<NewsDO> list = newsService.getNewsList(ids);
         return success(NewsConvert.INSTANCE.convertList(list));

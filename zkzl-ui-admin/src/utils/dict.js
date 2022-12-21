@@ -65,7 +65,7 @@ export const DICT_TYPE = {
   PROCUREMENT_SUMMARY_STATUS:'procurement_summary', // 采购单状态
   ORDER_STATUS: 'order_status', // 订单状态
   USER_STATUS: 'user_status', // 订单状态
-
+  NEWS_TYPE: 'news_type', // 新闻类别
   REASON_SERVICE: 'reason_service', // 选择原因 价格
   IS_SHELF: 'is_shelf', //是否上架
   REASON_QUALITY: 'reason_quality', // 选择原因-质量

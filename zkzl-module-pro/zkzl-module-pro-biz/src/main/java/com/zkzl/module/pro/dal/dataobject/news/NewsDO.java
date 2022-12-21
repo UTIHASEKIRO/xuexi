@@ -30,23 +30,39 @@ public class NewsDO extends BaseDO {
      */
     private String picUrl;
     /**
-     * 标题
+     * 标题_中文
      */
-    private String title;
+    private String titleCn;
     /**
-     * 内容
+     * 标题_英文
      */
-    private String content;
+    private String titleEn;
     /**
-     * 概要
+     * 概要_中文
      */
-    private String summary;
+    private String summaryCn;
+    /**
+     * 概要_英文
+     */
+    private String summaryEn;
+    /**
+     * 内容_中文
+     */
+    private String contentCn;
+    /**
+     * 内容_英文
+     */
+    private String contentEn;
     /**
      * 1公司新闻2行业新闻3通知通告
+     *
+     * 枚举 {@link TODO news_type 对应的类}
      */
     private Integer newsType;
     /**
      * 是否上架 1上架0下架
+     *
+     * 枚举 {@link TODO is_shelf 对应的类}
      */
     private String shelves;
 
