@@ -1,6 +1,5 @@
 package com.zkzl.module.pro.service.news;
 
-import com.zkzl.module.pro.dal.mysql.news.NewsMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -11,6 +10,7 @@ import com.zkzl.module.pro.dal.dataobject.news.NewsDO;
 import com.zkzl.framework.common.pojo.PageResult;
 
 import com.zkzl.module.pro.convert.news.NewsConvert;
+import com.zkzl.module.pro.dal.mysql.news.NewsMapper;
 
 import static com.zkzl.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static com.zkzl.module.system.enums.ErrorCodeConstants.NEWS_NOT_EXISTS;
@@ -71,7 +71,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public PageResult<NewsDO> getNewsPage(NewsPageReqVO pageReqVO) {
-        return newsMapper.selectPage(pageReqVO);
+        return newsMapper.selectPageNew(pageReqVO);
     }
 
     @Override
