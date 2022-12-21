@@ -43,8 +43,18 @@
       <el-table-column label="凭证id" align="center" prop="evidenceId" />
       <el-table-column label="询价单id" align="center" prop="priceInquryId" />
       <el-table-column label="订单id" align="center" prop="orderId" />
-      <el-table-column label="定金截图" align="center" prop="depositPic" />
-      <el-table-column label="尾款截图" align="center" prop="balancePic" />
+      <el-table-column label="定金截图" align="center" prop="depositPic" >
+        <template slot-scope="scope">
+          <ImagePreview  :src="scope.row.depositPic"
+                         :width="'100px'"></ImagePreview>
+        </template>
+      </el-table-column>
+      <el-table-column label="尾款截图" align="center" prop="balancePic" >
+        <template slot-scope="scope">
+          <ImagePreview  :src="scope.row.balancePic"
+                         :width="'100px'"></ImagePreview>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
@@ -87,10 +97,11 @@
 
 <script>
 import { createEvidence, updateEvidence, deleteEvidence, getEvidence, getEvidencePage, exportEvidenceExcel } from "@/api/pro/evidence";
-
+import ImagePreview from "@/components/ImagePreview";
 export default {
   name: "Evidence",
   components: {
+    ImagePreview
   },
   data() {
     return {
