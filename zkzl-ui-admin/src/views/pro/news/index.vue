@@ -41,7 +41,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号id" align="center" prop="id" />
       <el-table-column label="标题_中" align="center" prop="titleCn" />
       <el-table-column label="标题_英" align="center" prop="titleEn" />

@@ -35,7 +35,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号id" align="center" prop="id" />
       <el-table-column label="值-中文" align="center" prop="valueCn" />
       <el-table-column label="值-英文文" align="center" prop="valueEn" />

@@ -38,7 +38,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号id" align="center" prop="id" />
       <!-- <el-table-column label="固定参数id" align="center" prop="finalParametersId" /> -->
       <el-table-column label="参数名-中文" align="center" prop="parameterCn" />

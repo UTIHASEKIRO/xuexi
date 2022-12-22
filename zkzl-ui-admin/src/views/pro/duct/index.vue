@@ -36,7 +36,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号" align="center" prop="id" />
       <el-table-column label="产品名称" align="center" prop="productNameCn" />
       <el-table-column label="HS编号" align="center" prop="hsNo" />

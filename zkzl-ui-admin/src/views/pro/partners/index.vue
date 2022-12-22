@@ -30,7 +30,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号id" align="center" prop="id" />
       <el-table-column label="图片" align="center" prop="picUrl" >
         <template  slot-scope="scope">

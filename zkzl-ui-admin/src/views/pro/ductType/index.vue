@@ -39,7 +39,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="主键" align="center" prop="id" />
       <el-table-column label="类别名称-中文" align="center" prop="typeNameCn" />
       <el-table-column label="类别名称-英文" align="center" prop="typeNameEn" />

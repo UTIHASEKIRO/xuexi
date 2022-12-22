@@ -41,7 +41,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号id" align="center" prop="id" />
       <el-table-column label="客户" align="center" prop="customerName" />
       <el-table-column label="联系方式" align="center" prop="mobile" />

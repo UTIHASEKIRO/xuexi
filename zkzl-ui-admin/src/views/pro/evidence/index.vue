@@ -38,7 +38,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="id" align="center" prop="id" />
       <el-table-column label="凭证id" align="center" prop="evidenceId" />
       <el-table-column label="询价单id" align="center" prop="priceInquryId" />

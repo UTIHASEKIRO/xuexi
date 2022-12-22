@@ -45,7 +45,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号" align="center" prop="id" />
       <el-table-column label="订单编号" align="center" prop="orderId" />
       <el-table-column label="供货单号" align="center" prop="procurementSummaryId" />

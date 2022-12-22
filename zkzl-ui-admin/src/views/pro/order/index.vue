@@ -43,7 +43,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号id" align="center" prop="id" />
       <el-table-column label="订单id" align="center" prop="orderId" />
       <el-table-column label="卖方公司名称" align="center" prop="sellerCompanyName" />

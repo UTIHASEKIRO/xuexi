@@ -32,7 +32,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="用户ID" align="center" prop="userId" />
       <el-table-column label="公司名称" align="center" prop="companyName" />
       <el-table-column label="联系人" align="center" prop="contectName" />

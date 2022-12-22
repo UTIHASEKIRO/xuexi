@@ -29,7 +29,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号id" align="center" prop="id" />
       <el-table-column label="产品id" align="center" prop="productId" />
       <el-table-column label="图片地址" align="center" prop="url" />

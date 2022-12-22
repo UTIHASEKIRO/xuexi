@@ -84,7 +84,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="id" align="center" prop="id" />
       <el-table-column label="子订单id" align="center" prop="orderChildId" />
       <el-table-column label="订单表id" align="center" prop="orderId" />

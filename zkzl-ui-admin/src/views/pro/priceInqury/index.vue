@@ -35,7 +35,7 @@
     </el-row>
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号" align="center" prop="id" />
       <el-table-column label="询价单号" align="center" prop="priceInquryId" />
       <el-table-column label="公司名称" align="center" prop="companyName" />
