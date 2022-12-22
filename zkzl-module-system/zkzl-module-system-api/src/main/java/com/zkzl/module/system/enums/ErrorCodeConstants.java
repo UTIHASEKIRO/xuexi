@@ -152,6 +152,7 @@ public interface ErrorCodeConstants {
     ErrorCode ORDER_GOODS_NOT_EXISTS = new ErrorCode(1002023004, "订单货物 不存在");
     ErrorCode ORDER_SUMMARY_NOT_EXISTS = new ErrorCode(1002023005, "订单汇总 不存在");
     ErrorCode PRICE_INQURY_NOT_EXISTS = new ErrorCode(1002023006, "询价单 不存在");
+    ErrorCode PRICE_INQURY_NEED_SELLER_MES = new ErrorCode(1002023066, "询价单 需要补充卖方信息");
     ErrorCode PRICE_INQURY_CHILD_NOT_EXISTS = new ErrorCode(1002023007, "子询价单 不存在");
     ErrorCode PRICE_INQURY_INQUIRY_UNFINISHED = new ErrorCode(1002023008, "有未完成的询价单");
 

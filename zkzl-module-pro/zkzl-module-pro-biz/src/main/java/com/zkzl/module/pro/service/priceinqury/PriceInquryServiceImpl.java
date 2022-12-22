@@ -31,6 +31,7 @@ import com.zkzl.module.pro.dal.mysql.product.ProductMapper;
 import com.zkzl.module.pro.dal.mysql.supplyinfo.SupplyInfoMapper;
 import com.zkzl.module.system.dal.mysql.user.AdminUserMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 
@@ -122,6 +123,12 @@ public class PriceInquryServiceImpl implements PriceInquryService {
         //status=3 询价单成交 同时1创建订单 2创建订单汇总 3创建采购汇总
         if ("3".equals(updateReqVO.getStatus())){
             PriceInquryDO currentInqury = priceInquryMapper.selectById(updateReqVO.getId());
+            if(StringUtils.isEmpty(currentInqury.getSellerContact())
+                ||StringUtils.isEmpty(currentInqury.getSellerCompanyAddress())
+                ||StringUtils.isEmpty(currentInqury.getSellerCompanyName())
+                ||StringUtils.isEmpty(currentInqury.getSellerTel())){
+                throw exception(PRICE_INQURY_NEED_SELLER_MES);
+            }
             //1创建订单
             OrderDO insertOrder = inqury2Order(currentInqury);
             insertOrder.setOrderId(IdUtil.getSnowflakeNextIdStr());

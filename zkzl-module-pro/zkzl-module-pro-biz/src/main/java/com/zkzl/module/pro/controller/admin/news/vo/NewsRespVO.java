@@ -1,5 +1,6 @@
 package com.zkzl.module.pro.controller.admin.news.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import java.util.*;
 import io.swagger.annotations.*;
@@ -14,6 +15,7 @@ public class NewsRespVO extends NewsBaseVO {
     private Long id;
 
     @ApiModelProperty(value = "创建时间", required = true)
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date createTime;
 
 }
