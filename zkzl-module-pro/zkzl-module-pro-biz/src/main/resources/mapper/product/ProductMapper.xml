@@ -163,6 +163,7 @@
         select pp.*,ppp.url from pro_product pp
         left join pro_product_pic ppp on pp.product_id = ppp.product_id
         <where>
+            and pp.shipped = '1'
             <if test="productReqVO.typeId != null and productReqVO.typeId != '' ">
                 and pp.type_id = #{productReqVO.typeId}
             </if>
