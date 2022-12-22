@@ -6,7 +6,7 @@
     <!-- 操作工具栏 -->
 
     <!-- 列表 -->
-    <el-table v-loading="loading" :data="list">
+    <el-table v-loading="loading" :data="list" border>
       <el-table-column label="电话" align="center" prop="mobile" />
       <el-table-column label="邮箱" align="center" prop="email" />
       <el-table-column label="公司名称-中" align="center" prop="nameCn" />
