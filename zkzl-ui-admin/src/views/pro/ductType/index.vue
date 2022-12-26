@@ -68,6 +68,10 @@
         <el-form-item label="类别名称-英文" prop="typeNameEn">
           <el-input v-model="form.typeNameEn" placeholder="请输入类别名称-英文" />
         </el-form-item>
+        <el-form-item label="图片" prop="typePic">
+          <!-- <el-input v-model="form.typeId" placeholder="请输入产品类别id" /> -->
+          <imageUpload v-model="form.typePic" :limit="8"/>
+        </el-form-item>
       
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -80,10 +84,12 @@
 
 <script>
 import { createductType, updateductType, deleteductType, getductType, getductTypePage, exportductTypeExcel,ductTypeList } from "@/api/pro/ductType";
+import ImageUpload from '@/components/ImageUpload';
 
 export default {
   name: "ductType",
   components: {
+    ImageUpload
   },
   data() {
     return {
