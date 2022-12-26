@@ -73,4 +73,6 @@ public interface SupplyInfoService {
 
     /*获得供货商名称*/
     PageResult<SupplyInfoNameVO> getSupplyInfoName(SupplyInfoPageReqVO pageVO);
+
+    List<SupplyInfoDO> getSupplyInfoListByproductId(String productId);
 }

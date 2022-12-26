@@ -16,10 +16,10 @@
         <result column="seller_contact" property="sellerContact" />
         <result column="seller_tel" property="sellerTel" />
         <result column="buyer_ideal_price" property="buyerIdealPrice" />
-        <result column="address" property="buyerAddress" />
-        <result column="company_name" property="buyerCompanyName" />
-        <result column="contect_name" property="buyerContactName" />
-        <result column="mobile" property="buyerMobile" />
+        <result column="buyer_company_address" property="buyerAddress" />
+        <result column="buyer_company_name" property="buyerCompanyName" />
+        <result column="buyer_contact" property="buyerContactName" />
+        <result column="buyer_tel" property="buyerMobile" />
         <result column="price" property="price" />
         <result column="discount" property="discount" />
         <result column="total" property="total" />
@@ -74,52 +74,34 @@
 
     <select id="pageManage" resultType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryPageVO">
         /*管理员查看询价表*/
-        select ppi.id,ppi.price_inqury_id,pcu.company_name,pcu.contect_name,su.mobile,
-               ppi.create_time,ppi.status ,su1.username operator
-        from pro_price_inqury ppi
-                 left join pro_cus_user pcu on ppi.buyer_company_id = pcu.user_id
-                 left join system_users su on ppi.buyer_company_id = su.id
-                 left join system_users su1 on ppi.operator = su1.id
+        select id,price_inqury_id priceInquryId,buyer_company_name companyName,buyer_contact contactName,buyer_tel mobile,
+               create_time createTime,`status`
+        from pro_price_inqury
         <where>
             <if test="param.buyerCompanyName != null and param.buyerCompanyName != ''">
-                and pcu.company_name like concat('%',#{param.buyerCompanyName},'%')
+                and buyer_company_name like concat('%',#{param.buyerCompanyName},'%')
             </if>
             <if test="param.status != null and param.status != ''">
-                and ppi.status = #{param.status}
+                and status = #{param.status}
             </if>
         </where>
     </select>
     <select id="pageCommon" resultType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryPageVO">
         /*业务员查看询价表*/
-        select ppi.id,ppi.price_inqury_id,pcu.company_name,pcu.contect_name,su.mobile,
-               ppi.create_time,ppi.status ,su1.username operator
-        from pro_price_inqury ppi
-                 left join pro_cus_user pcu on ppi.buyer_company_id = pcu.user_id
-                 left join system_users su on ppi.buyer_company_id = su.id
-                 left join system_users su1 on ppi.operator = su1.id
-        where (ppi.operator is null
-            or ppi.operator = #{param.loginUserId}
-            or ppi.status in (0,1))
+        select id,price_inqury_id priceInquryId,buyer_company_name companyName,buyer_contact contactName,buyer_tel mobile,
+        create_time createTime,`status`
+        from pro_price_inqury
+        where status in (0,5)
             <if test="param.buyerCompanyName != null and param.buyerCompanyName != ''">
-                and pcu.company_name like concat('%',#{param.buyerCompanyName},'%')
+                and buyer_company_name like concat('%',#{param.buyerCompanyName},'%')
             </if>
     </select>
     <select id="getPriceInquryAndChilds" resultMap="inquryAndChilds">
         /*查看询价表及子表*/
-        select ppi.id,ppi.price_inqury_id,ppi.seller_company_name,ppi.seller_company_address,
-               ppi.seller_contact,ppi.seller_tel,
-               ppi.buyer_ideal_price,pcu.contect_name,pcu.address,pcu.company_name,su.mobile,
-               ppi.price,ppi.discount,ppi.total, ppi.price_date,ppi.effective_date,ppi.status,
-
-               ppic.id ppicid,ppic.product_id,ppic.hs_serial,ppic.product_desc,ppic.product_size,ppic.product_color,
-               ppic.product_g,ppic.package_way,ppic.box_length,ppic.box_height,ppic.box_wide,
-               ppic.volume,ppic.price,ppic.gross_weight,ppic.net_weight,ppic.mount,ppic.unit_price,
-               pp.*
+        select *
         from pro_price_inqury ppi
-                 left join pro_cus_user pcu on ppi.buyer_company_id = pcu.user_id
-                 left join system_users su on ppi.buyer_company_id = su.id
                  left join pro_price_inqury_child ppic on ppi.price_inqury_id = ppic.price_inqury_id
-        left join pro_product pp on ppic.product_id = pp.product_id
+                 left join pro_product pp on ppic.product_id = pp.product_id
         where ppi.id = #{0}
     </select>
     <select id="inquryHistory"
