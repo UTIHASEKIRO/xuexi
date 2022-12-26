@@ -4,6 +4,7 @@ import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.lang.generator.SnowflakeGenerator;
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.module.pro.dal.dataobject.producttype.ProductTypeDO;
 import me.ahoo.cosid.snowflake.SnowflakeFriendlyId;
@@ -100,6 +101,11 @@ public class SupplyInfoServiceImpl implements SupplyInfoService {
         IPage<SupplyInfoNameVO> mPage = MyBatisUtils.buildPage(pageVO);
         supplyInfoMapper.getSupplyInfoName(mPage,pageVO);
         return new PageResult<>(mPage.getRecords(), mPage.getTotal());
+    }
+
+    @Override
+    public List<SupplyInfoDO> getSupplyInfoListByproductId(String productId) {
+        return supplyInfoMapper.selectList(new LambdaQueryWrapperX<SupplyInfoDO>().eqIfPresent(SupplyInfoDO::getProductId,productId));
     }
 
 }

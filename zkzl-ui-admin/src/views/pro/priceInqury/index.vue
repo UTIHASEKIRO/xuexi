@@ -7,14 +7,14 @@
       <el-form-item label="公司名称" prop="buyerCompanyName">
         <el-input v-model="queryParams.buyerCompanyName" placeholder="请输入公司名称" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-     
-      <el-form-item label="状态" prop="status">
+
+      <el-form-item label="状态" prop="status" v-if="this.isAdmin" >
         <el-select v-model="queryParams.status" placeholder="请选择状态" clearable size="small">
          <el-option v-for="dict in inqueryStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="dict.value"/>
-        
+
         </el-select>
       </el-form-item>
-     
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -43,7 +43,7 @@
       <el-table-column label="联系人" align="center" prop="contactName" />
       <el-table-column label="联系电话" align="center" prop="mobile" />
       <el-table-column label="询价时间" align="center" prop="createTime" />
-<!-- 
+<!--
       <el-table-column label="客户id" align="center" prop="buyerCompanyId" />
       <el-table-column label="总价格" align="center" prop="price" />
       <el-table-column label="折扣" align="center" prop="discount" />
@@ -101,9 +101,9 @@
           <el-date-picker clearable v-model="form.effectiveDate" type="date" value-format="yyyy-MM-dd" placeholder="选择报价有效日期" />
         </el-form-item>
           </el-col>
-          
-          
-         
+
+
+
         </el-row>
         <el-row >
           <el-col :span="8">
@@ -148,7 +148,7 @@
         <el-table  :data="form.childs">
       <el-table-column label="编号" align="center" prop="productId" />
       <el-table-column label="HS编号" align="center" prop="hsSerial" />
-      <el-table-column label="货描" align="center" prop="desc" />
+      <el-table-column label="货描" align="center" prop="productDesc" />
       <el-table-column label="尺寸" align="center" prop="productSize" />
       <el-table-column label="颜色" align="center" prop="productColor" />
       <el-table-column label="克重" align="center" prop="productG" />
@@ -187,7 +187,7 @@
           <span>{{form.buyerIdealPrice}}</span>
           <!-- <el-date-picker clearable v-model="form.priceDate" type="date" value-format="timestamp" placeholder="选择报价日期" /> -->
         </el-form-item>
-       
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="danger" @click="reject">拒 绝</el-button>
@@ -217,15 +217,15 @@
           <el-date-picker clearable v-model="form.effectiveDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择报价有效日期" />
         </el-form-item> -->
           </el-col>
-          
-          
-         
+
+
+
         </el-row>
         <el-row >
           <el-col :span="8">
             <div class="sub-title">卖方信息</div>
              <el-form-item label="公司名称" prop="sellerCompanyName">
-              
+
               <el-input v-model="form.sellerCompanyName" placeholder="请输入卖方公司名称" />
             </el-form-item>
             <el-form-item label="联系地址" prop="sellerCompanyAddress">
@@ -288,7 +288,7 @@
     </el-table>
 
 
-       
+
       </el-form>
       <div slot="footer" class="dialog-footer">
 
@@ -368,7 +368,9 @@ export default {
   },
   created() {
   this.isAdmin = this.roles.findIndex(ele=>ele === 'super_admin')!=-1
-
+    if(!this.isAdmin){
+      this.isAdmin = this.roles.findIndex(ele=>ele === 'boss')!=-1
+    }
     this.getList();
   },
   methods: {
@@ -389,7 +391,7 @@ export default {
                 this.loading = false;
               });
       }
-      
+
     },
     priceInput(row){
       console.log("priceInput",row)
@@ -451,7 +453,7 @@ export default {
         console.log('update',this.form)
         update( this.form).then(result=>{
         this.open = false
-        
+
         this.getList()
         })
     },
@@ -512,7 +514,7 @@ export default {
         }else{
           this.commonOpen = true
         }
-        
+
         this.title = "修改询价";
       });
     },

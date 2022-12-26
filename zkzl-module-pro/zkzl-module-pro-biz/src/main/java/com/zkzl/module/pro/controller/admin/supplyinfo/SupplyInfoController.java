@@ -115,4 +115,12 @@ public class SupplyInfoController {
         return success(ProductTypeConvert.INSTANCE.convertList(result));
     }
 
+    @GetMapping("/listByproductId")
+    @ApiOperation("根据产品获得供货商信息列表")
+    @PreAuthorize("@ss.hasPermission('pro:supply-info:query')")
+    public CommonResult<List<SupplyInfoRespVO>> getSupplyInfoListByproductId(@RequestParam("productId") String productId) {
+        List<SupplyInfoDO> list = supplyInfoService.getSupplyInfoListByproductId(productId);
+        return success(SupplyInfoConvert.INSTANCE.convertList(list));
+    }
+
 }

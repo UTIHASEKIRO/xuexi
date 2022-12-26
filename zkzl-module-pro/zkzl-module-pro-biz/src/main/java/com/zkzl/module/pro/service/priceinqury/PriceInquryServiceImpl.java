@@ -219,14 +219,14 @@ public class PriceInquryServiceImpl implements PriceInquryService {
     public PriceInquryAndChildsVO getPriceInquryAndChilds(Long id) {
         PriceInquryAndChildsVO result = priceInquryMapper.getPriceInquryAndChilds(id);
 
-        for (PriceInquryChildsVO child : result.getChilds()) {
+        /*for (PriceInquryChildsVO child : result.getChilds()) {
             List<PriceInquryChildsSupplyerVO> supplys = supplyInfoMapper.getSupplyByProductId(child.getProductId());
             if (ObjectUtil.isEmpty(supplys)){
                 log.info("产品:"+child.getProductId()+" 无法查询供应商！");
                 continue;
             }
             child.setSupplyName(supplys.get(0).getName());
-        }
+        }*/
         return result;
     }
 
