@@ -28,6 +28,8 @@
         <result column="status" property="status" />
         <collection property="childs" ofType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryChildsVO">
             <id column="ppicid" property="id" />
+            <result column="price_inqury_id" property="priceInquryId" />
+            <result column="supply_info_id" property="supplyInfoId" />
             <result column="product_id" property="productId" />
             <result column="hs_serial" property="hsSerial" />
             <result column="product_desc" property="productDesc" />
@@ -98,7 +100,27 @@
     </select>
     <select id="getPriceInquryAndChilds" resultMap="inquryAndChilds">
         /*查看询价表及子表*/
-        select *
+        select ppi.*,
+               ppic.id ppicid,
+               ppic.price_inqury_id,
+               ppic.supply_info_id,
+               ppic.product_id,
+               ppic.hs_serial,
+               ppic.product_desc,
+               ppic.product_size,
+               ppic.product_color,
+               ppic.product_g,
+               ppic.package_way,
+               ppic.box_length,
+               ppic.box_height,
+               ppic.box_wide,
+               ppic.volume,
+               ppic.price,
+               ppic.gross_weight,
+               ppic.net_weight,
+               ppic.mount,
+               ppic.unit_price,
+               pp.*
         from pro_price_inqury ppi
                  left join pro_price_inqury_child ppic on ppi.price_inqury_id = ppic.price_inqury_id
                  left join pro_product pp on ppic.product_id = pp.product_id
