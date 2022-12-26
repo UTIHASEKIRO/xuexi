@@ -162,7 +162,18 @@
           <el-input v-model="scope.row.unitPrice " type="number" @input="priceInput(scope.row)" placeholder="请输入价格" />
         </template>
       </el-table-column>
-      <el-table-column label="供应商" align="center" prop="supplyName" />
+      <el-table-column label="供应商" align="center" prop="supplyName" width="180">
+        <template slot-scope="scope">
+            <el-select v-model="scope.row.supplyInfoId" placeholder="请选择供应商">
+              <el-option
+                v-for="item in scope.row.supplyList"
+                :key="item.supplyInfoId"
+                :label="item.name"
+                :value="item.supplyInfoId">
+              </el-option>
+            </el-select>
+        </template>
+      </el-table-column>
       <el-table-column label="小计" align="center" prop="price" />
       <el-table-column label="体积" align="center" prop="volume" />
       <el-table-column label="毛重" align="center" prop="grossWeight" />
@@ -302,6 +313,7 @@
 <script>
 import { createPriceInqury, updatePriceInqury, deletePriceInqury, getPriceInqury, getPriceInquryPage, exportPriceInquryExcel,pageManage,pageCommon,
 update } from "@/api/pro/priceInqury";
+import {listSupplyByproductId} from "@/api/pro/supplyInfo";
 import { mapGetters } from 'vuex'
 import {DICT_TYPE, getDictDatas} from "@/utils/dict";
 export default {
@@ -507,6 +519,10 @@ export default {
       const id = row.id;
       getPriceInqury({id}).then(response => {
         this.form = response.data;
+        // form.childs
+        this.form.childs.forEach((ele,index)=>{
+          this.processChildSupplyList(ele,index)
+        })
         if(this.isAdmin){
           this.open = true;
         }else{
@@ -515,6 +531,11 @@ export default {
         
         this.title = "修改询价";
       });
+    },
+    processChildSupplyList(ele,index){
+    listSupplyByproductId({productId:ele.productId}).then(result=>{
+      this.$set(ele,'supplyList',result.data)
+    })
     },
     /** 提交按钮 */
     submitForm() {

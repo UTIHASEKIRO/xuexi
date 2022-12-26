@@ -52,3 +52,11 @@ export function exportSupplyInfoExcel(query) {
     responseType: 'blob'
   })
 }
+// 根据商品名查询供应商
+export function listSupplyByproductId(query) {
+  return request({
+    url: '/pro/supply-info/listByproductId',
+    method: 'get',
+    params: query
+  })
+}
