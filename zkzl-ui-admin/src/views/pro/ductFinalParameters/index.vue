@@ -178,7 +178,7 @@ export default {
       // this.form = row;
       //   this.open = true;
       //   this.title = "修改产品固定参数";
-        this.$router.push({path:'/pro/productFinalParametersValue',query:{cn:row.parameterCn,en:row.parameterEn}})
+        this.$router.push({path:'productFinalParametersValue',query:{cn:row.parameterCn,en:row.parameterEn}})
 
       // const id = row.id;
       // getductFinalParameters(id).then(response => {
