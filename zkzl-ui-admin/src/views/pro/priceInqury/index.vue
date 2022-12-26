@@ -193,7 +193,7 @@
         <el-button type="danger" @click="reject">拒 绝</el-button>
         <el-button type="success" @click="success">成 交</el-button>
         <el-button type="primary" @click="confirm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <!-- <el-button @click="cancel">取 消</el-button> -->
       </div>
     </el-dialog>
 
@@ -293,7 +293,7 @@
       <div slot="footer" class="dialog-footer">
 
         <el-button type="primary" @click="confirm">确 定</el-button>
-        <el-button @click="cancel">取 消</el-button>
+        <!-- <el-button @click="cancel">取 消</el-button> -->
       </div>
     </el-dialog>
   </div>
