@@ -200,7 +200,7 @@
         </el-form-item>
 
       </el-form>
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer" v-if="!(form.status === '3' || form.status === '4')">
         <el-button type="danger" @click="reject">拒 绝</el-button>
         <el-button type="success" @click="success">成 交</el-button>
         <el-button type="primary" @click="confirm">确 定</el-button>
