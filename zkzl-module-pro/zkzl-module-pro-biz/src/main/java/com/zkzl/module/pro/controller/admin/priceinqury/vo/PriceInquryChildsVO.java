@@ -12,6 +12,14 @@ public class PriceInquryChildsVO {
      */
     private String id;
     /**
+     * 询价表id
+     */
+    private String priceInquryId;
+    /**
+     * 供应商业务id
+     */
+    private String supplyInfoId;
+    /**
      * 产品id
      */
     private String productId;

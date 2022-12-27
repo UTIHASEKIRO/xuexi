@@ -16,6 +16,9 @@ public class PriceInquryChildBaseVO {
     @ApiModelProperty(value = "询价表id", required = true)
     private String priceInquryId;
 
+    @ApiModelProperty(value = "供货商业务id", required = true)
+    private String supplyInfoId;
+
     @ApiModelProperty(value = "产品id", required = true)
     private String productId;
 
