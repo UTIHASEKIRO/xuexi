@@ -316,6 +316,7 @@ update } from "@/api/pro/priceInqury";
 import {listSupplyByproductId} from "@/api/pro/supplyInfo";
 import { mapGetters } from 'vuex'
 import {DICT_TYPE, getDictDatas} from "@/utils/dict";
+import {parseTime} from "@/utils/ruoyi"
 export default {
   name: "PriceInqury",
   components: {
@@ -442,6 +443,9 @@ export default {
         }
         this.form.priceInquryChilds = this.form.childs
         this.form.status = '2'
+         if(!this.form.priceDate){
+          this.form.priceDate = parseTime(new Date(), '{y}-{m}-{d}')
+        }
         console.log('update',this.form)
         update( this.form).then(result=>{
         this.open = false
@@ -462,6 +466,7 @@ export default {
         }
         this.form.priceInquryChilds = this.form.childs
         this.form.status = '3'
+       
         console.log('update',this.form)
         update( this.form).then(result=>{
         this.open = false
