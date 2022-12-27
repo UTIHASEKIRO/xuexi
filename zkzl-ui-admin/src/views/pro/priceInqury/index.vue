@@ -98,7 +98,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="报价有效日期" prop="effectiveDate"  label-width="120px">
-          <el-date-picker clearable v-model="form.effectiveDate" type="date" value-format="yyyy-MM-dd" placeholder="选择报价有效日期" />
+          <el-date-picker clearable v-model="form.effectiveDate" :disabled="form.status === '3' || form.status === '4'" type="date" value-format="yyyy-MM-dd" placeholder="选择报价有效日期" />
         </el-form-item>
           </el-col>
 
@@ -159,12 +159,12 @@
       <el-table-column label="数量" align="center" prop="mount" />
       <el-table-column label="单价" align="center" prop="unitPrice " >
         <template slot-scope="scope">
-          <el-input v-model="scope.row.unitPrice " type="number" @input="priceInput(scope.row)" placeholder="请输入价格" />
+          <el-input v-model="scope.row.unitPrice " :disabled="form.status === '3' || form.status === '4'" type="number" @input="priceInput(scope.row)" placeholder="请输入价格" />
         </template>
       </el-table-column>
       <el-table-column label="供应商" align="center" prop="supplyName" width="180">
         <template slot-scope="scope">
-            <el-select v-model="scope.row.supplyInfoId" placeholder="请选择供应商">
+            <el-select v-model="scope.row.supplyInfoId" :disabled="form.status === '3' || form.status === '4'" placeholder="请选择供应商">
               <el-option
                 v-for="item in scope.row.supplyList"
                 :key="item.supplyInfoId"
@@ -188,7 +188,7 @@
           <!-- <el-input v-model="form.price" placeholder="请输入总价格" /> -->
         </el-form-item>
         <el-form-item label="折扣" prop="discount">
-          <el-input v-model="form.discount" type="number" @input="calcDiscountPrice" placeholder="请输入折扣" />
+          <el-input v-model="form.discount" :disabled="form.status === '3' || form.status === '4'" type="number" @input="calcDiscountPrice" placeholder="请输入折扣" />
         </el-form-item>
         <el-form-item label="合计" prop="total">
           <span>{{form.total}}</span>
