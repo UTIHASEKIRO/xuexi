@@ -3,6 +3,7 @@ package com.zkzl.module.pro.controller.app.order;
 import com.zkzl.framework.common.exception.ServiceException;
 import com.zkzl.framework.common.pojo.CommonResult;
 import com.zkzl.framework.common.pojo.PageResult;
+import com.zkzl.framework.security.core.util.SecurityFrameworkUtils;
 import com.zkzl.module.pro.controller.admin.evidence.vo.EvidenceCreateReqVO;
 import com.zkzl.module.pro.controller.admin.order.vo.OrderPageReqVO;
 import com.zkzl.module.pro.controller.app.order.vo.OrderDescVO;
@@ -34,7 +35,7 @@ public class AppOrderController {
     @GetMapping("/pageOrder")
     @ApiOperation("用户端订单列表")
     public CommonResult<PageResult<OrderDO>> pageOrder(OrderPageReqVO param) {
-        param.setUserId(119L);
+        param.setUserId(SecurityFrameworkUtils.getLoginUserId());
         return success(orderService.appGetOrderPage(param));
     }
 

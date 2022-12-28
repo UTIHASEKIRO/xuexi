@@ -95,6 +95,11 @@ public class OrderServiceImpl implements OrderService {
         for (OrderDO orderDO : list) {
             PriceInquryDO price = priceInquryMapper.selectOne("price_inqury_id",orderDO.getPriceInquryId());
             orderDO.setRemarks(price.getBuyerIdealPrice());//买方理想价格
+            orderDO.setBuyerCompanyName(price.getBuyerCompanyName());
+            orderDO.setBuyerCompanyAddress(price.getBuyerCompanyAddress());
+            orderDO.setBuyerContact(price.getBuyerContact());
+            orderDO.setBuyerTel(price.getBuyerTel());
+
         }
         return result;
     }

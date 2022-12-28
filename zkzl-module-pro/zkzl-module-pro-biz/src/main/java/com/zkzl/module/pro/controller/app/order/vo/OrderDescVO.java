@@ -29,16 +29,16 @@ public class OrderDescVO {
     private String sellerTel;
 
     @ApiModelProperty(value = "买方联系人")
-    private String contectName;
+    private String buyerContactName;
 
     @ApiModelProperty(value = "买方地址")
-    private String address;
+    private String buyerCompanyAddress;
 
     @ApiModelProperty(value = "买方公司名称")
-    private String companyName;
+    private String buyerCompanyName;
 
     @ApiModelProperty(value = "买方公司联系方式")
-    private String mobile;
+    private String buyerMobile;
 
     @ApiModelProperty(value = "goods")
     private List<OrderDescGoodsVO> goods;

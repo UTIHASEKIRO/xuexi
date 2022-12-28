@@ -87,4 +87,30 @@ public class OrderDO extends BaseDO {
     @TableField(exist = false)
     private String username;
 
+    /**
+     * 买方公司名称
+     */
+    @TableField(exist = false)
+    private String buyerCompanyName;
+    /**
+     * 买方联系地址
+     */
+    @TableField(exist = false)
+    private String buyerCompanyAddress;
+    /**
+     * 买方联系人
+     */
+    @TableField(exist = false)
+    private String buyerContact;
+    /**
+     * 买方联系电话
+     */
+    @TableField(exist = false)
+    private String buyerTel;
+    /**
+     * "客户理想价格"
+     */
+    @TableField(exist = false)
+    private String buyerIdealPrice;
+
 }
