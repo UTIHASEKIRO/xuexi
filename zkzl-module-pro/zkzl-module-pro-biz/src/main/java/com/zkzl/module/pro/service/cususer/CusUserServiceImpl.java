@@ -2,6 +2,8 @@ package com.zkzl.module.pro.service.cususer;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
+import com.zkzl.module.pro.dal.dataobject.customermanage.CustomerManageDO;
+import com.zkzl.module.pro.dal.mysql.customermanage.CustomerManageMapper;
 import com.zkzl.module.system.api.user.AdminUserApi;
 import com.zkzl.module.system.service.user.AdminUserService;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,9 @@ public class CusUserServiceImpl implements CusUserService {
     private CusUserMapper cusUserMapper;
 
     @Resource
+    private CustomerManageMapper customerManageMapper;
+
+    @Resource
     private AdminUserService adminUserService;
 
     @Override
@@ -39,6 +44,11 @@ public class CusUserServiceImpl implements CusUserService {
         // 插入
         CusUserDO cusUser = CusUserConvert.INSTANCE.convert(createReqVO);
         cusUserMapper.insert(cusUser);
+        //同步更新客户管理跟进表
+        CustomerManageDO param = new CustomerManageDO();
+        param.setCustomerName(cusUser.getCompanyName())
+                .setMobile(cusUser.getMobile());
+        customerManageMapper.insert(param);
         // 返回
         return cusUser.getUserId();
     }
