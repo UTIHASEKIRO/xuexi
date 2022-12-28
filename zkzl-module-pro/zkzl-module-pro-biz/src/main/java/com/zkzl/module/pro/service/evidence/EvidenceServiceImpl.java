@@ -1,6 +1,7 @@
 package com.zkzl.module.pro.service.evidence;
 
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -79,6 +80,14 @@ public class EvidenceServiceImpl implements EvidenceService {
     @Override
     public List<EvidenceDO> getEvidenceList(EvidenceExportReqVO exportReqVO) {
         return evidenceMapper.selectList(exportReqVO);
+    }
+
+    @Override
+    public int updateByOrder(EvidenceCreateReqVO param) {
+        return evidenceMapper.update(null,new LambdaUpdateWrapper<EvidenceDO>()
+                .set(EvidenceDO::getBalancePic,param.getBalancePic())
+                .eq(EvidenceDO::getOrderId,param.getOrderId())
+                .eq(EvidenceDO::getPriceInquryId,param.getPriceInquryId()));
     }
 
 }

@@ -67,4 +67,6 @@ public interface EvidenceService {
      */
     List<EvidenceDO> getEvidenceList(EvidenceExportReqVO exportReqVO);
 
+    /*上传尾款截图*/
+    int updateByOrder(EvidenceCreateReqVO param);
 }

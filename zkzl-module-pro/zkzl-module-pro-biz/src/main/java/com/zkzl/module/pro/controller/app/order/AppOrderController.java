@@ -40,10 +40,27 @@ public class AppOrderController {
     }
 
 
+    @PostMapping("/uploadBalance")
+    @ApiOperation("上传尾款截图")
+    public CommonResult<Integer> pageOrder(@Valid @RequestBody EvidenceCreateReqVO param) {
+        if (null == param
+            || null == param.getBalancePic()
+            || null == param.getOrderId()
+            || null == param.getPriceInquryId()){
+            ServiceException mes = new ServiceException();
+            return error(mes.setCode(500)
+                    .setMessage("缺少参数！"));
+        }
+        return success(evidenceService.updateByOrder(param));
+    }
+
     @PostMapping("/upload")
-    @ApiOperation("上传凭证")
-    public CommonResult<Long> pageOrder(@Valid @RequestBody EvidenceCreateReqVO param) {
-        if (null == param || null == param.getBalancePic()){
+    @ApiOperation("上传定金截图")
+    public CommonResult<Long> uploadBalance(@Valid @RequestBody EvidenceCreateReqVO param) {
+        if (null == param
+            || null == param.getDepositPic()
+            || null == param.getOrderId()
+            || null == param.getPriceInquryId()){
             ServiceException mes = new ServiceException();
             return error(mes.setCode(500)
                     .setMessage("缺少参数！"));
