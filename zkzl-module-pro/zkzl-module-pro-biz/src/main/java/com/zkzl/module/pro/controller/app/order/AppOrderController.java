@@ -5,8 +5,11 @@ import com.zkzl.framework.common.pojo.CommonResult;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.security.core.util.SecurityFrameworkUtils;
 import com.zkzl.module.pro.controller.admin.evidence.vo.EvidenceCreateReqVO;
+import com.zkzl.module.pro.controller.admin.evidence.vo.EvidenceExcelVO;
+import com.zkzl.module.pro.controller.admin.evidence.vo.EvidenceExportReqVO;
 import com.zkzl.module.pro.controller.admin.order.vo.OrderPageReqVO;
 import com.zkzl.module.pro.controller.app.order.vo.OrderDescVO;
+import com.zkzl.module.pro.dal.dataobject.evidence.EvidenceDO;
 import com.zkzl.module.pro.dal.dataobject.order.OrderDO;
 import com.zkzl.module.pro.service.evidence.EvidenceService;
 import com.zkzl.module.pro.service.order.OrderService;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static com.zkzl.framework.common.pojo.CommonResult.error;
 import static com.zkzl.framework.common.pojo.CommonResult.success;
@@ -64,6 +69,15 @@ public class AppOrderController {
             ServiceException mes = new ServiceException();
             return error(mes.setCode(500)
                     .setMessage("缺少参数！"));
+        }
+        EvidenceExportReqVO query = new EvidenceExportReqVO();
+        query.setOrderId(param.getOrderId())
+                .setPriceInquryId(param.getPriceInquryId());
+        List<EvidenceDO> queryResult = evidenceService.getEvidenceList(query);
+        if (null != queryResult){
+            ServiceException mes = new ServiceException();
+            return error(mes.setCode(500)
+                    .setMessage("此订单凭证信息已存在！"));
         }
         return success(evidenceService.createEvidence(param));
     }
