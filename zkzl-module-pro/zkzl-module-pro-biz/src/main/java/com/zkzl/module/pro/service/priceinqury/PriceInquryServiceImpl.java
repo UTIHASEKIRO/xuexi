@@ -156,6 +156,7 @@ public class PriceInquryServiceImpl implements PriceInquryService {
                 insertProcurement = new ProcurementSummaryDO();
                 insertProcurement.setProcurementSummaryId(IdUtil.getSnowflakeNextIdStr())
                         .setSupplyCompany(insertGood.getSupplyCompany())
+                        .setProcurementAmount(insertGood.getPrice())
                         .setOrderId(insertGood.getOrderId())
                         .setOrderChildId(insertGood.getOrderChildId());
                 procurementSummaryMapper.insert(insertProcurement);
