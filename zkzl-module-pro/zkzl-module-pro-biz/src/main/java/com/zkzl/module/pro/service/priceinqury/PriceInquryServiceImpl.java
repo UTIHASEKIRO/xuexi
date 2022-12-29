@@ -155,6 +155,7 @@ public class PriceInquryServiceImpl implements PriceInquryService {
             for (OrderGoodsDO insertGood : insertGoods) {
                 insertProcurement = new ProcurementSummaryDO();
                 insertProcurement.setProcurementSummaryId(IdUtil.getSnowflakeNextIdStr())
+                        .setSupplyCompany(insertGood.getSupplyCompany())
                         .setOrderId(insertGood.getOrderId())
                         .setOrderChildId(insertGood.getOrderChildId());
                 procurementSummaryMapper.insert(insertProcurement);
@@ -374,6 +375,7 @@ public class PriceInquryServiceImpl implements PriceInquryService {
                     .setProductG(child.getProductG())
                     .setProductColor(child.getProductColor())
                     .setProductSize(child.getProductSize())
+                    .setSupplyCompany(supplyInfoMapper.selectOne("supply_info_id",child.getSupplyInfoId()).getName())
                     .setOrderChildId(IdUtil.getSnowflakeNextIdStr());
             results.add(result);
         }

@@ -103,4 +103,8 @@ public class OrderGoodsDO extends BaseDO {
      */
     private String remark;
 
+    /*供应商 对应*/
+    @TableField(exist = false)
+    private String supplyCompany;
+
 }
