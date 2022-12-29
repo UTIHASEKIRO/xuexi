@@ -73,11 +73,11 @@ public class AppOrderController {
         EvidenceExportReqVO query = new EvidenceExportReqVO();
         query.setOrderId(param.getOrderId())
                 .setPriceInquryId(param.getPriceInquryId());
-        List<EvidenceDO> queryResult = evidenceService.getEvidenceList(query);
-        if (null != queryResult){
-            ServiceException mes = new ServiceException();
-            return error(mes.setCode(500)
-                    .setMessage("此订单凭证信息已存在！"));
+        EvidenceDO evidenceDO = evidenceService.getOne(query);
+        if (null != evidenceDO){
+            evidenceDO.setDepositPic(param.getDepositPic());
+            evidenceService.updateById(evidenceDO);
+            return success(null);
         }
         return success(evidenceService.createEvidence(param));
     }

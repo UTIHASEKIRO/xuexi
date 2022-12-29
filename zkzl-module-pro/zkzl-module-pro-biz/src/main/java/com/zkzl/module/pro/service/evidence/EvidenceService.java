@@ -69,4 +69,8 @@ public interface EvidenceService {
 
     /*上传尾款截图*/
     int updateByOrder(EvidenceCreateReqVO param);
+
+    EvidenceDO getOne(EvidenceExportReqVO query);
+
+    void updateById(EvidenceDO evidenceDO);
 }

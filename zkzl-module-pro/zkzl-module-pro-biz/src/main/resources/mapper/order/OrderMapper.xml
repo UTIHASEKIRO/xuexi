@@ -165,4 +165,47 @@
             </if>
         </where>
     </select>
+
+    <resultMap id="orderDO" type="com.zkzl.module.pro.dal.dataobject.order.OrderDO">
+        <id column="id" property="id"/>
+        <result column="order_id" property="orderId"/>
+        <result column="price_inqury_id" property="priceInquryId"/>
+        <result column="seller_company_name" property="sellerCompanyName"/>
+        <result column="seller_company_address" property="sellerCompanyAddress"/>
+        <result column="seller_contact" property="sellerContact"/>
+        <result column="seller_tel" property="sellerTel"/>
+        <result column="price" property="price"/>
+        <result column="discount" property="discount"/>
+        <result column="total" property="total"/>
+        <result column="price_date" property="priceDate"/>
+        <result column="effective_date" property="effectiveDate"/>
+        <result column="remarks" property="remarks"/>
+        <result column="status" property="status"/>
+        <result column="deposit_pic" property="depositPic"/>
+        <result column="balance_pic" property="balancePic"/>
+    </resultMap>
+
+    <select id="appGetOrderPage" resultMap="orderDO">
+        select po.id,
+               po.order_id,
+               po.price_inqury_id,
+               po.seller_company_name,
+               po.seller_company_address,
+               po.seller_contact,
+               po.seller_tel,
+               po.user_id,
+               po.price,
+               po.discount,
+               po.total,
+               po.price_date,
+               po.effective_date,
+               ppi.buyer_ideal_price remarks,
+               po.status,
+               pe.deposit_pic,
+               pe.balance_pic
+        from pro_order po
+                 left join pro_price_inqury ppi on po.price_inqury_id = ppi.price_inqury_id
+                 left join pro_evidence pe on po.order_id = pe.order_id
+        where po.user_id = #{pageReqVO.userId}
+    </select>
 </mapper>

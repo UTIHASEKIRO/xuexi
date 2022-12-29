@@ -113,4 +113,16 @@ public class OrderDO extends BaseDO {
     @TableField(exist = false)
     private String buyerIdealPrice;
 
+    /**
+     * 定金截图
+     */
+    @TableField(exist = false)
+    private String depositPic;
+
+    /**
+     * 尾款截图
+     */
+    @TableField(exist = false)
+    private String balancePic;
+
 }

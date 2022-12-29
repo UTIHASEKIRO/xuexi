@@ -2,17 +2,21 @@ package com.zkzl.module.pro.service.evidence;
 
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.zkzl.framework.common.pojo.PageResult;
+import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.zkzl.module.pro.controller.admin.evidence.vo.EvidenceCreateReqVO;
+import com.zkzl.module.pro.controller.admin.evidence.vo.EvidenceExportReqVO;
+import com.zkzl.module.pro.controller.admin.evidence.vo.EvidencePageReqVO;
+import com.zkzl.module.pro.controller.admin.evidence.vo.EvidenceUpdateReqVO;
+import com.zkzl.module.pro.convert.evidence.EvidenceConvert;
+import com.zkzl.module.pro.dal.dataobject.evidence.EvidenceDO;
+import com.zkzl.module.pro.dal.mysql.evidence.EvidenceMapper;
 import org.springframework.stereotype.Service;
-import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
 
-import java.util.*;
-import com.zkzl.module.pro.controller.admin.evidence.vo.*;
-import com.zkzl.module.pro.dal.dataobject.evidence.EvidenceDO;
-import com.zkzl.framework.common.pojo.PageResult;
-
-import com.zkzl.module.pro.convert.evidence.EvidenceConvert;
-import com.zkzl.module.pro.dal.mysql.evidence.EvidenceMapper;
+import javax.annotation.Resource;
+import java.util.Collection;
+import java.util.List;
 
 import static com.zkzl.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static com.zkzl.module.system.enums.ErrorCodeConstants.EVIDENCE_NOT_EXISTS;
@@ -88,6 +92,20 @@ public class EvidenceServiceImpl implements EvidenceService {
                 .set(EvidenceDO::getBalancePic,param.getBalancePic())
                 .eq(EvidenceDO::getOrderId,param.getOrderId())
                 .eq(EvidenceDO::getPriceInquryId,param.getPriceInquryId()));
+    }
+
+    @Override
+    public EvidenceDO getOne(EvidenceExportReqVO query) {
+        return evidenceMapper.selectOne(new LambdaQueryWrapperX<EvidenceDO>()
+                .eqIfPresent(EvidenceDO::getOrderId, query.getOrderId())
+                .eqIfPresent(EvidenceDO::getPriceInquryId, query.getPriceInquryId())
+                .last("limit 1")
+        );
+    }
+
+    @Override
+    public void updateById(EvidenceDO evidenceDO) {
+        evidenceMapper.updateById(evidenceDO);
     }
 
 }

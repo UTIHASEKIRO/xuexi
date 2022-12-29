@@ -58,4 +58,6 @@ public interface ProOrderMapper extends BaseMapperX<OrderDO> {
     OrderDescVO orderDesc(String orderId);
 
     IPage<OrderDO> getPage(@Param("page")IPage<OrderDO> page, @Param("req") OrderPageReqVO pageReqVO);
+
+    IPage<OrderDO> appGetOrderPage(@Param("mpPage") IPage<OrderDO> mpPage,@Param("pageReqVO") OrderPageReqVO pageReqVO);
 }

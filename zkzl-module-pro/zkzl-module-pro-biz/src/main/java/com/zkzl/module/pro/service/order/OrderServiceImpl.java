@@ -9,6 +9,7 @@ import com.zkzl.module.pro.controller.app.order.vo.OrderDescVO;
 import com.zkzl.module.pro.dal.dataobject.priceinqury.PriceInquryDO;
 import com.zkzl.module.pro.dal.mysql.order.ProOrderMapper;
 import com.zkzl.module.pro.dal.mysql.priceinqury.PriceInquryMapper;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
@@ -90,18 +91,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public PageResult<OrderDO> appGetOrderPage(OrderPageReqVO pageReqVO) {
-        PageResult<OrderDO> result = orderMapper.selectPage(pageReqVO);
-        List<OrderDO> list = result.getList();
-        for (OrderDO orderDO : list) {
-            PriceInquryDO price = priceInquryMapper.selectOne("price_inqury_id",orderDO.getPriceInquryId());
-            orderDO.setRemarks(price.getBuyerIdealPrice());//买方理想价格
-            orderDO.setBuyerCompanyName(price.getBuyerCompanyName());
-            orderDO.setBuyerCompanyAddress(price.getBuyerCompanyAddress());
-            orderDO.setBuyerContact(price.getBuyerContact());
-            orderDO.setBuyerTel(price.getBuyerTel());
-
-        }
-        return result;
+        IPage<OrderDO> mpPage = MyBatisUtils.buildPage(pageReqVO);
+        orderMapper.appGetOrderPage(mpPage,pageReqVO);
+        return new PageResult<>(mpPage.getRecords(),mpPage.getTotal());
     }
 
     @Override

@@ -12,12 +12,6 @@
       <el-form-item label="订单id" prop="orderId">
         <el-input v-model="queryParams.orderId" placeholder="请输入订单id" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="定金截图" prop="depositPic">
-        <el-input v-model="queryParams.depositPic" placeholder="请输入定金截图" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
-      <el-form-item label="尾款截图" prop="balancePic">
-        <el-input v-model="queryParams.balancePic" placeholder="请输入尾款截图" clearable @keyup.enter.native="handleQuery"/>
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -25,17 +19,6 @@
     </el-form>
 
     <!-- 操作工具栏 -->
-    <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-                   v-hasPermi="['pro:evidence:create']">新增</el-button>
-      </el-col>
-      <el-col :span="1.5">
-        <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
-                   v-hasPermi="['pro:evidence:export']">导出</el-button>
-      </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
-    </el-row>
 
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list" border>
@@ -81,10 +64,10 @@
           <el-input v-model="form.orderId" placeholder="请输入订单id" />
         </el-form-item>
         <el-form-item label="定金截图" prop="depositPic">
-          <el-input v-model="form.depositPic" placeholder="请输入定金截图" />
+          <imageUpload v-model="form.depositPic" :limit="1"/>
         </el-form-item>
         <el-form-item label="尾款截图" prop="balancePic">
-          <el-input v-model="form.balancePic" placeholder="请输入尾款截图" />
+          <imageUpload v-model="form.depositPic" :limit="1" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
