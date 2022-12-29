@@ -105,4 +105,11 @@ public class OrderController {
         return success(orderRespVO);
     }
 
+    @PutMapping("/updateOrderByOrderId")
+    @ApiOperation("订单审核")
+    public CommonResult<Boolean> updateOrderByOrderId(@RequestBody OrderBaseVO orderBaseVO) {
+        orderService.updateOrderByOrderId(orderBaseVO);
+        return success(true);
+    }
+
 }

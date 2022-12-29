@@ -73,4 +73,8 @@ public interface EvidenceService {
     EvidenceDO getOne(EvidenceExportReqVO query);
 
     void updateById(EvidenceDO evidenceDO);
+
+    void depositPicRejected(Long id);
+
+    void balancePicRejected(Long id);
 }

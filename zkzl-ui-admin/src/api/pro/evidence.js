@@ -52,3 +52,19 @@ export function exportEvidenceExcel(query) {
     responseType: 'blob'
   })
 }
+
+// 驳回定金
+export function depositPicRejected(id) {
+  return request({
+    url: '/pro/evidence/depositPicRejected?id=' + id,
+    method: 'get'
+  })
+}
+
+// 驳回尾款
+export function balancePicRejected(id) {
+  return request({
+    url: '/pro/evidence/balancePicRejected?id=' + id,
+    method: 'get'
+  })
+}

@@ -97,4 +97,20 @@ public class EvidenceController {
         ExcelUtils.write(response, "订单凭证信息.xls", "数据", EvidenceExcelVO.class, datas);
     }
 
+    @GetMapping("/depositPicRejected")
+    @ApiOperation("驳回定金")
+    @PreAuthorize("@ss.hasPermission('pro:evidence:update')")
+    public CommonResult<Boolean> depositPicRejected(@RequestParam("id") Long id) {
+        evidenceService.depositPicRejected(id);
+        return success(true);
+    }
+
+    @GetMapping("/balancePicRejected")
+    @ApiOperation("驳回尾款")
+    @PreAuthorize("@ss.hasPermission('pro:evidence:update')")
+    public CommonResult<Boolean> balancePicRejected(@RequestParam("id") Long id) {
+        evidenceService.balancePicRejected(id);
+        return success(true);
+    }
+
 }

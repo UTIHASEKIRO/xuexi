@@ -10,7 +10,7 @@
           <el-option v-for="dict in orderStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="dict.value"/>
         </el-select>
       </el-form-item>
-     
+
       <el-form-item label="包装确认日期" prop="signTime" label-width="108px">
         <el-date-picker v-model="queryParams.signTime" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
                         range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
@@ -55,10 +55,10 @@
       </el-table-column>
       <el-table-column label="完成进度" align="center" prop="finishPercent" />
       <el-table-column label="业务员" align="center" prop="salesman" />
-     
+
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+          <el-button  v-if="scope.row.status !== '0'" size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                      v-hasPermi="['pro:order-summary:update']">修改</el-button>
           <!-- <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
                      v-hasPermi="['pro:order-summary:delete']">删除</el-button> -->

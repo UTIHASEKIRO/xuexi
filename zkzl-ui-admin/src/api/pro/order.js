@@ -52,3 +52,12 @@ export function exportOrderExcel(query) {
     responseType: 'blob'
   })
 }
+
+// 更新订单
+export function updateOrderByOrderId(data) {
+  return request({
+    url: '/pro/order/updateOrderByOrderId',
+    method: 'put',
+    data: data
+  })
+}

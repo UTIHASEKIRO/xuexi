@@ -13,4 +13,6 @@ public class EvidenceRespVO extends EvidenceBaseVO {
     @ApiModelProperty(value = "id", required = true)
     private Long id;
 
+    @ApiModelProperty(value = "订单状态 0初始化-1待生产-2生产完成-3待装柜-4待开船-5待到港-6最后完成", required = true)
+    private String status;
 }

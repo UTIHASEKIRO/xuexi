@@ -2,6 +2,7 @@ package com.zkzl.module.pro.service.order;
 
 import cn.hutool.core.util.IdUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryBaseVO;
 import com.zkzl.module.pro.controller.admin.supplyinfo.vo.SupplyInfoNameVO;
@@ -109,6 +110,17 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDescVO orderDesc(OrderPageReqVO param) {
         return orderMapper.orderDesc(param.getOrderId());
+    }
+
+    @Override
+    public void updateOrderByOrderId(OrderBaseVO orderBaseVO) {
+        OrderDO orderDO = orderMapper.selectOne(new LambdaQueryWrapperX<OrderDO>().eqIfPresent(OrderDO::getOrderId, orderBaseVO.getOrderId())
+                .last("limit 1"));
+        if(orderDO == null){
+            throw exception(ORDER_NOT_EXISTS);
+        }
+        orderDO.setStatus(orderBaseVO.getStatus());
+        orderMapper.updateById(orderDO);
     }
 
 }

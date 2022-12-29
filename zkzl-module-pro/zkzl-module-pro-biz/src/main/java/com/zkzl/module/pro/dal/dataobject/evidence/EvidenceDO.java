@@ -48,4 +48,9 @@ public class EvidenceDO implements Serializable {
      */
     private String balancePic;
 
+    /**
+     * 订单状态
+     */
+    @TableField(exist = false)
+    private String status;
 }

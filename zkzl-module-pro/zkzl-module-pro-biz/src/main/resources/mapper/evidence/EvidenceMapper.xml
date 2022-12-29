@@ -9,4 +9,27 @@
         文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
      -->
 
+    <select id="getEvidence" resultType="com.zkzl.module.pro.dal.dataobject.evidence.EvidenceDO">
+        select pe.*, po.status
+        from pro_evidence pe
+                 left join pro_order po on pe.order_id = po.order_id
+        where pe.id = #{id}
+    </select>
+    <select id="getEvidencePage" resultType="com.zkzl.module.pro.dal.dataobject.evidence.EvidenceDO">
+        select pe.*, po.status
+        from pro_evidence pe
+        left join pro_order po on pe.order_id = po.order_id
+        <where>
+            <if test="pageReqVO.evidenceId != null and pageReqVO.evidenceId != ''">
+                and pe.evidence_id = #{pageReqVO.evidenceId}
+            </if>
+            <if test="pageReqVO.priceInquryId != null and pageReqVO.priceInquryId != ''">
+                and pe.price_inqury_id = #{pageReqVO.priceInquryId}
+            </if>
+            <if test="pageReqVO.orderId != null and pageReqVO.orderId != ''">
+                and pe.order_id = #{pageReqVO.orderId}
+            </if>
+        </where>
+        order by pe.id desc
+    </select>
 </mapper>

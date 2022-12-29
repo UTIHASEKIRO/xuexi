@@ -28,22 +28,20 @@
       <el-table-column label="订单id" align="center" prop="orderId" />
       <el-table-column label="定金截图" align="center" prop="depositPic" >
         <template slot-scope="scope">
-          <ImagePreview  :src="scope.row.depositPic"
-                         :width="'100px'"></ImagePreview>
+          <image-preview  :src="scope.row.depositPic"
+                         :width="'100px'"></image-preview>
         </template>
       </el-table-column>
       <el-table-column label="尾款截图" align="center" prop="balancePic" >
         <template slot-scope="scope">
-          <ImagePreview  :src="scope.row.balancePic"
-                         :width="'100px'"></ImagePreview>
+          <image-preview  :src="scope.row.balancePic"
+                         :width="'100px'"></image-preview>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
-                     v-hasPermi="['pro:evidence:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['pro:evidence:delete']">删除</el-button>
+          <el-button  v-if="scope.row.status === '0' || scope.row.status === '2'" size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+                     v-hasPermi="['pro:evidence:update']">审核</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -54,7 +52,7 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="凭证id" prop="evidenceId">
+<!--        <el-form-item label="凭证id" prop="evidenceId">
           <el-input v-model="form.evidenceId" placeholder="请输入凭证id" />
         </el-form-item>
         <el-form-item label="询价单id" prop="priceInquryId">
@@ -62,12 +60,16 @@
         </el-form-item>
         <el-form-item label="订单id" prop="orderId">
           <el-input v-model="form.orderId" placeholder="请输入订单id" />
+        </el-form-item>-->
+        <el-form-item label="定金截图" prop="depositPic" v-if="this.form.depositPic">
+          <el-image :src="this.form.depositPic" />
+          <el-button v-if="this.form.status === '0'" size="mini" type="text" icon="el-icon-edit" @click="depositPicThrough(form.orderId)">通过</el-button>
+          <el-button v-if="this.form.status === '0'"  size="mini" type="text" icon="el-icon-edit" @click="depositPicRejected()">驳回</el-button>
         </el-form-item>
-        <el-form-item label="定金截图" prop="depositPic">
-          <imageUpload v-model="form.depositPic" :limit="1"/>
-        </el-form-item>
-        <el-form-item label="尾款截图" prop="balancePic">
-          <imageUpload v-model="form.depositPic" :limit="1" />
+        <el-form-item label="尾款截图" prop="balancePic" v-if="this.form.balancePic">
+          <el-image :src="this.form.balancePic"/>
+          <el-button v-if="this.form.status === '2'" size="mini" type="text" icon="el-icon-edit" @click="balancePicThrough(form.orderId)">通过</el-button>
+          <el-button v-if="this.form.status === '2'" size="mini" type="text" icon="el-icon-edit" @click="balancePicRejected()">驳回</el-button>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -79,7 +81,8 @@
 </template>
 
 <script>
-import { createEvidence, updateEvidence, deleteEvidence, getEvidence, getEvidencePage, exportEvidenceExcel } from "@/api/pro/evidence";
+import { createEvidence, updateEvidence, deleteEvidence, getEvidence, getEvidencePage, exportEvidenceExcel,depositPicRejected,balancePicRejected } from "@/api/pro/evidence";
+import { updateOrderByOrderId } from "@/api/pro/order";
 import ImagePreview from "@/components/ImagePreview";
 export default {
   name: "Evidence",
@@ -114,6 +117,7 @@ export default {
       },
       // 表单参数
       form: {},
+      order: {},
       // 表单校验
       rules: {
         evidenceId: [{ required: true, message: "凭证id不能为空", trigger: "blur" }],
@@ -176,7 +180,7 @@ export default {
       getEvidence(id).then(response => {
         this.form = response.data;
         this.open = true;
-        this.title = "修改订单凭证信息";
+        this.title = "审核订单凭证";
       });
     },
     /** 提交按钮 */
@@ -201,6 +205,46 @@ export default {
           this.getList();
         });
       });
+    },
+    /** 通过定金 */
+    depositPicThrough(orderId) {
+      this.order.orderId = orderId;
+      this.order.status = "1";
+      updateOrderByOrderId(this.order).then(() => {
+        this.$modal.msgSuccess("通过成功");
+        getEvidence(id).then(response => {
+          this.form = response.data;
+          this.open = true;
+          this.title = "审核订单凭证";
+        });
+      }).catch(() => {});
+    },
+    /** 驳回定金 */
+    depositPicRejected() {
+      this.form.depositPic = null;
+      return depositPicRejected(this.form.id).then(() => {
+        this.$modal.msgSuccess("驳回成功");
+      }).catch(() => {});
+    },
+    /** 通过尾款 */
+    balancePicThrough(orderId) {
+      this.order.orderId = orderId;
+      this.order.status = "3";
+      updateOrderByOrderId(this.order).then(() => {
+        this.$modal.msgSuccess("通过成功");
+        getEvidence(id).then(response => {
+          this.form = response.data;
+          this.open = true;
+          this.title = "审核订单凭证";
+        });
+      }).catch(() => {});
+    },
+    /** 驳回尾款 */
+    balancePicRejected() {
+      this.form.balancePic = null;
+      balancePicRejected(this.form.id).then(() => {
+        this.$modal.msgSuccess("驳回成功");
+      }).catch(() => {});
     },
     /** 删除按钮操作 */
     handleDelete(row) {

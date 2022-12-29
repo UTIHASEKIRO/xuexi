@@ -6,14 +6,6 @@
       <el-form-item label="客户名称" prop="username">
         <el-input v-model="queryParams.username" placeholder="请输入客户名称" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="报价日期" prop="priceDate">
-        <el-date-picker v-model="queryParams.priceDate" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
-      <el-form-item label="报价有效日期" prop="effectiveDate">
-        <el-date-picker v-model="queryParams.effectiveDate" style="width: 240px" value-format="yyyy-MM-dd HH:mm:ss" type="daterange"
-                        range-separator="-" start-placeholder="开始日期" end-placeholder="结束日期" :default-time="['00:00:00', '23:59:59']" />
-      </el-form-item>
       <el-form-item label="订单状态" prop="status">
         <el-select v-model="queryParams.status" placeholder="请选择订单状态" clearable size="small">
           <el-option v-for="dict in orderStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="dict.value"/>
@@ -77,10 +69,8 @@
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
-          <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
+          <el-button  v-if="scope.row.status !== '0'" size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                      v-hasPermi="['pro:order:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['pro:order:delete']">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

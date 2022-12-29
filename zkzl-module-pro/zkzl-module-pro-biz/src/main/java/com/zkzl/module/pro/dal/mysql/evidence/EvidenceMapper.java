@@ -2,12 +2,14 @@ package com.zkzl.module.pro.dal.mysql.evidence;
 
 import java.util.*;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
 import com.zkzl.module.pro.dal.dataobject.evidence.EvidenceDO;
 import org.apache.ibatis.annotations.Mapper;
 import com.zkzl.module.pro.controller.admin.evidence.vo.*;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 订单凭证信息 Mapper
@@ -37,4 +39,7 @@ public interface EvidenceMapper extends BaseMapperX<EvidenceDO> {
                 .orderByDesc(EvidenceDO::getId));
     }
 
+    EvidenceDO getEvidence(Long id);
+
+    IPage<EvidenceDO> getEvidencePage(@Param("mpPage") IPage<EvidenceDO> mpPage, @Param("pageReqVO") EvidencePageReqVO pageReqVO);
 }

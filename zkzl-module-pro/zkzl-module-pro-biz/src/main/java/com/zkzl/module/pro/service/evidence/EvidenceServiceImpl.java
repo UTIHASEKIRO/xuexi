@@ -1,9 +1,13 @@
 package com.zkzl.module.pro.service.evidence;
 
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.module.pro.controller.admin.evidence.vo.EvidenceCreateReqVO;
 import com.zkzl.module.pro.controller.admin.evidence.vo.EvidenceExportReqVO;
 import com.zkzl.module.pro.controller.admin.evidence.vo.EvidencePageReqVO;
@@ -11,6 +15,7 @@ import com.zkzl.module.pro.controller.admin.evidence.vo.EvidenceUpdateReqVO;
 import com.zkzl.module.pro.convert.evidence.EvidenceConvert;
 import com.zkzl.module.pro.dal.dataobject.evidence.EvidenceDO;
 import com.zkzl.module.pro.dal.mysql.evidence.EvidenceMapper;
+import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -68,7 +73,7 @@ public class EvidenceServiceImpl implements EvidenceService {
 
     @Override
     public EvidenceDO getEvidence(Long id) {
-        return evidenceMapper.selectById(id);
+        return evidenceMapper.getEvidence(id);
     }
 
     @Override
@@ -78,7 +83,9 @@ public class EvidenceServiceImpl implements EvidenceService {
 
     @Override
     public PageResult<EvidenceDO> getEvidencePage(EvidencePageReqVO pageReqVO) {
-        return evidenceMapper.selectPage(pageReqVO);
+        IPage<EvidenceDO> mpPage = MyBatisUtils.buildPage(pageReqVO);
+        evidenceMapper.getEvidencePage(mpPage,pageReqVO);
+        return new PageResult<>(mpPage.getRecords(),mpPage.getTotal());
     }
 
     @Override
@@ -106,6 +113,20 @@ public class EvidenceServiceImpl implements EvidenceService {
     @Override
     public void updateById(EvidenceDO evidenceDO) {
         evidenceMapper.updateById(evidenceDO);
+    }
+
+    @Override
+    public void depositPicRejected(Long id) {
+        evidenceMapper.update(null,new LambdaUpdateWrapper<EvidenceDO>().set(EvidenceDO::getDepositPic,null)
+        .eq(EvidenceDO::getId,id)
+        );
+    }
+
+    @Override
+    public void balancePicRejected(Long id) {
+        evidenceMapper.update(null,new LambdaUpdateWrapper<EvidenceDO>().set(EvidenceDO::getBalancePic,null)
+                .eq(EvidenceDO::getId,id)
+        );
     }
 
 }

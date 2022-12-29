@@ -74,4 +74,6 @@ public interface OrderService {
 
     /*订单详情*/
     OrderDescVO orderDesc(OrderPageReqVO param);
+
+    void updateOrderByOrderId(OrderBaseVO orderBaseVO);
 }
