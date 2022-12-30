@@ -144,7 +144,7 @@
         where po.order_id = #{0}
     </select>
     <select id="getPage" resultType="com.zkzl.module.pro.dal.dataobject.order.OrderDO">
-        select po.*,su.userName
+        select po.*,su.username
         from pro_order po
         left join system_users su on po.user_id = su.id
         <where>

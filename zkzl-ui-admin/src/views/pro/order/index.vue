@@ -23,10 +23,10 @@
 
     <!-- 操作工具栏 -->
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
                    v-hasPermi="['pro:order:create']">新增</el-button>
-      </el-col>
+      </el-col> -->
       <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
                    v-hasPermi="['pro:order:export']">导出</el-button>
@@ -96,9 +96,9 @@
         <el-form-item label="卖方联系电话" prop="sellerTel">
           <el-input v-model="form.sellerTel" placeholder="请输入卖方联系电话" />
         </el-form-item>
-        <el-form-item label="客户名称" prop="username">
-          <el-input v-model="form.username" placeholder="请输入客户id" />
-        </el-form-item>
+        <!-- <el-form-item label="客户名称" prop="username">
+          <el-input v-model="form.username" disabled/>
+        </el-form-item> -->
         <el-form-item label="总价格" prop="price">
           <el-input v-model="form.price" placeholder="请输入总价格" />
         </el-form-item>

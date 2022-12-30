@@ -31,6 +31,9 @@ public class OrderRespVO extends OrderBaseVO {
     @ApiModelProperty(value = "买方联系电话", required = true)
     private String buySellerTel;
 
+    @ApiModelProperty(value = "客户名")
+    private String username;
+
     @ApiModelProperty(value = "子订单", required = true)
     private List<OrderGoodsBaseVO> orderGoodsBaseVOS;
 }
