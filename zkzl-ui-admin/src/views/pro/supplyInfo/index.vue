@@ -113,7 +113,8 @@
         </el-form-item>
 
 
-        <el-form-item label="主要产品" prop="product">
+        <el-form-item label="主要产品" prop="productId">
+          
           <el-select v-model="form.productId" placeholder="请选择主要产品" clearable size="small" style="width: 240px">
             <el-option v-for="dict in productList" :key="parseInt(dict.id)" :label="dict.productNameCn" :value="dict.productId"/>
           </el-select>
@@ -185,7 +186,9 @@ export default {
         reasonService: null,
       },
       // 表单参数
-      form: {},
+      form: {
+        productId:''
+      },
       addForm: {},
       // 表单校验
       rules: {
@@ -290,6 +293,7 @@ export default {
         reasonPrice: undefined,
         reasonQuality: undefined,
         reasonService: undefined,
+        productId:undefined
       };
       this.resetForm("form");
     },
