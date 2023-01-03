@@ -87,14 +87,12 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="产品类别：" prop="typeId">
-          <el-select ref="selectReport" v-model="form.typeId" placeholder="请选择">
+          <el-select v-model="form.typeId" clearable placeholder="请选择" @change="getProductList">
             <el-option
               v-for="item in duckTypeList"
               :key="item.typeId"
               :label="item.typeNameCn"
-              :value="item.typeId"
-              @change="handleNodeClick(item)"
-            >
+              :value="item.typeId">
             </el-option>
 <!--            <el-option :value="form.typeId" :label="form.typeNameCn" style="height: auto">
               <el-tree :data="duckTypeList" :props="{ value: 'typeId',  label: 'typeNameCn' ,children: 'productTypeDOS'}" @node-click="handleNodeClick"></el-tree>
@@ -260,12 +258,17 @@ export default {
       })
     },
     /** 类别树选择 */
+    typeToProduct(val) {
+      console.log("11111111111111111111");
+      this.getProductList(val.typeId)
+    },
+    /** 类别树选择 */
     handleNodeClick(val) {
       this.$set(this.form, "typeId", val.typeId);
       this.$set(this.form, "typeNameCn", val.typeNameCn);
-      /*if (!val.productTypeDOS || val.productTypeDOS.length == 0) {
+      if (!val.productTypeDOS || val.productTypeDOS.length == 0) {
         this.$refs.selectReport.blur();
-      }*/
+      }
       this.getProductList(val.typeId)
     },
     /** 取消按钮 */
