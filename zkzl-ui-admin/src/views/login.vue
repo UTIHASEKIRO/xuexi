@@ -196,6 +196,7 @@ export default {
   created() {
     // 租户开关
     this.tenantEnable = getTenantEnable();
+    setTenantId(1)
     // 重定向地址
     this.redirect = this.$route.query.redirect;
     this.getCode();
