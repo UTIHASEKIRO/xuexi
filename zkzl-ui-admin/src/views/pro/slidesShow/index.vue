@@ -63,7 +63,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="图片">
-          <imageUpload v-model="form.picUrl" :limit="1"/>
+          <imageUpload v-model="form.picUrl" :limit="1" fileWh="1920*615"/>
         </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input v-model="form.sort" placeholder="请输入排序" />

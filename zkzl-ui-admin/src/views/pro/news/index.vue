@@ -79,7 +79,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="图片">
-          <imageUpload v-model="form.picUrl" limit="3"/>
+          <imageUpload v-model="form.picUrl" limit="3"  fileWh="205*125"/>
         </el-form-item>
         <el-form-item label="标题_中" prop="titleCn">
           <el-input v-model="form.titleCn" placeholder="请输入标题_中" />

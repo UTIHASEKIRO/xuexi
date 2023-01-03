@@ -139,7 +139,7 @@
         </el-form-item>
         <el-form-item label="图片" prop="picDOS">
           <!-- <el-input v-model="form.typeId" placeholder="请输入产品类别id" /> -->
-          <imageUpload v-model="form.picDOSTemp" :limit="8"/>
+          <imageUpload v-model="form.picDOSTemp" :limit="8" fileWh="380*380"/>
         </el-form-item>
         <el-form-item label="证书" prop="productCertificateDOS">
           <!-- <el-input v-model="form.productCertificateDOS" placeholder="请输入产品类别id" /> -->
