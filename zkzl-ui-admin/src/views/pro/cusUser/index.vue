@@ -11,7 +11,7 @@
       <el-form-item label="公司名称" prop="companyName">
         <el-input v-model="queryParams.companyName" placeholder="请输入公司名称" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-     
+
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" @click="resetQuery">重置</el-button>
@@ -121,7 +121,7 @@ export default {
         companyName: [{ required: true, message: "公司名称不能为空", trigger: "blur" }],
         contectName: [{ required: true, message: "联系人不能为空", trigger: "blur" }],
       },
-      userStatusDict: getDictDatas(DICT_TYPE.USER_STATUS), 
+      userStatusDict: getDictDatas(DICT_TYPE.USER_STATUS),
     };
   },
   created() {
@@ -155,7 +155,7 @@ export default {
     handleUpdateUserPassword(row){
        var payload = {
         id:row.userId,
-        password:"A2c1_3"
+        password:"123456"
       }
     this.$modal.confirm('确认要重置'  + '"' + row.contectName + '"用户密码吗?').then(function() {
           return  updateUserPassword(payload);
@@ -184,8 +184,8 @@ export default {
           // row.status = row.status === CommonStatusEnum.ENABLE ? CommonStatusEnum.DISABLE
           //     : CommonStatusEnum.ENABLE;
         });
-      
-     
+
+
     },
     /** 搜索按钮操作 */
     handleQuery() {
