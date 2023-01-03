@@ -7,8 +7,10 @@ import com.zkzl.framework.mybatis.core.util.MyBatisUtils;
 import com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryBaseVO;
 import com.zkzl.module.pro.controller.admin.supplyinfo.vo.SupplyInfoNameVO;
 import com.zkzl.module.pro.controller.app.order.vo.OrderDescVO;
+import com.zkzl.module.pro.dal.dataobject.ordersummary.OrderSummaryDO;
 import com.zkzl.module.pro.dal.dataobject.priceinqury.PriceInquryDO;
 import com.zkzl.module.pro.dal.mysql.order.ProOrderMapper;
+import com.zkzl.module.pro.dal.mysql.ordersummary.OrderSummaryMapper;
 import com.zkzl.module.pro.dal.mysql.priceinqury.PriceInquryMapper;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ import com.zkzl.module.pro.convert.order.OrderConvert;
 
 import static com.zkzl.framework.common.exception.util.ServiceExceptionUtil.exception;
 import static com.zkzl.module.system.enums.ErrorCodeConstants.ORDER_NOT_EXISTS;
+import static com.zkzl.module.system.enums.ErrorCodeConstants.ORDER_SUMMARY_NOT_EXISTS;
 
 /**
  * 订单 Service 实现类
@@ -36,6 +39,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Resource
     private ProOrderMapper orderMapper;
+
+    @Resource
+    private OrderSummaryMapper orderSummaryMapper;
 
     @Resource
     private PriceInquryMapper priceInquryMapper;
@@ -114,6 +120,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void updateOrderByOrderId(OrderBaseVO orderBaseVO) {
+        // 更新订单
         OrderDO orderDO = orderMapper.selectOne(new LambdaQueryWrapperX<OrderDO>().eqIfPresent(OrderDO::getOrderId, orderBaseVO.getOrderId())
                 .last("limit 1"));
         if(orderDO == null){
@@ -121,6 +128,14 @@ public class OrderServiceImpl implements OrderService {
         }
         orderDO.setStatus(orderBaseVO.getStatus());
         orderMapper.updateById(orderDO);
+        // 更新订单汇总
+        OrderSummaryDO orderSummaryDO = orderSummaryMapper.selectOne(new LambdaQueryWrapperX<OrderSummaryDO>().eqIfPresent(OrderSummaryDO::getOrderId, orderBaseVO.getOrderId())
+                .last("limit 1"));
+        if(orderSummaryDO == null){
+            throw exception(ORDER_SUMMARY_NOT_EXISTS);
+        }
+        orderSummaryDO.setStatus(orderBaseVO.getStatus());
+        orderSummaryMapper.updateById(orderSummaryDO);
     }
 
 }

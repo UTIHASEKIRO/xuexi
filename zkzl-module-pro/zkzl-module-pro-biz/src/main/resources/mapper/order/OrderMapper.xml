@@ -183,6 +183,7 @@
         <result column="status" property="status"/>
         <result column="deposit_pic" property="depositPic"/>
         <result column="balance_pic" property="balancePic"/>
+        <result column="create_time" property="createTime"/>
     </resultMap>
 
     <select id="appGetOrderPage" resultMap="orderDO">
@@ -202,7 +203,8 @@
                ppi.buyer_ideal_price remarks,
                po.status,
                pe.deposit_pic,
-               pe.balance_pic
+               pe.balance_pic,
+               po.create_time
         from pro_order po
                  left join pro_price_inqury ppi on po.price_inqury_id = ppi.price_inqury_id
                  left join pro_evidence pe on po.order_id = pe.order_id

@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      title: '快速开发管理系统',
+      title: '集采管理系统',
       logo: logoImg
     }
   }

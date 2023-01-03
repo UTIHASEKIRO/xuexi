@@ -9,7 +9,7 @@
         文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
      -->
 
-    <select id="cusFromSysUser" resultType="com.zkzl.module.pro.dal.dataobject.cususer.CusUserDO">
+<!--    <select id="cusFromSysUser" resultType="com.zkzl.module.pro.dal.dataobject.cususer.CusUserDO">
         /*获取客户角色*/
         select sur.user_id,su.mobile,su.create_time,su.status,
                pcu.address,pcu.company_name,pcu.contect_name
@@ -17,12 +17,28 @@
                  left join system_user_role sur on sr.id = sur.role_id
                  left join system_users su on sur.user_id = su.id
                  left join pro_cus_user pcu on su.id = pcu.user_id
-        where sr.name = "客户角色"
+        where sr.code = 'customer'
         <if test="pageVO.companyName != null and pageVO.companyName != ''">
             and pcu.company_name like concat('%',#{pageVO.companyName},'%')
         </if>
         <if test="pageVO.status != null">
             and su.status = #{pageVO.status}
         </if>
+    </select>-->
+    <select id="cusFromSysUser" resultType="com.zkzl.module.pro.dal.dataobject.cususer.CusUserDO">
+        /*获取客户角色*/
+        select pcu.user_id,su.mobile,su.create_time,su.status,
+        pcu.address,pcu.company_name,pcu.contect_name
+        from pro_cus_user pcu
+        left join system_users su on su.id = pcu.user_id
+        <where>
+            su.deleted = false
+        <if test="pageVO.companyName != null and pageVO.companyName != ''">
+            and pcu.company_name like concat('%',#{pageVO.companyName},'%')
+        </if>
+        <if test="pageVO.status != null">
+            and su.status = #{pageVO.status}
+        </if>
+        </where>
     </select>
 </mapper>

@@ -48,6 +48,7 @@ public class CusUserServiceImpl implements CusUserService {
         CustomerManageDO param = new CustomerManageDO();
         param.setCustomerName(cusUser.getCompanyName())
                 .setMobile(cusUser.getMobile());
+        param.setImportantLevel("2");
         customerManageMapper.insert(param);
         // 返回
         return cusUser.getUserId();

@@ -28,13 +28,13 @@
       <el-table-column label="订单id" align="center" prop="orderId" />
       <el-table-column label="定金截图" align="center" prop="depositPic" >
         <template slot-scope="scope">
-          <image-preview  :src="scope.row.depositPic"
+          <image-preview v-if="scope.row.depositPic"   :src="scope.row.depositPic"
                          :width="'100px'"></image-preview>
         </template>
       </el-table-column>
       <el-table-column label="尾款截图" align="center" prop="balancePic" >
         <template slot-scope="scope">
-          <image-preview  :src="scope.row.balancePic"
+          <image-preview v-if="scope.row.balancePic"  :src="scope.row.balancePic"
                          :width="'100px'"></image-preview>
         </template>
       </el-table-column>
