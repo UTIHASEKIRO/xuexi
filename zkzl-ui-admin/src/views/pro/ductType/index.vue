@@ -70,7 +70,7 @@
         </el-form-item>
         <el-form-item label="图片" prop="typePic">
           <!-- <el-input v-model="form.typeId" placeholder="请输入产品类别id" /> -->
-          <imageUpload v-model="form.typePic" :limit="8"/>
+          <imageUpload v-model="form.typePic" :limit="1" fileWh="320*265"/>
         </el-form-item>
       
       </el-form>

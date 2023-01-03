@@ -61,7 +61,7 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="图片" prop="picUrl">
-          <imageUpload v-model="form.picUrl" :limit="20"/>
+          <imageUpload v-model="form.picUrl" :limit="1" fileWh="103*85"/>
         </el-form-item>
         <el-form-item label="合作伙伴名称" prop="name">
           <el-input v-model="form.name" placeholder="请输入合作伙伴名称" />
