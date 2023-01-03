@@ -50,7 +50,7 @@
     </div>
     <!-- footer -->
     <div class="footer">
-      Copyright © 2020-2022 iocoder.cn All Rights Reserved.
+      Copyright © 2020-2022 manage.yxwisdom.com All Rights Reserved.
     </div>
   </div>
 </template>

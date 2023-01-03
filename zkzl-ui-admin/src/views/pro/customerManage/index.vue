@@ -3,15 +3,15 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px" >
-      
+
       <el-form-item label="重要等级" prop="importantLevel" >
         <el-select v-model="queryParams.importantLevel" placeholder="请选择重要等级" clearable size="small" style="width: 240px">
           <el-option v-for="dict in importantLevelDict" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
         </el-select>
       </el-form-item>
-     
+
       <el-form-item label="客户跟进结果" prop="customerResult" label-width="100px">
-        
+
         <el-select v-model="queryParams.customerResult" placeholder="请选择客户跟进结果" clearable size="small" style="width: 240px">
           <el-option v-for="dict in customerResultDict" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
         </el-select>
@@ -50,21 +50,21 @@
          <template slot-scope="scope">
           <dict-tag :type="DICT_TYPE.IMPORTANT_LEVEL" :value="scope.row.importantLevel"/>
         </template>
-        
+
       </el-table-column>
       <!-- <el-table-column label="客户意向" align="center" prop="customerIntention" >
         <template slot-scope="scope">
           <dict-tag :type="DICT_TYPE.CUSTOMER_INTENTION" :value="scope.row.status"/>
         </template>
       </el-table-column> -->
-      
+
       <el-table-column label="跟进销售员" align="center" prop="followUser" />
       <el-table-column label="客户跟进结果" align="center" prop="customerResult" >
          <template slot-scope="scope">
           <dict-tag :type="DICT_TYPE.CUSTOMER_RESULT" :value="scope.row.customerResult"/>
         </template>
       </el-table-column>
-      
+
       <el-table-column label="跟进次数" align="center" prop="followNum" />
       <el-table-column label="客户需求" align="center" prop="customerDemand" />
       <el-table-column label="备注" align="center" prop="remark" />
@@ -73,14 +73,14 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column> -->
-      <!-- <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
+       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button size="mini" type="text" icon="el-icon-edit" @click="handleUpdate(scope.row)"
                      v-hasPermi="['pro:customer-manage:update']">修改</el-button>
-          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
-                     v-hasPermi="['pro:customer-manage:delete']">删除</el-button>
+<!--          <el-button size="mini" type="text" icon="el-icon-delete" @click="handleDelete(scope.row)"
+                     v-hasPermi="['pro:customer-manage:delete']">删除</el-button>-->
         </template>
-      </el-table-column> -->
+      </el-table-column>
     </el-table>
     <!-- 分页组件 -->
     <pagination v-show="total > 0" :total="total" :page.sync="queryParams.pageNo" :limit.sync="queryParams.pageSize"
@@ -90,25 +90,34 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="客户" prop="customerName">
-          <el-input v-model="form.customerName" placeholder="请输入客户" />
+          <el-input v-model="form.customerName" placeholder="请输入客户" disabled = 'true' />
         </el-form-item>
         <el-form-item label="联系方式" prop="mobile">
-          <el-input v-model="form.mobile" placeholder="请输入联系方式" />
+          <el-input v-model="form.mobile" placeholder="请输入联系方式" disabled = 'true'  />
         </el-form-item>
         <el-form-item label="联系地址" prop="address">
           <el-input v-model="form.address" placeholder="请输入联系地址" />
         </el-form-item>
-        <el-form-item label="重要等级 1重要2一般3其它" prop="importantLevel">
-          <el-input v-model="form.importantLevel" placeholder="请输入重要等级 1重要2一般3其它" />
+        <el-form-item label="重要等级" prop="importantLevel">
+          <el-select v-model="form.importantLevel" placeholder="请选择重要等级">
+            <el-option v-for="dict in this.getDictDatas(DICT_TYPE.IMPORTANT_LEVEL)"
+                       :key="dict.value" :label="dict.label" :value="dict.value" />
+          </el-select>
         </el-form-item>
-        <el-form-item label="客户意向  1高2中3低" prop="customerIntention">
-          <el-input v-model="form.customerIntention" placeholder="请输入客户意向  1高2中3低" />
+        <el-form-item label="客户意向" prop="customerIntention">
+          <el-select v-model="form.customerIntention" placeholder="请选择客户意向">
+            <el-option v-for="dict in this.getDictDatas(DICT_TYPE.CUSTOMER_INTENTION)"
+                       :key="dict.value" :label="dict.label" :value="dict.value" />
+          </el-select>
         </el-form-item>
-        <el-form-item label="客户需求，引号;分隔开" prop="customerDemand">
+        <el-form-item label="客户需求" prop="customerDemand">
           <el-input v-model="form.customerDemand" placeholder="请输入客户需求，引号;分隔开" />
         </el-form-item>
-        <el-form-item label="客户跟进结果 1进行中2已签约3已放弃" prop="customerResult">
-          <el-input v-model="form.customerResult" placeholder="请输入客户跟进结果 1进行中2已签约3已放弃" />
+        <el-form-item label="客户跟进结果" prop="customerResult">
+          <el-select v-model="form.customerResult" placeholder="请选择客户跟进结果">
+            <el-option v-for="dict in this.getDictDatas(DICT_TYPE.CUSTOMER_RESULT)"
+                       :key="dict.value" :label="dict.label" :value="dict.value" />
+          </el-select>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
           <el-input v-model="form.remark" placeholder="请输入备注" />
@@ -173,7 +182,6 @@ export default {
       rules: {
         customerName: [{ required: true, message: "客户不能为空", trigger: "blur" }],
         mobile: [{ required: true, message: "联系方式不能为空", trigger: "blur" }],
-        address: [{ required: true, message: "联系地址不能为空", trigger: "blur" }],
         importantLevel: [{ required: true, message: "重要等级不能为空", trigger: "blur" }],
         followUser: [{ required: true, message: "跟进销售员不能为空", trigger: "blur" }],
       },
