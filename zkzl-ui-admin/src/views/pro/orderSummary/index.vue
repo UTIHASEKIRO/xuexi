@@ -70,13 +70,13 @@
                 @pagination="getList"/>
 
     <!-- 对话框(添加 / 修改) -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="800px" v-dialogDrag append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="150px">
         <el-form-item label="订单id" prop="orderId">
           <el-input v-model="form.orderId" disabled placeholder="请输入订单id" />
         </el-form-item>
         <el-form-item label="客户" prop="customer">
-          <el-input v-model="form.customer" placeholder="请输入客户" />
+          <el-input v-model="form.customer" placeholder="请输入客户" disabled />
         </el-form-item>
         <el-form-item label="订单状态" prop="status">
           <!-- <el-input v-model="form.status" placeholder="请输入客户" /> -->

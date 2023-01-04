@@ -141,7 +141,8 @@ public class PriceInquryServiceImpl implements PriceInquryService {
             orderGoodsMapper.insertBatch(insertGoods);
 
             //2创建订单汇总
-            String customer = userMapper.selectById(insertOrder.getUserId()).getUsername();
+            //String customer = userMapper.selectById(insertOrder.getUserId()).getUsername();
+            String customer = updateObj.getBuyerCompanyName();
             //String customer = "ccc";
             OrderSummaryDO insertSummary = new OrderSummaryDO();
             insertSummary.setOrderSummaryId(IdUtil.getSnowflakeNextIdStr())

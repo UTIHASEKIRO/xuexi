@@ -79,40 +79,40 @@
                 @pagination="getList"/>
 
     <!-- 对话框(添加 / 修改) -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+    <el-dialog :title="title" :visible.sync="open" width="800px" v-dialogDrag append-to-body>
+      <el-form ref="form" :model="form" :rules="rules" label-width="120px">
         <el-form-item label="订单id" prop="orderId">
-          <el-input v-model="form.orderId" placeholder="请输入订单id" />
+          <el-input v-model="form.orderId" placeholder="请输入订单id" disabled="true" />
         </el-form-item>
         <el-form-item label="卖方公司名称" prop="sellerCompanyName">
-          <el-input v-model="form.sellerCompanyName" placeholder="请输入卖方公司名称" />
+          <el-input v-model="form.sellerCompanyName" placeholder="请输入卖方公司名称" disabled="true"  />
         </el-form-item>
         <el-form-item label="卖方联系地址" prop="sellerCompanyAddress">
-          <el-input v-model="form.sellerCompanyAddress" placeholder="请输入卖方联系地址" />
+          <el-input v-model="form.sellerCompanyAddress" placeholder="请输入卖方联系地址" disabled="true"  />
         </el-form-item>
         <el-form-item label="卖方联系人" prop="sellerContact">
-          <el-input v-model="form.sellerContact" placeholder="请输入卖方联系人" />
+          <el-input v-model="form.sellerContact" placeholder="请输入卖方联系人" disabled="true"  />
         </el-form-item>
         <el-form-item label="卖方联系电话" prop="sellerTel">
-          <el-input v-model="form.sellerTel" placeholder="请输入卖方联系电话" />
+          <el-input v-model="form.sellerTel" placeholder="请输入卖方联系电话" disabled="true"  />
         </el-form-item>
         <!-- <el-form-item label="客户名称" prop="username">
           <el-input v-model="form.username" disabled/>
         </el-form-item> -->
         <el-form-item label="总价格" prop="price">
-          <el-input v-model="form.price" placeholder="请输入总价格" />
+          <el-input v-model="form.price" placeholder="请输入总价格" disabled="true" />
         </el-form-item>
         <el-form-item label="折扣" prop="discount">
-          <el-input v-model="form.discount" placeholder="请输入折扣" />
+          <el-input v-model="form.discount" placeholder="请输入折扣" disabled="true" />
         </el-form-item>
         <el-form-item label="合计" prop="total">
-          <el-input v-model="form.total" placeholder="请输入合计" />
+          <el-input v-model="form.total" placeholder="请输入合计" disabled="true" />
         </el-form-item>
         <el-form-item label="报价日期" prop="priceDate">
-          <el-date-picker clearable v-model="form.priceDate" type="date" value-format="timestamp" placeholder="选择报价日期" />
+          <el-date-picker clearable v-model="form.priceDate" type="date" value-format="timestamp" placeholder="选择报价日期" disabled="true" />
         </el-form-item>
         <el-form-item label="报价有效日期" prop="effectiveDate">
-          <el-date-picker clearable v-model="form.effectiveDate" type="date" value-format="timestamp" placeholder="选择报价有效日期" />
+          <el-date-picker clearable v-model="form.effectiveDate" type="date" value-format="timestamp" placeholder="选择报价有效日期" disabled="true" />
         </el-form-item>
         <el-form-item label="说明" prop="remarks">
           <el-input v-model="form.remarks" placeholder="请输入说明" />
