@@ -120,7 +120,7 @@
         <el-form-item label="订单状态" prop="status">
           <!-- <el-input v-model="form.status" placeholder="请输入客户" /> -->
           <el-select v-model="form.status" placeholder="请选择状态" clearable size="small" >
-          <el-option v-for="dict in orderStatusDict" :key="parseInt(dict.value)" :label="dict.label" :value="parseInt(dict.value)"/>
+          <el-option v-for="dict in orderStatusDict" :key="dict.value" :label="dict.label" :value="dict.value"/>
         </el-select>
         </el-form-item>
       </el-form>

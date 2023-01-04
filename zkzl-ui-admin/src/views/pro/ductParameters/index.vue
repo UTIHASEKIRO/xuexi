@@ -38,7 +38,7 @@
     <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号id" align="center" prop="id" />
       <el-table-column label="值-中文" align="center" prop="valueCn" />
-      <el-table-column label="值-英文文" align="center" prop="valueEn" />
+      <el-table-column label="值-英文" align="center" prop="valueEn" />
       <!-- <el-table-column label="参数名" align="center" prop="parameter" />
       <el-table-column label="值" align="center" prop="value" /> -->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -63,7 +63,7 @@
         <el-form-item label="值-英文" prop="valueEn">
           <el-input v-model="form.valueEn" placeholder="请输入值-英文" />
         </el-form-item>
-      
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>

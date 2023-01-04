@@ -20,6 +20,9 @@ public class ProductReqVO extends PageParam {
 
     @ApiModelProperty(value = "产品名称")
     private String productName;
+
+    @ApiModelProperty(value = "用途分类")
+    private String classification;
 }
 
 
