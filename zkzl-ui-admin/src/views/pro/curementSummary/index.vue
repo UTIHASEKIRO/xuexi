@@ -78,7 +78,7 @@
 
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="800px" v-dialogDrag append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+      <el-form ref="form" :model="form" :rules="rules" label-width="160px">
         <el-form-item label="订单号" prop="orderId">
           <span>{{ form.orderId }}</span>
         </el-form-item>
@@ -98,7 +98,7 @@
           <el-input v-model="form.finishPercent" placeholder="请输入完成进度" />
         </el-form-item>
         <el-form-item label="采购金额" prop="contractAmount">
-          <span>{{ form.contractAmount }}</span>
+          <el-input v-model="form.contractAmount" placeholder="请输入采购金额" />
         </el-form-item>
         <el-form-item label="定金金额" prop="depositAmount">
           <el-input v-model="form.depositAmount" placeholder="请输入定金金额" />
@@ -124,7 +124,7 @@
         </el-form-item>
 
         <el-form-item label="运费" prop="volume">
-          <el-input v-model="form.volume" placeholder="请输入体积" />
+          <el-input v-model="form.volume" placeholder="请输入运费" />
         </el-form-item>
 
         <el-form-item label="装柜时间" prop="packTime">
