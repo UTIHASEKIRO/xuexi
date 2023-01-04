@@ -137,9 +137,9 @@
         <el-form-item label="发货时间" prop="deleveryTime">
           <el-date-picker clearable v-model="form.deleveryTime" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择发货时间" />
         </el-form-item>
-        <el-form-item label="结束时间" prop="endingTime">
+<!--        <el-form-item label="结束时间" prop="endingTime">
           <el-date-picker clearable v-model="form.endingTime" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择结束时间" />
-        </el-form-item>
+        </el-form-item>-->
         <el-form-item label="备注" prop="remarks">
           <el-input v-model="form.remarks" placeholder="请输入备注" />
         </el-form-item>
