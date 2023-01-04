@@ -85,19 +85,26 @@
         </el-select>
         </el-form-item>
         <el-form-item label="完成进度" prop="finishPercent">
-          <el-input v-model="form.finishPercent" placeholder="请输入完成进度" />
+          <!-- <el-input v-model="form.finishPercent" placeholder="请输入完成进度" /> -->
+          <el-input-number class="input-number" v-model="form.finishPercent"  controls-position="right"  :min="0" :max='100' placeholder="请输入完成进度"></el-input-number>
+
         </el-form-item>
         <!-- <el-form-item label="业务员" prop="salesman">
           <el-input v-model="form.salesman" placeholder="请输入业务员" />
         </el-form-item> -->
         <el-form-item label="合同金额" prop="contractAmount">
-          <el-input v-model="form.contractAmount" placeholder="请输入合同金额" />
+          <el-input-number class="input-number" v-model="form.contractAmount"  controls-position="right"  :min="0"  :precision="2" placeholder="请输入合同金额"></el-input-number>
+
+          <!-- <el-input v-model="form.contractAmount" placeholder="请输入合同金额" /> -->
         </el-form-item>
         <el-form-item label="定金金额" prop="depositAmount">
-          <el-input v-model="form.depositAmount" placeholder="请输入定金金额" />
+          <el-input-number class="input-number" v-model="form.depositAmount"  controls-position="right"  :min="0"  :precision="2" placeholder="请输入定金金额"></el-input-number>
+
+          <!-- <el-input v-model="form.depositAmount" placeholder="请输入定金金额" /> -->
         </el-form-item>
         <el-form-item label="尾款金额" prop="balanceAmount">
-          <el-input v-model="form.balanceAmount" placeholder="请输入尾款金额" />
+          <el-input-number class="input-number" v-model="form.balanceAmount"  controls-position="right"  :min="0"  :precision="2" placeholder="请输入尾款金额"></el-input-number>
+          <!-- <el-input v-model="form.balanceAmount" placeholder="请输入尾款金额" /> -->
         </el-form-item>
         <el-form-item label="生产日期" prop="produceDate">
           <el-date-picker clearable v-model="form.produceDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="选择生产日期" />
@@ -322,5 +329,10 @@ export default {
   font-size: 14px;
     color: #606266;
     font-weight: 700;
+}
+</style>
+<style>
+.input-number{
+width: 180px !important;
 }
 </style>
