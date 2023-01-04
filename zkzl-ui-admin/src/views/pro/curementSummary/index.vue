@@ -95,16 +95,19 @@
           </el-select>
         </el-form-item>
         <el-form-item label="完成进度" prop="finishPercent">
-          <el-input v-model="form.finishPercent" placeholder="请输入完成进度" />
+          <el-input-number class="input-number" v-model="form.finishPercent"  controls-position="right"  :min="0" :max="100" placeholder="请输入完成进度"></el-input-number>
         </el-form-item>
         <el-form-item label="采购金额" prop="procurementAmount">
-          <el-input v-model="form.procurementAmount" placeholder="请输入采购金额" />
+           <el-input-number class="input-number" v-model="form.procurementAmount" controls-position="right"  :min="0" :precision="2" placeholder="请输入采购金额"></el-input-number>
+          <!-- <el-input v-model="form.procurementAmount" placeholder="请输入采购金额" /> -->
         </el-form-item>
         <el-form-item label="定金金额" prop="depositAmount">
-          <el-input v-model="form.depositAmount" placeholder="请输入定金金额" />
+          <el-input-number class="input-number" v-model="form.depositAmount"  controls-position="right"  :min="0" :precision="2" placeholder="请输入定金金额"></el-input-number>
+          <!-- <el-input v-model="form.depositAmount" placeholder="请输入定金金额" /> -->
         </el-form-item>
         <el-form-item label="尾款金额" prop="balanceAmount">
-          <el-input v-model="form.balanceAmount" placeholder="请输入尾款金额" />
+          <el-input-number class="input-number" v-model="form.balanceAmount"  controls-position="right"  :min="0" :precision="2" placeholder="请输入尾款金额"></el-input-number>
+          <!-- <el-input v-model="form.balanceAmount" placeholder="请输入尾款金额" /> -->
         </el-form-item>
 
         <el-form-item label="生产日期" prop="produceDate">
@@ -124,7 +127,8 @@
         </el-form-item>
 
         <el-form-item label="运费" prop="freight">
-          <el-input v-model="form.freight" placeholder="请输入运费" />
+           <el-input-number class="input-number" v-model="form.freight"  controls-position="right"  :min="0" :precision="2" placeholder="请输入运费"></el-input-number>
+          <!-- <el-input v-model="form.freight" placeholder="请输入运费" /> -->
         </el-form-item>
 
         <el-form-item label="装柜时间" prop="packTime">
@@ -320,3 +324,8 @@ export default {
   }
 };
 </script>
+<style>
+.input-number{
+width: 180px !important;
+}
+</style>
