@@ -98,7 +98,7 @@
     </div>
     <!-- footer -->
     <div class="footer">
-      Copyright © 2020-2022 manage.yxwisdom.com All Rights Reserved.
+      Copyright © 2020-2022 yxwisdom.com All Rights Reserved.
     </div>
   </div>
 </template>
@@ -128,8 +128,8 @@ export default {
       mobileCodeTimer: 0,
       loginForm: {
         loginType: "uname",
-        username: "admin",
-        password: "admin123",
+        username: "",
+        password: "",
         mobile: "",
         mobileCode: "",
         rememberMe: false,

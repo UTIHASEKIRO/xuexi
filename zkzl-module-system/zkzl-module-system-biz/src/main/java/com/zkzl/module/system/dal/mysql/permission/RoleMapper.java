@@ -20,6 +20,7 @@ public interface RoleMapper extends BaseMapperX<RoleDO> {
 
     default PageResult<RoleDO> selectPage(RolePageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<RoleDO>()
+                .eq(RoleDO::getType,2)
                 .likeIfPresent(RoleDO::getName, reqVO.getName())
                 .likeIfPresent(RoleDO::getCode, reqVO.getCode())
                 .eqIfPresent(RoleDO::getStatus, reqVO.getStatus())
