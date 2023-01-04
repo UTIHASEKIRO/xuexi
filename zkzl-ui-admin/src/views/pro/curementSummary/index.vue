@@ -97,8 +97,8 @@
         <el-form-item label="完成进度" prop="finishPercent">
           <el-input v-model="form.finishPercent" placeholder="请输入完成进度" />
         </el-form-item>
-        <el-form-item label="采购金额" prop="contractAmount">
-          <el-input v-model="form.contractAmount" placeholder="请输入采购金额" />
+        <el-form-item label="采购金额" prop="procurementAmount">
+          <el-input v-model="form.procurementAmount" placeholder="请输入采购金额" />
         </el-form-item>
         <el-form-item label="定金金额" prop="depositAmount">
           <el-input v-model="form.depositAmount" placeholder="请输入定金金额" />
@@ -123,8 +123,8 @@
           <el-input v-model="form.volume" placeholder="请输入体积" />
         </el-form-item>
 
-        <el-form-item label="运费" prop="volume">
-          <el-input v-model="form.volume" placeholder="请输入运费" />
+        <el-form-item label="运费" prop="freight">
+          <el-input v-model="form.freight" placeholder="请输入运费" />
         </el-form-item>
 
         <el-form-item label="装柜时间" prop="packTime">
