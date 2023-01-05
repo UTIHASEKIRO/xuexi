@@ -132,6 +132,9 @@ public class PriceInquryServiceImpl implements PriceInquryService {
             //1创建订单
             OrderDO insertOrder = inqury2Order(currentInqury);
             insertOrder.setOrderId(IdUtil.getSnowflakeNextIdStr());
+            if (null == insertOrder.getPriceDate()){
+                throw exception(PRICE_INQURY_NEED_PRICE_DATE);
+            }
             proOrderMapper.insert(insertOrder);
 
             //批量插入订单子表
