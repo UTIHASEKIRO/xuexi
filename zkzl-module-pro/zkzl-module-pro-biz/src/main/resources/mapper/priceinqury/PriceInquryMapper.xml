@@ -87,6 +87,7 @@
                 and status = #{param.status}
             </if>
         </where>
+        order by update_time desc
     </select>
     <select id="pageCommon" resultType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryPageVO">
         /*业务员查看询价表*/
@@ -97,6 +98,7 @@
             <if test="param.buyerCompanyName != null and param.buyerCompanyName != ''">
                 and buyer_company_name like concat('%',#{param.buyerCompanyName},'%')
             </if>
+        order by update_time desc
     </select>
     <select id="getPriceInquryAndChilds" resultMap="inquryAndChilds">
         /*查看询价表及子表*/

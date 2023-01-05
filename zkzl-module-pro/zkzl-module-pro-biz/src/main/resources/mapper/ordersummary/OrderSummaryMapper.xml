@@ -27,5 +27,6 @@
                 and pos.create_time between #{param.signTime.[0]} and #{param.signTime.[1]}
             </if>
         </where>
+        order by pos.update_time desc
     </select>
 </mapper>
