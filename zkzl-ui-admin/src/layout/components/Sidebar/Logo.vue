@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       title: '集采管理系统',
-      logo: logoImg
+      //logo: logoImg
     }
   }
 }
@@ -78,7 +78,7 @@ export default {
       color: #fff;
       font-weight: 600;
       line-height: 50px;
-      font-size: 14px;
+      font-size: 17px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
     }
