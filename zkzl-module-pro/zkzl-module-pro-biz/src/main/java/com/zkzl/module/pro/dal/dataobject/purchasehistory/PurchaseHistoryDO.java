@@ -1,8 +1,6 @@
 package com.zkzl.module.pro.dal.dataobject.purchasehistory;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import java.util.*;
 import java.math.BigDecimal;
 import com.baomidou.mybatisplus.annotation.*;
 import com.zkzl.framework.mybatis.core.dataobject.BaseDO;

@@ -240,7 +240,11 @@ public class PriceInquryServiceImpl implements PriceInquryService {
         Long LoginUserId = SecurityFrameworkUtils.getLoginUserId();
         Boolean isNewInqury = false;//是否为新建的询价单-不是新的询价单则需验证子表产品是否已加入询价
 
-        int[] status = new int[]{0,1,2,5};
+        List<String> status = new ArrayList<>();
+        status.add("0");
+        status.add("1");
+        status.add("2");
+        status.add("5");
         //查询登陆人是否有正在询价的询价单
         //原则上 询价单每个人只存在一条正在询价的询价单(status=0,1,2,5)
         PriceInquryDO inquryIng = priceInquryMapper.selectOne(new LambdaQueryWrapper<PriceInquryDO>()
