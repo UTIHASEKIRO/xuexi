@@ -363,7 +363,7 @@ public class PriceInquryServiceImpl implements PriceInquryService {
         OrderGoodsDO result;
         for (PriceInquryChildDO child : childs) {
             result = new OrderGoodsDO();
-            result.setPrice(child.getPrice())
+            result.setPrice(child.getUnitPrice().multiply(BigDecimal.valueOf(child.getMount())))
                     .setUnitPrice(child.getUnitPrice())
                     .setMount(child.getMount())
                     .setBoxHeight(child.getBoxHeight())
