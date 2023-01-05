@@ -164,6 +164,7 @@
                 and po.create_time between #{req.effectiveDate.[0]} and #{req.effectiveDate.[1]}
             </if>
         </where>
+        order by po.update_time desc
     </select>
 
     <resultMap id="orderDO" type="com.zkzl.module.pro.dal.dataobject.order.OrderDO">
