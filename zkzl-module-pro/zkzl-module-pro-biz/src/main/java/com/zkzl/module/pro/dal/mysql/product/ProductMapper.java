@@ -49,6 +49,9 @@ public interface ProductMapper extends BaseMapperX<ProductDO> {
                 .eqIfPresent(ProductDO::getNetWeight, reqVO.getNetWeight())
                 .eqIfPresent(ProductDO::getShipped, reqVO.getShipped())
                 .betweenIfPresent(ProductDO::getCreateTime, reqVO.getCreateTime())
+                .likeIfPresent(ProductDO::getProductNameCn, reqVO.getProductName())
+                .orX()
+                .likeIfPresent(ProductDO::getProductNameEn, reqVO.getProductName())
                 .orderByDesc(ProductDO::getId));
     }
 

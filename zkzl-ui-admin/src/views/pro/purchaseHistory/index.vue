@@ -111,25 +111,14 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="产品类别：" prop="typeId">
-          <el-cascader
-            v-model="form.typeId"
-            :options="duckTypeList"
-            placeholder="请输入产品类别"
-            clearable size="small" style="width: 240px"
-            :props="{children:'productTypeDOS',value:'typeId',label:'typeNameCn'}"
-            >
-          </el-cascader>
-          <!-- <el-select ref="selectReport" v-model="form.typeId" placeholder="请选择">
-            <el-option :value="form.typeId" :label="form.typeNameCn" style="height: auto">
-              <el-tree :data="duckTypeList"
-                       :props="{ value: 'typeId',  label: 'typeNameCn' ,children: 'productTypeDOS'}"
-                       @node-click="handleNodeClick"></el-tree>
-            </el-option>
-          </el-select> -->
+          <el-select v-model="form.typeId" placeholder="请选择产品类别" clearable size="small" style="width: 240px"
+                     @change="getProductList">
+            <el-option v-for="dict in duckTypeList" :key="dict.typeId" :label="dict.typeNameCn" :value="dict.typeId"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="产品" prop="product">
           <el-select v-model="form.productId" placeholder="请选择产品" clearable size="small" style="width: 240px" @change="getSupplyInfoPage(null,$event)">
-            <el-option v-for="dict in productList" :key="parseInt(dict.id)" :label="dict.productNameCn" :value="dict.productId"/>
+            <el-option v-for="dict in productList" :key="dict.productId" :label="dict.productNameCn" :value="dict.productId"/>
           </el-select>
         </el-form-item>
         <el-form-item label="供货商" prop="supplyInfoId">

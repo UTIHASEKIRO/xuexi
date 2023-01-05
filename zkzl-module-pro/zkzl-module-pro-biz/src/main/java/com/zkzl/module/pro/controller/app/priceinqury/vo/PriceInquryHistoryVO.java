@@ -24,6 +24,9 @@ public class PriceInquryHistoryVO extends PageParam{
     @ApiModelProperty(value = "客户理想价格")
     private String buyerIdealPrice;
 
+    @ApiModelProperty(value = "客户名称")
+    private String buyerCompanyName;
+
     @ApiModelProperty(value = "询价时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd")

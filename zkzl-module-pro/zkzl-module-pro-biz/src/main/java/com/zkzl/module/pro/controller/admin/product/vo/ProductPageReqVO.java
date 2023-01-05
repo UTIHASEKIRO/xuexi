@@ -83,4 +83,7 @@ public class ProductPageReqVO extends PageParam {
     @DateTimeFormat(pattern = FORMAT_YEAR_MONTH_DAY_HOUR_MINUTE_SECOND)
     private Date[] createTime;
 
+    @ApiModelProperty(value = "产品名称(搜索用)")
+    private String productName;
+
 }

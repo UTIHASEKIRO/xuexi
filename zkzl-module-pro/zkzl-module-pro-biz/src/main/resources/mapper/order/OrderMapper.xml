@@ -210,5 +210,6 @@
                  left join pro_price_inqury ppi on po.price_inqury_id = ppi.price_inqury_id
                  left join pro_evidence pe on po.order_id = pe.order_id
         where po.user_id = #{pageReqVO.userId}
+        order by po.create_time desc
     </select>
 </mapper>

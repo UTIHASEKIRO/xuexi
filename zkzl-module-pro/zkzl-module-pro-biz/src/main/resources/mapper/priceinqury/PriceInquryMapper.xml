@@ -9,43 +9,43 @@
         文档可见：https://www.iocoder.cn/MyBatis/x-plugins/
      -->
     <resultMap id="inquryAndChilds" type="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryAndChildsVO">
-        <id column="id" property="id" />
-        <result column="price_inqury_id" property="priceInquryId" />
-        <result column="seller_company_name" property="sellerCompanyName" />
-        <result column="seller_company_address" property="sellerCompanyAddress" />
-        <result column="seller_contact" property="sellerContact" />
-        <result column="seller_tel" property="sellerTel" />
-        <result column="buyer_ideal_price" property="buyerIdealPrice" />
-        <result column="buyer_company_address" property="buyerAddress" />
-        <result column="buyer_company_name" property="buyerCompanyName" />
-        <result column="buyer_contact" property="buyerContactName" />
-        <result column="buyer_tel" property="buyerMobile" />
-        <result column="price" property="price" />
-        <result column="discount" property="discount" />
-        <result column="total" property="total" />
-        <result column="price_date" property="priceDate" />
-        <result column="effective_date" property="effectiveDate" />
-        <result column="status" property="status" />
+        <id column="id" property="id"/>
+        <result column="price_inqury_id" property="priceInquryId"/>
+        <result column="seller_company_name" property="sellerCompanyName"/>
+        <result column="seller_company_address" property="sellerCompanyAddress"/>
+        <result column="seller_contact" property="sellerContact"/>
+        <result column="seller_tel" property="sellerTel"/>
+        <result column="buyer_ideal_price" property="buyerIdealPrice"/>
+        <result column="buyer_company_address" property="buyerAddress"/>
+        <result column="buyer_company_name" property="buyerCompanyName"/>
+        <result column="buyer_contact" property="buyerContactName"/>
+        <result column="buyer_tel" property="buyerMobile"/>
+        <result column="price" property="price"/>
+        <result column="discount" property="discount"/>
+        <result column="total" property="total"/>
+        <result column="price_date" property="priceDate"/>
+        <result column="effective_date" property="effectiveDate"/>
+        <result column="status" property="status"/>
         <collection property="childs" ofType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryChildsVO">
-            <id column="ppicid" property="id" />
-            <result column="price_inqury_id" property="priceInquryId" />
-            <result column="supply_info_id" property="supplyInfoId" />
-            <result column="product_id" property="productId" />
-            <result column="hs_serial" property="hsSerial" />
-            <result column="product_desc" property="productDesc" />
-            <result column="product_size" property="productSize" />
-            <result column="product_color" property="productColor" />
-            <result column="product_g" property="productG" />
-            <result column="package_way" property="packageWay" />
-            <result column="box_length" property="boxLength" />
-            <result column="box_height" property="boxHeight" />
-            <result column="box_wide" property="boxWide" />
-            <result column="volume" property="volume" />
-            <result column="price" property="price" />
-            <result column="unit_price" property="unitPrice" />
-            <result column="gross_weight" property="grossWeight" />
-            <result column="net_weight" property="netWeight" />
-            <result column="mount" property="mount" />
+            <id column="ppicid" property="id"/>
+            <result column="price_inqury_id" property="priceInquryId"/>
+            <result column="supply_info_id" property="supplyInfoId"/>
+            <result column="product_id" property="productId"/>
+            <result column="hs_serial" property="hsSerial"/>
+            <result column="product_desc" property="productDesc"/>
+            <result column="product_size" property="productSize"/>
+            <result column="product_color" property="productColor"/>
+            <result column="product_g" property="productG"/>
+            <result column="package_way" property="packageWay"/>
+            <result column="box_length" property="boxLength"/>
+            <result column="box_height" property="boxHeight"/>
+            <result column="box_wide" property="boxWide"/>
+            <result column="volume" property="volume"/>
+            <result column="price" property="price"/>
+            <result column="unit_price" property="unitPrice"/>
+            <result column="gross_weight" property="grossWeight"/>
+            <result column="net_weight" property="netWeight"/>
+            <result column="mount" property="mount"/>
         </collection>
         <collection property="productBaseVOList" ofType="com.zkzl.module.pro.controller.admin.product.vo.ProductBaseVO">
             <result column="product_id" property="productId"/>
@@ -69,15 +69,16 @@
             <result column="gross_weight" property="grossWeight"/>
             <result column="net_weight" property="netWeight"/>
             <result column="shipped" property="shipped"/>
-            <result column="mount" property="mount" />
+            <result column="mount" property="mount"/>
         </collection>
     </resultMap>
 
 
     <select id="pageManage" resultType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryPageVO">
         /*管理员查看询价表*/
-        select id,price_inqury_id priceInquryId,buyer_company_name companyName,buyer_contact contactName,buyer_tel mobile,
-               create_time createTime,`status`
+        select id,price_inqury_id priceInquryId,buyer_company_name companyName,buyer_contact contactName,buyer_tel
+        mobile,
+        create_time createTime,`status`
         from pro_price_inqury
         <where>
             <if test="param.buyerCompanyName != null and param.buyerCompanyName != ''">
@@ -91,13 +92,14 @@
     </select>
     <select id="pageCommon" resultType="com.zkzl.module.pro.controller.admin.priceinqury.vo.PriceInquryPageVO">
         /*业务员查看询价表*/
-        select id,price_inqury_id priceInquryId,buyer_company_name companyName,buyer_contact contactName,buyer_tel mobile,
+        select id,price_inqury_id priceInquryId,buyer_company_name companyName,buyer_contact contactName,buyer_tel
+        mobile,
         create_time createTime,`status`
         from pro_price_inqury
         where status in (0,5)
-            <if test="param.buyerCompanyName != null and param.buyerCompanyName != ''">
-                and buyer_company_name like concat('%',#{param.buyerCompanyName},'%')
-            </if>
+        <if test="param.buyerCompanyName != null and param.buyerCompanyName != ''">
+            and buyer_company_name like concat('%',#{param.buyerCompanyName},'%')
+        </if>
         order by update_time desc
     </select>
     <select id="getPriceInquryAndChilds" resultMap="inquryAndChilds">
@@ -131,9 +133,18 @@
     <select id="inquryHistory"
             resultType="com.zkzl.module.pro.controller.app.priceinqury.vo.PriceInquryHistoryVO">
         /*用户询价历史*/
-        select ppi.id,ppi.price_inqury_id,ppi.create_time,ppi.price,ppi.discount,ppi.total,
-               ppi.buyer_ideal_price,ppi.price_date,ppi.status
+        select ppi.id,
+               ppi.price_inqury_id,
+               ppi.create_time,
+               ppi.price,
+               ppi.discount,
+               ppi.total,
+               ppi.buyer_ideal_price,
+               ppi.price_date,
+               ppi.status,
+               ppi.buyer_company_name
         from pro_price_inqury ppi
         where ppi.buyer_company_id = #{loginUserId}
+        order by ppi.create_time desc
     </select>
 </mapper>
