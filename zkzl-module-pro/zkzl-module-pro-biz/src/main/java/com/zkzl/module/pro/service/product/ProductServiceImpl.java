@@ -140,7 +140,19 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public PageResult<ProductDO> getductPage(ProductPageReqVO pageReqVO) {
-        return ductMapper.selectPage(pageReqVO);
+        PageResult<ProductDO> result = ductMapper.selectPage(pageReqVO);
+        List<ProductDO> resultList = result.getList();
+        List<ProductPicDO> picDO;
+        for (ProductDO productDO : resultList) {
+            picDO = productPicMapper.selectList(new LambdaQueryWrapperX<ProductPicDO>()
+                    .eq(ProductPicDO::getProductId,productDO.getProductId())
+                    .last("limit 1"));
+            if (null == picDO){
+                continue;
+            }
+            productDO.setPicDOS(picDO);
+        }
+        return result;
     }
 
     @Override
