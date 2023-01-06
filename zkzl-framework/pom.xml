@@ -22,6 +22,7 @@
         <module>zkzl-spring-boot-starter-protection</module>
         <module>zkzl-spring-boot-starter-config</module>
         <module>zkzl-spring-boot-starter-job</module>
+        <module>zkzl-spring-boot-starter-log</module>
         <module>zkzl-spring-boot-starter-mq</module>
         <module>zkzl-spring-boot-starter-rabbitmq</module>
 
