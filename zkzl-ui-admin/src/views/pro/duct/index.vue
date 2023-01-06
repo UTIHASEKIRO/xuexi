@@ -39,6 +39,11 @@
     <el-table v-loading="loading" :data="list" border>
       <el-table-column label="序号" align="center" prop="id" />
       <el-table-column label="产品名称" align="center" prop="productNameCn" />
+      <el-table-column label="产品图片" align="center" prop="ductImgs" >
+        <template  slot-scope="scope">
+          <image-preview :src="scope.row.ductImgs" :width="'100px'"/>
+        </template>
+      </el-table-column>
       <el-table-column label="HS编号" align="center" prop="hsNo" />
       <el-table-column label="产品型号" align="center" prop="productModel" />
       <el-table-column label="用途分类" align="center" prop="useClassificationCn" />
@@ -192,11 +197,12 @@ import {getductParametersPage} from "@/api/pro/ductParameters";
 import { ductTypeList} from "@/api/pro/ductType"
 import {  getductFinalParametersPage } from "@/api/pro/ductFinalParameters";
 import ImageUpload from '@/components/ImageUpload';
+import ImagePreview from "@/components/ImagePreview";
 import {DICT_TYPE, getDictDatas} from "@/utils/dict";
 export default {
   name: "duct",
   components: {
-    ImageUpload
+    ImageUpload,ImagePreview
   },
   data() {
     return {
@@ -276,6 +282,9 @@ export default {
       this.loading = true;
       // 执行查询
       getductPage(this.queryParams).then(response => {
+        response.data.list.forEach(ele=>{
+          ele.ductImgs = ele.picDOS.map(pic=>pic.url).join(',')
+        })
         this.list = response.data.list;
         this.total = response.data.total;
         this.loading = false;
