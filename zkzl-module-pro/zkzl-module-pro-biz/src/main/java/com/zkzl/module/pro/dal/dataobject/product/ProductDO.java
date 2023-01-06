@@ -1,5 +1,7 @@
 package com.zkzl.module.pro.dal.dataobject.product;
 
+import com.zkzl.module.pro.dal.dataobject.productpic.ProductPicDO;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -111,5 +113,11 @@ public class ProductDO extends BaseDO {
      * 1上架0下架
      */
     private String shipped;
+
+    /*
+    * 图片 取第一张
+    * */
+    @TableField(exist = false)
+    private List<ProductPicDO> picDOS;
 
 }

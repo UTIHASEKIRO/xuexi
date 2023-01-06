@@ -50,6 +50,10 @@
             <artifactId>zkzl-spring-boot-starter-excel</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>top.code.zkzl</groupId>
+            <artifactId>zkzl-spring-boot-starter-log</artifactId>
+        </dependency>
         <!-- DB 相关 -->
         <dependency>
             <groupId>top.code.zkzl</groupId>
