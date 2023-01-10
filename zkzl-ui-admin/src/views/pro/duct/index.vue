@@ -120,7 +120,7 @@
         </el-form-item>
         <el-form-item label="用途分类" prop="useClassificationCns">
           <!-- <el-input v-model="form.useClassificationCn" placeholder="请输入用途分类" /> -->
-          <el-select v-model="form.useClassificationCns" placeholder="请输入用途分类" clearable size="small" style="width: 240px">
+          <el-select v-model="form.useClassificationCns" multiple placeholder="请输入用途分类" clearable size="small" style="width: 240px">
             <el-option v-for="dict in useList" :key="parseInt(dict.id)" :label="dict.valueCn" :value="dict.valueCn"/>
           </el-select>
         </el-form-item>
@@ -405,7 +405,7 @@ export default {
           var certTemp = this.form.productCertificateDOS
           var certDosTemp = ''
           certTemp.forEach(ele => {
-            certDosTemp = certDosTemp + ele.url + ","
+            certDosTemp = certDosTemp + ele.certificateUrl + ","
           })
           this.form.productCertificateDOSTemp = certDosTemp
           this.form.productCertificateDOSTemp = this.form.productCertificateDOSTemp.substr(0,this.form.productCertificateDOSTemp.length-1);
@@ -436,13 +436,15 @@ export default {
             this.form.deliveryMethodEn = ele.valueEn
           }
         })
+        this.form.useClassificationEns = [];
         this.useList.forEach(ele=>{
           this.form.useClassificationCns.forEach(useClassification =>{
-            if(ele.valueCn === useClassification.useClassificationCn){
+            if(ele.valueCn === useClassification){
               this.form.useClassificationEns.push(ele.valueEn);
             }
           })
         })
+        console.log('英文用途：'+ this.form.useClassificationEns);
         //修改图片地址
         if(this.form.picDOSTemp){
         var temp =this.form.picDOSTemp
