@@ -174,9 +174,9 @@
                 )
             </if>
             <if test="productReqVO.classification != null and productReqVO.classification != '' ">
-                and (pp.use_classification_cn = #{productReqVO.classification}
+                and (pp.use_classification_cn like concat('%',#{productReqVO.classification},'%')
                 or
-                pp.use_classification_en = #{productReqVO.classification}
+                pp.use_classification_en like concat('%',#{productReqVO.classification},'%')
                 )
             </if>
         </where>
