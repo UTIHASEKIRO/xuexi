@@ -28,6 +28,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,6 +60,14 @@ public class ProductServiceImpl implements ProductService {
         // 产品id
         String productId = IdUtil.getSnowflakeNextIdStr();
         createReqVO.setProductId(productId);
+        // 用途分类中文
+        if(createReqVO.getUseClassificationCns() != null){
+            createReqVO.setUseClassificationCn(createReqVO.getUseClassificationCns().toString().substring(1,createReqVO.getUseClassificationCns().toString().length()-1));
+        }
+        // 用途分类英文
+        if(createReqVO.getUseClassificationEns() != null){
+            createReqVO.setUseClassificationEn(createReqVO.getUseClassificationEns().toString().substring(1,createReqVO.getUseClassificationEns().toString().length()-1));
+        }
         // 插入
         //插入产品参数
         addProductParameters(createReqVO.getProductParametersDOS(), productId, 0L);
@@ -90,6 +99,15 @@ public class ProductServiceImpl implements ProductService {
         productPicMapper.delete(new QueryWrapper<ProductPicDO>().lambda().eq(ProductPicDO::getProductId,updateReqVO.getProductId()));
         productCertificateMapper.delete(new QueryWrapper<ProductCertificateDO>().lambda().eq(ProductCertificateDO::getProductId,updateReqVO.getProductId()));
         // 更新
+
+        // 用途分类中文
+        if(updateReqVO.getUseClassificationCns() != null){
+            updateReqVO.setUseClassificationCn(updateReqVO.getUseClassificationCns().toString().substring(1,updateReqVO.getUseClassificationCns().toString().length()-1));
+        }
+        // 用途分类英文
+        if(updateReqVO.getUseClassificationEns() != null){
+            updateReqVO.setUseClassificationEn(updateReqVO.getUseClassificationEns().toString().substring(1,updateReqVO.getUseClassificationEns().toString().length()-1));
+        }
 
         //插入产品参数
         addProductParameters(updateReqVO.getProductParametersDOS(),updateReqVO.getProductId(),0L);
@@ -164,6 +182,10 @@ public class ProductServiceImpl implements ProductService {
     public ProductRespVO getProduct(String productId) {
         ProductRespVO product = ductMapper.getProduct(productId);
         product.setProductParametersDOS(streamMethod(0L, product.getProductParametersDOS()));
+        // 用途分类中文
+        if(product.getUseClassificationCn() != null){
+            product.setUseClassificationCns(Arrays.asList(product.getUseClassificationCn().split(",")));
+        }
         return product;
     }
 

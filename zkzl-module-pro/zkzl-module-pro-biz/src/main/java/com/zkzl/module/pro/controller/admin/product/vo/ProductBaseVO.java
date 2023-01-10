@@ -89,6 +89,12 @@ public class ProductBaseVO {
     @ApiModelProperty(value = "证书", required = true)
     private List<ProductCertificateDO> productCertificateDOS;
 
+    @ApiModelProperty(value = "用途分类中文list", required = true)
+    private List<String> useClassificationCns;
+
+    @ApiModelProperty(value = "用途分类英文list", required = true)
+    private List<String> useClassificationEns;
+
     /*
      *  数量
      * */

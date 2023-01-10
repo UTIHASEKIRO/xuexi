@@ -118,9 +118,9 @@
             <el-option v-for="dict in deliveryList" :key="parseInt(dict.id)" :label="dict.valueCn" :value="dict.valueCn"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="用途分类" prop="useClassificationCn">
+        <el-form-item label="用途分类" prop="useClassificationCns">
           <!-- <el-input v-model="form.useClassificationCn" placeholder="请输入用途分类" /> -->
-          <el-select v-model="form.useClassificationCn" placeholder="请输入用途分类" clearable size="small" style="width: 240px">
+          <el-select v-model="form.useClassificationCns" placeholder="请输入用途分类" clearable size="small" style="width: 240px">
             <el-option v-for="dict in useList" :key="parseInt(dict.id)" :label="dict.valueCn" :value="dict.valueCn"/>
           </el-select>
         </el-form-item>
@@ -231,7 +231,9 @@ export default {
       },
       // 表单参数
       form: {
-        productParametersDOS:[]
+        productParametersDOS:[],
+        useClassificationCns:[],
+        useClassificationEns:[]
       },
       dynamicParamDialogFlag:false,
       dynamicParamForm:{
@@ -435,9 +437,11 @@ export default {
           }
         })
         this.useList.forEach(ele=>{
-          if(ele.valueCn === this.form.useClassificationCn){
-            this.form.useClassificationEn = ele.valueEn
-          }
+          this.form.useClassificationCns.forEach(useClassification =>{
+            if(ele.valueCn === useClassification.useClassificationCn){
+              this.form.useClassificationEns.push(ele.valueEn);
+            }
+          })
         })
         //修改图片地址
         if(this.form.picDOSTemp){
