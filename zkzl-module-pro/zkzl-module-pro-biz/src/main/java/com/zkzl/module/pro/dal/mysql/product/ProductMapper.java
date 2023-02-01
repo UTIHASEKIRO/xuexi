@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.zkzl.module.pro.controller.admin.product.vo.ProductExcelVO2;
 import com.zkzl.module.pro.controller.admin.product.vo.ProductExportReqVO;
 import com.zkzl.module.pro.controller.admin.product.vo.ProductPageReqVO;
 import com.zkzl.module.pro.controller.admin.product.vo.ProductRespVO;
@@ -82,6 +83,8 @@ public interface ProductMapper extends BaseMapperX<ProductDO> {
                 .orderByDesc(ProductDO::getId));
     }
 
+    List<ProductExcelVO2> selectList2(ProductExportReqVO reqVO);
+
     Page<ProductRespVO> getProductPage(Page<ProductRespVO> page, @Param("pageReqVO") ProductPageReqVO pageReqVO);
 
     ProductRespVO getProduct(String productId);
@@ -96,4 +99,6 @@ public interface ProductMapper extends BaseMapperX<ProductDO> {
     IPage<ProductDescVO> recommend(IPage<ProductDescVO> mPage,@Param("productReqVO") ProductReqVO pageParam);
 
     String getIsInqury(@Param("productId") String productId,@Param("userId") Long userId);
+
+
 }

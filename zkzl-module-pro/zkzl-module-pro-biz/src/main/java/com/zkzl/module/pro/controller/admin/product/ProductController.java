@@ -1,17 +1,24 @@
 package com.zkzl.module.pro.controller.admin.product;
 
+import com.zkzl.framework.excel.core.util.ExcelUtils;
+import com.zkzl.framework.operatelog.core.annotations.OperateLog;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.security.access.prepost.PreAuthorize;
 import io.swagger.annotations.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.common.pojo.CommonResult;
 import static com.zkzl.framework.common.pojo.CommonResult.success;
+import static com.zkzl.framework.operatelog.core.enums.OperateTypeEnum.EXPORT;
 
 
 import com.zkzl.module.pro.controller.admin.product.vo.*;
@@ -81,5 +88,26 @@ public class ProductController {
     public CommonResult<Boolean> deleteduct(@RequestParam("productId") String productId) {
         ductService.deleteduct(productId);
         return success(true);
+    }
+
+    @GetMapping("/export-excel")
+    @ApiOperation("导出产品 Excel")
+    @PreAuthorize("@ss.hasPermission('pro:duct:export')")
+    @OperateLog(type = EXPORT)
+    public void exportductExcel(@Valid ProductExportReqVO exportReqVO,
+                                HttpServletResponse response) throws IOException {
+        List<ProductExcelVO2> list = ductService.getductList2(exportReqVO);
+        for (ProductExcelVO2 productExcelVO2 : list) {
+            String filePath = ExcelUtils.saveFile(productExcelVO2.getUrl(), ExcelUtils.path);
+            productExcelVO2.setPic(new File(filePath));
+        }
+//        List<ProductExcelVO2> productDOList = list.stream()
+//                .filter(ProductExcelVO2 -> ProductExcelVO2.getShipped().equals("0"))
+//                .sorted(Comparator.comparing(ProductExcelVO2::getTypeId))
+//                .collect(Collectors.toList());
+
+        // 导出 Excel
+//        List<ProductExcelVO> datas = ProductConvert.INSTANCE.convertList02(productDOList);
+        ExcelUtils.write(response, "产品.xls", "数据", ProductExcelVO2.class, list);
     }
 }

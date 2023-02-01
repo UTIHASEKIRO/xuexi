@@ -5,7 +5,9 @@ import com.alibaba.excel.write.style.column.LongestMatchColumnWidthStyleStrategy
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -15,6 +17,8 @@ import java.util.List;
  * @author 芋道源码
  */
 public class ExcelUtils {
+
+    public static final String path= "./template/excelDeleteImage/";
 
     /**
      * 将列表以 Excel 响应给前端
@@ -43,6 +47,69 @@ public class ExcelUtils {
        return EasyExcel.read(file.getInputStream(), head, null)
                 .autoCloseStream(false)  // 不要自动关闭，交给 Servlet 自己处理
                 .doReadAllSync();
+    }
+
+
+    /**
+     * 保存图片到本地
+     * @date 2022/5/9
+     * @param imageUrl
+     * @param path
+     * @return
+     */
+    public static String saveFile(String imageUrl, String path){
+        String filename = imageUrl.substring(imageUrl.lastIndexOf("/")+1, imageUrl.length());
+        //log.error("图片===="+filename);
+        //Random rand = new Random();
+        //int s = rand.nextInt(900)+ 100;
+        int s = (int) (Math.random() * 10000);
+        //log.error("随机数=="+s);
+        filename = s + filename;  //这里如果有文件名称重复的，就取一个随机数拼接文件名
+        File sf= null;
+        OutputStream os = null;
+        InputStream is = null;
+        try {
+            // 构造URL
+            URL url = new URL(imageUrl);
+            // 打开连接
+            URLConnection con = url.openConnection();
+            //设置请求超时为5s
+            con.setConnectTimeout(5*1000);
+            // 输入流
+            is = con.getInputStream();
+
+            // 1K的数据缓冲
+            byte[] bs = new byte[1024];
+            // 读取到的数据长度
+            int len;
+            // 输出的文件流
+//		    String path = "E:\\data\\nginxd\\sportsApplets";
+//          String path = "/data/nginxd/sportsApplets/excelDeleteImage/";
+            sf = new File(path);
+            if(!sf.exists()){
+                sf.mkdirs();
+            }
+            os = new FileOutputStream(sf.getPath()+"/"+filename);
+            // 开始读取
+            while ((len = is.read(bs)) != -1) {
+                os.write(bs, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            // 完毕，关闭所有链接
+            try {
+                if(os!=null){
+                    os.close();
+                }
+                if(is!=null){
+                    is.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sf.getPath()+"/"+filename;
     }
 
 }

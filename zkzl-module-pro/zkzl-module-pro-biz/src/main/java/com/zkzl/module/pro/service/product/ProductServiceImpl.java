@@ -179,6 +179,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductExcelVO2> getductList2(ProductExportReqVO exportReqVO) {
+        return ductMapper.selectList2(exportReqVO);
+    }
+
+    @Override
     public ProductRespVO getProduct(String productId) {
         ProductRespVO product = ductMapper.getProduct(productId);
         product.setProductParametersDOS(streamMethod(0L, product.getProductParametersDOS()));

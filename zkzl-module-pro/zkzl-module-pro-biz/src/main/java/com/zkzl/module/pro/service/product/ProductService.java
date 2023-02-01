@@ -71,6 +71,14 @@ public interface ProductService {
      */
     List<ProductDO> getductList(ProductExportReqVO exportReqVO);
 
+    /**
+     * 获得产品列表, 用于 Excel 导出
+     *
+     * @param exportReqVO 查询条件
+     * @return 产品列表
+     */
+    List<ProductExcelVO2> getductList2(ProductExportReqVO exportReqVO);
+
     ProductRespVO getProduct(String productId);
 
     void updateShipped(String productId);
