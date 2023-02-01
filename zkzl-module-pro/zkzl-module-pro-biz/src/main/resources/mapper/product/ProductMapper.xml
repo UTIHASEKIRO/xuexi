@@ -237,7 +237,10 @@
           and ppi.status in (1,2,5)
     </select>
     <select id="selectList2" resultType="com.zkzl.module.pro.controller.admin.product.vo.ProductExcelVO2">
-        select packaging_method_cn ,gram_weight,box_gauge,volume,gross_weight,net_weight,ppp.url
+        select product_name_cn,product_name_en,product_model,hs_no,packaging_method_cn,
+            packaging_method_en,colour_cn,colour_en,use_classification_cn,use_classification_en
+            delivery_method_cn,delivery_method_en,gram_weight,size,box_gauge,volume,gross_weight,
+            net_weight,ppp.url
         from pro_product pp
         left join (select url,product_id from pro_product_pic group by product_id) ppp on pp.product_id = ppp.product_id
         where pp.shipped = '0'
