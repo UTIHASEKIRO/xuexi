@@ -64,13 +64,13 @@ public class OrderGoodsExcelVO {
     private BigDecimal price;
 
     @ExcelProperty("体积")
-    private BigDecimal volume;
+    private String volume;
 
     @ExcelProperty("毛重")
-    private BigDecimal grossWeight;
+    private String grossWeight;
 
     @ExcelProperty("净重")
-    private BigDecimal netWeight;
+    private String netWeight;
 
     @ExcelProperty("备注")
     private String remark;

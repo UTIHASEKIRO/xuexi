@@ -52,16 +52,16 @@ public class PriceInquryChildExcelVO {
     private BigDecimal boxWide;
 
     @ExcelProperty("体积")
-    private BigDecimal volume;
+    private String volume;
 
     @ExcelProperty("总价格")
     private BigDecimal price;
 
     @ExcelProperty("毛重")
-    private BigDecimal grossWeight;
+    private String grossWeight;
 
     @ExcelProperty("净重")
-    private BigDecimal netWeight;
+    private String netWeight;
 
     @ExcelProperty("数量")
     private Integer mount;

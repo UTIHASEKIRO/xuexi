@@ -62,13 +62,13 @@ public class OrderGoodsPageReqVO extends PageParam {
     private BigDecimal price;
 
     @ApiModelProperty(value = "体积")
-    private BigDecimal volume;
+    private String volume;
 
     @ApiModelProperty(value = "毛重")
-    private BigDecimal grossWeight;
+    private String grossWeight;
 
     @ApiModelProperty(value = "净重")
-    private BigDecimal netWeight;
+    private String netWeight;
 
     @ApiModelProperty(value = "备注")
     private String remark;

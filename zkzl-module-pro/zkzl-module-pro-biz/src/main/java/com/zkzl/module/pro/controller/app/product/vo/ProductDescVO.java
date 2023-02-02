@@ -96,17 +96,17 @@ public class ProductDescVO{
      * 体积
      */
     @ApiModelProperty(value = "体积")
-    private BigDecimal volume;
+    private String volume;
     /**
      * 毛重
      */
     @ApiModelProperty(value = "毛重")
-    private BigDecimal grossWeight;
+    private String grossWeight;
     /**
      * 净重
      */
     @ApiModelProperty(value = "净重")
-    private BigDecimal netWeight;
+    private String netWeight;
 
     @ApiModelProperty(value = "是否加入询价 1已加入 0未加入")
     private String isInqury;
