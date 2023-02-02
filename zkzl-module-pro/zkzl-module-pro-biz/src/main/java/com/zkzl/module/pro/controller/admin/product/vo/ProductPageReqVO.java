@@ -68,13 +68,13 @@ public class ProductPageReqVO extends PageParam {
     private String boxGauge;
 
     @ApiModelProperty(value = "体积")
-    private BigDecimal volume;
+    private String volume;
 
     @ApiModelProperty(value = "毛重")
-    private BigDecimal grossWeight;
+    private String grossWeight;
 
     @ApiModelProperty(value = "净重")
-    private BigDecimal netWeight;
+    private String netWeight;
 
     @ApiModelProperty(value = "1上架0下架")
     private String shipped;

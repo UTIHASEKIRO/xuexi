@@ -95,11 +95,11 @@ public class ProductExcelVO2 {
 
     @ExcelProperty("毛重")
     @ColumnWidth(value = 18)
-    private BigDecimal grossWeight;
+    private String grossWeight;
 
     @ExcelProperty("净重")
     @ColumnWidth(value = 18)
-    private BigDecimal netWeight;
+    private String netWeight;
 
     @ExcelIgnore
     private String url;

@@ -74,10 +74,10 @@ public class ProductExcelVO {
     private String volume;
 
     @ExcelProperty("毛重")
-    private BigDecimal grossWeight;
+    private String grossWeight;
 
     @ExcelProperty("净重")
-    private BigDecimal netWeight;
+    private String netWeight;
 
 //    @ExcelProperty("1上架0下架")
 //    private BigDecimal shipped;

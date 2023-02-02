@@ -89,15 +89,15 @@ public class OrderGoodsDO extends BaseDO {
     /**
      * 体积
      */
-    private BigDecimal volume;
+    private String volume;
     /**
      * 毛重
      */
-    private BigDecimal grossWeight;
+    private String grossWeight;
     /**
      * 净重
      */
-    private BigDecimal netWeight;
+    private String netWeight;
     /**
      * 备注
      */

@@ -77,7 +77,7 @@ public class PriceInquryChildDO extends BaseDO {
     /**
      * 体积
      */
-    private BigDecimal volume;
+    private String volume;
     /**
      * 总价格
      */
@@ -85,11 +85,11 @@ public class PriceInquryChildDO extends BaseDO {
     /**
      * 毛重
      */
-    private BigDecimal grossWeight;
+    private String grossWeight;
     /**
      * 净重
      */
-    private BigDecimal netWeight;
+    private String netWeight;
     /**
      * 数量
      */
