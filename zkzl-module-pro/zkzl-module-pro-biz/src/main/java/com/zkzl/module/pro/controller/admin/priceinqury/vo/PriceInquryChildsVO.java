@@ -62,7 +62,7 @@ public class PriceInquryChildsVO {
     /**
      * 体积
      */
-    private BigDecimal volume;
+    private String volume;
     /**
      * 总价格
      */
@@ -74,11 +74,11 @@ public class PriceInquryChildsVO {
     /**
      * 毛重
      */
-    private BigDecimal grossWeight;
+    private String grossWeight;
     /**
      * 净重
      */
-    private BigDecimal netWeight;
+    private String netWeight;
     /*
      * 供应商
      * */

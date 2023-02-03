@@ -364,8 +364,13 @@ public class PriceInquryServiceImpl implements PriceInquryService {
     private List<OrderGoodsDO> inquryChild2OrderGoods(List<PriceInquryChildDO> childs,String orderId){
         List<OrderGoodsDO> results = new CopyOnWriteArrayList<>();
         OrderGoodsDO result;
+        SupplyInfoDO supply = null;
         for (PriceInquryChildDO child : childs) {
             result = new OrderGoodsDO();
+            supply = supplyInfoMapper.selectOne("supply_info_id",child.getSupplyInfoId());
+            if (null == supply){
+                throw exception(PRODUCT_HAVE_NOT_SUPPLY);
+            }
             result.setPrice(child.getUnitPrice().multiply(BigDecimal.valueOf(child.getMount())))
                     .setUnitPrice(child.getUnitPrice())
                     .setMount(child.getMount())
@@ -384,7 +389,7 @@ public class PriceInquryServiceImpl implements PriceInquryService {
                     .setProductG(child.getProductG())
                     .setProductColor(child.getProductColor())
                     .setProductSize(child.getProductSize())
-                    .setSupplyCompany(supplyInfoMapper.selectOne("supply_info_id",child.getSupplyInfoId()).getName())
+                    .setSupplyCompany(supply.getName())
                     .setOrderChildId(IdUtil.getSnowflakeNextIdStr());
             results.add(result);
         }

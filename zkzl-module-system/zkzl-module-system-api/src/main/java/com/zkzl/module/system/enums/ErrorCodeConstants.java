@@ -168,7 +168,7 @@ public interface ErrorCodeConstants {
     ErrorCode DUCT_FINAL_PARAMETERS_NAME_NOT_EXISTS = new ErrorCode(1002023016, "产品参数名 不存在");
     ErrorCode DUCT_CERTIFICATE_NOT_EXISTS = new ErrorCode(1002023017, "证书 不存在");
     ErrorCode PRODUCT_ALREADY_EXISTS = new ErrorCode(1002023018,"产品已经在询价列表中！");
-    ErrorCode PRODUCT_HAVE_NOT_SUPPLY = new ErrorCode(1002023019,"产品没有供应商！");
+    ErrorCode PRODUCT_HAVE_NOT_SUPPLY = new ErrorCode(1002023019,"产品需绑定供应商！");
     ErrorCode PARTNERS_NOT_EXISTS = new ErrorCode(1002023020, "合作伙伴不存在");
     ErrorCode SLIDES_SHOW_NOT_EXISTS = new ErrorCode(1002023021, "轮播图不存在");
     ErrorCode COMPANY_NOT_EXISTS = new ErrorCode(1002023022, "公司信息维护不存在");
