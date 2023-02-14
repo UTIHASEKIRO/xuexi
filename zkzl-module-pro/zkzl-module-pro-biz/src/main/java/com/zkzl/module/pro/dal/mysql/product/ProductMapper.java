@@ -53,7 +53,7 @@ public interface ProductMapper extends BaseMapperX<ProductDO> {
                 .likeIfPresent(ProductDO::getProductNameCn, reqVO.getProductName())
                 .orX()
                 .likeIfPresent(ProductDO::getProductNameEn, reqVO.getProductName())
-                .orderByDesc(ProductDO::getId));
+                .orderByDesc(ProductDO::getShipped,ProductDO::getId));
     }
 
     default List<ProductDO> selectList(ProductExportReqVO reqVO) {

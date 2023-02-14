@@ -44,12 +44,13 @@
           <image-preview :src="scope.row.ductImgs" :width="'100px'"/>
         </template>
       </el-table-column>
-      <el-table-column label="HS编号" align="center" prop="hsNo" />
+      <el-table-column label="供货商" align="center" prop="supply" />
       <el-table-column label="产品型号" align="center" prop="productModel" />
-      <el-table-column label="用途分类" align="center" prop="useClassificationCn" />
       <el-table-column label="颜色" align="center" prop="colourCn" />
+      <el-table-column label="单个克重" align="center" prop="gramWeight" />
+      <el-table-column label="箱规" align="center" prop="boxGauge" />
       <el-table-column label="包装方式" align="center" prop="packagingMethodCn" />
-      <el-table-column label="交货方式" align="center" prop="deliveryMethodCn" />
+      <el-table-column label="产品尺寸" align="center" prop="size" />
       <el-table-column label="状态" align="center" prop="shipped" >
          <template slot-scope="scope" >
           <dict-tag :type="DICT_TYPE.SHIPPED" :value="scope.row.shipped"/>

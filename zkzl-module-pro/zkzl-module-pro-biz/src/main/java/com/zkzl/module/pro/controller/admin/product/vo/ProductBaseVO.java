@@ -80,6 +80,9 @@ public class ProductBaseVO {
     @ApiModelProperty(value = "1上架0下架", required = true)
     private String shipped;
 
+    @ApiModelProperty(value = "供应商", required = true)
+    private String supply;
+
     @ApiModelProperty(value = "参数列表", required = true)
     private List<ProductParametersDO> productParametersDOS;
 

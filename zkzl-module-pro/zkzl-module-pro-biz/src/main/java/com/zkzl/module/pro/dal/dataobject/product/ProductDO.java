@@ -120,4 +120,9 @@ public class ProductDO extends BaseDO {
     @TableField(exist = false)
     private List<ProductPicDO> picDOS;
 
+    /*
+    * 供货商*/
+    @TableField(exist = false)
+    private String supply;
+
 }

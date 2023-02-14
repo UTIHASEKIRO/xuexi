@@ -1,6 +1,10 @@
 package com.zkzl.module.pro.service.product;
 
+import cn.hutool.core.collection.ListUtil;
+import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.ObjectUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -17,10 +21,13 @@ import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
 import com.zkzl.module.pro.dal.dataobject.productcertificate.ProductCertificateDO;
 import com.zkzl.module.pro.dal.dataobject.productparameters.ProductParametersDO;
 import com.zkzl.module.pro.dal.dataobject.productpic.ProductPicDO;
+import com.zkzl.module.pro.dal.dataobject.supplyinfo.SupplyInfoDO;
 import com.zkzl.module.pro.dal.mysql.product.ProductMapper;
 import com.zkzl.module.pro.dal.mysql.productcertificate.ProductCertificateMapper;
 import com.zkzl.module.pro.dal.mysql.productparameters.ProductParametersMapper;
 import com.zkzl.module.pro.dal.mysql.productpic.ProductPicMapper;
+import com.zkzl.module.pro.dal.mysql.supplyinfo.SupplyInfoMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +35,7 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -53,6 +61,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductPicMapper productPicMapper;
     @Resource
     private ProductCertificateMapper productCertificateMapper;
+    @Resource
+    private SupplyInfoMapper supplyInfoMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -170,6 +180,22 @@ public class ProductServiceImpl implements ProductService {
             }
             productDO.setPicDOS(picDO);
         }
+        List<SupplyInfoDO> supplyers = null;
+        String resultSupplyers = "";
+        for (ProductDO productDO : resultList) {
+            supplyers = supplyInfoMapper.selectList(new LambdaQueryWrapper<SupplyInfoDO>().eq(SupplyInfoDO::getProductId,productDO.getProductId()));
+            if (supplyers.size() == 0){
+                productDO.setSupply("暂无");
+            }else{
+                resultSupplyers = "";
+                for (SupplyInfoDO supplyer : supplyers) {
+                    resultSupplyers += (supplyer.getName()+"、");
+                }
+                StringUtils.removeEnd(resultSupplyers,"、");
+                productDO.setSupply(resultSupplyers);
+            }
+        }
+
         return result;
     }
 
