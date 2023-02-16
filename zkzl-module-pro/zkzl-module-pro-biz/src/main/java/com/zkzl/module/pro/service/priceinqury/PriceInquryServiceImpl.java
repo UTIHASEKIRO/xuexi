@@ -296,15 +296,21 @@ public class PriceInquryServiceImpl implements PriceInquryService {
             priceInquryChildDO.setProductColor(productDO.getColourCn());
             priceInquryChildDO.setProductG(productDO.getGramWeight());
             priceInquryChildDO.setPackageWay(productDO.getPackagingMethodCn());
-            String[] boxGauge = productDO.getBoxGauge().split("\\*");
-            if(boxGauge.length ==3){
-                priceInquryChildDO.setBoxLength(new BigDecimal(boxGauge[0]));
-                priceInquryChildDO.setBoxWide(new BigDecimal(boxGauge[1]));
-                priceInquryChildDO.setBoxHeight(new BigDecimal(boxGauge[2]));
-            }else {
+            if (productDO.getBoxGauge().contains("*") && productDO.getBoxGauge().contains("定制")){
                 priceInquryChildDO.setBoxLength(BigDecimal.valueOf(0));
                 priceInquryChildDO.setBoxWide(BigDecimal.valueOf(0));
                 priceInquryChildDO.setBoxHeight(BigDecimal.valueOf(0));
+            }else {
+                String[] boxGauge = productDO.getBoxGauge().split("\\*");
+                if (boxGauge.length == 3) {
+                    priceInquryChildDO.setBoxLength(new BigDecimal(boxGauge[0]));
+                    priceInquryChildDO.setBoxWide(new BigDecimal(boxGauge[1]));
+                    priceInquryChildDO.setBoxHeight(new BigDecimal(boxGauge[2]));
+                } else {
+                    priceInquryChildDO.setBoxLength(BigDecimal.valueOf(0));
+                    priceInquryChildDO.setBoxWide(BigDecimal.valueOf(0));
+                    priceInquryChildDO.setBoxHeight(BigDecimal.valueOf(0));
+                }
             }
             priceInquryChildDO.setVolume(productDO.getVolume());
             priceInquryChildDO.setGrossWeight(productDO.getGrossWeight());

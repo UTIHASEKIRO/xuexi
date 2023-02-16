@@ -13,6 +13,7 @@ import com.zkzl.module.pro.controller.app.product.vo.ProductDescVO;
 import com.zkzl.module.pro.controller.app.product.vo.ProductReqVO;
 import com.zkzl.module.pro.controller.app.product.vo.ProductVO;
 import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,7 +29,7 @@ public interface ProductMapper extends BaseMapperX<ProductDO> {
 
     default PageResult<ProductDO> selectPage(ProductPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<ProductDO>()
-                .eqIfPresent(ProductDO::getProductId, reqVO.getProductId())
+                .eq(StringUtils.isNotEmpty(reqVO.getProductId()),ProductDO::getProductId, reqVO.getProductId())
                 .eqIfPresent(ProductDO::getTypeId, reqVO.getTypeId())
                 .eqIfPresent(ProductDO::getProductNameCn, reqVO.getProductNameCn())
                 .eqIfPresent(ProductDO::getProductNameEn, reqVO.getProductNameEn())

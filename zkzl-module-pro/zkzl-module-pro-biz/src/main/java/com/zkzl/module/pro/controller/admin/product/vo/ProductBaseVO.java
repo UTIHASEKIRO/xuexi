@@ -102,4 +102,9 @@ public class ProductBaseVO {
      *  数量
      * */
     private Long mount;
+
+    /**
+     * 备注
+     */
+    private String remark;
 }

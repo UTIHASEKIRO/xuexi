@@ -12,22 +12,26 @@ import javax.validation.constraints.*;
 @Data
 public class CompanyBaseVO {
 
+    /**
+     * 图片
+     * 66666666
+     */
     @ApiModelProperty(value = "图片", required = true)
     @NotNull(message = "图片不能为空")
     private String picUrl;
-
+    /*电话*/
     @ApiModelProperty(value = "电话", required = true)
     @NotNull(message = "电话不能为空")
     private String mobile;
-
+    /*邮箱*/
     @ApiModelProperty(value = "邮箱", required = true)
     @NotNull(message = "邮箱不能为空")
     private String email;
-
+    /*公司名称_中文*/
     @ApiModelProperty(value = "公司名称_中文", required = true)
     @NotNull(message = "公司名称_中文不能为空")
     private String nameCn;
-
+    /*公司名称_英文*/
     @ApiModelProperty(value = "公司名称_英文", required = true)
     @NotNull(message = "公司名称_英文不能为空")
     private String nameEn;

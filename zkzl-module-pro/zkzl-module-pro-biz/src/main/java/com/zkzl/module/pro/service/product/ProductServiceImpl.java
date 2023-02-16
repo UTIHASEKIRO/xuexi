@@ -278,18 +278,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDescVO getDesc(Long id) {
         ProductDescVO productDescVO = ductMapper.getDesc(id);
-
-        String[] split = productDescVO.getBoxGauge().split("\\*");
-        if(split.length ==3){
-            productDescVO.setBoxLength(new BigDecimal(split[0]));
-            productDescVO.setBoxWide(new BigDecimal(split[1]));
-            productDescVO.setBoxHeight(new BigDecimal(split[2]));
-        }else {
+        if (productDescVO.getBoxGauge().contains("*") && productDescVO.getBoxGauge().contains("定制")){
             productDescVO.setBoxLength(BigDecimal.valueOf(0));
             productDescVO.setBoxWide(BigDecimal.valueOf(0));
             productDescVO.setBoxHeight(BigDecimal.valueOf(0));
+        }else {
+            String[] split = productDescVO.getBoxGauge().split("\\*");
+            if (split.length == 3) {
+                productDescVO.setBoxLength(new BigDecimal(split[0]));
+                productDescVO.setBoxWide(new BigDecimal(split[1]));
+                productDescVO.setBoxHeight(new BigDecimal(split[2]));
+            } else {
+                productDescVO.setBoxLength(BigDecimal.valueOf(0));
+                productDescVO.setBoxWide(BigDecimal.valueOf(0));
+                productDescVO.setBoxHeight(BigDecimal.valueOf(0));
+            }
         }
-
         // 设置是否已加入询价标志
         /*Long userId = SecurityFrameworkUtils.getLoginUserId();
         productDescVO.setIsInqury(ductMapper.getIsInqury(productDescVO.getProductId(),userId));*/
@@ -317,15 +321,21 @@ public class ProductServiceImpl implements ProductService {
     @NotNull
     private PageResult<ProductDescVO> getProductDescVOPageResult(IPage<ProductDescVO> mPage) {
         mPage.getRecords().forEach(ProductDescVO->{
-            String[] split = ProductDescVO.getBoxGauge().split("\\*");
-            if(split.length ==3){
-                ProductDescVO.setBoxLength(new BigDecimal(split[0]));
-                ProductDescVO.setBoxWide(new BigDecimal(split[1]));
-                ProductDescVO.setBoxHeight(new BigDecimal(split[2]));
-            }else {
+            if (ProductDescVO.getBoxGauge().contains("*") && ProductDescVO.getBoxGauge().contains("定制")){
                 ProductDescVO.setBoxLength(BigDecimal.valueOf(0));
                 ProductDescVO.setBoxWide(BigDecimal.valueOf(0));
                 ProductDescVO.setBoxHeight(BigDecimal.valueOf(0));
+            }else{
+                String[] split = ProductDescVO.getBoxGauge().split("\\*");
+                if(split.length ==3){
+                    ProductDescVO.setBoxLength(new BigDecimal(split[0]));
+                    ProductDescVO.setBoxWide(new BigDecimal(split[1]));
+                    ProductDescVO.setBoxHeight(new BigDecimal(split[2].trim()));
+                }else {
+                    ProductDescVO.setBoxLength(BigDecimal.valueOf(0));
+                    ProductDescVO.setBoxWide(BigDecimal.valueOf(0));
+                    ProductDescVO.setBoxHeight(BigDecimal.valueOf(0));
+                }
             }
         });
 

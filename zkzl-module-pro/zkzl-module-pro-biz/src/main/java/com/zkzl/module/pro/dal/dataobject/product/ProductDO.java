@@ -113,6 +113,12 @@ public class ProductDO extends BaseDO {
      * 1上架0下架
      */
     private String shipped;
+    /**
+     * 备注
+     */
+    private String remark;
+
+
 
     /*
     * 图片 取第一张

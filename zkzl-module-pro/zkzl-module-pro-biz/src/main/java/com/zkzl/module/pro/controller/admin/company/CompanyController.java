@@ -26,6 +26,9 @@ import com.zkzl.module.pro.dal.dataobject.company.CompanyDO;
 import com.zkzl.module.pro.convert.company.CompanyConvert;
 import com.zkzl.module.pro.service.company.CompanyService;
 
+/**
+ * 管理后台 - 公司信息维护
+ */
 @Api(tags = "管理后台 - 公司信息维护")
 @RestController
 @RequestMapping("/pro/company")
@@ -35,6 +38,11 @@ public class CompanyController {
     @Resource
     private CompanyService companyService;
 
+    /**
+     * 创建公司信息维护
+     * @param createReqVO
+     * @return
+     */
     @PostMapping("/create")
     @ApiOperation("创建公司信息维护")
     @PreAuthorize("@ss.hasPermission('pro:company:create')")
@@ -42,6 +50,11 @@ public class CompanyController {
         return success(companyService.createCompany(createReqVO));
     }
 
+    /**
+     * 更新公司信息维护
+     * @param updateReqVO
+     * @return
+     */
     @PutMapping("/update")
     @ApiOperation("更新公司信息维护")
     @PreAuthorize("@ss.hasPermission('pro:company:update')")
@@ -50,6 +63,11 @@ public class CompanyController {
         return success(true);
     }
 
+    /**
+     * 删除公司信息维护
+     * @param id
+     * @return
+     */
     @DeleteMapping("/delete")
     @ApiOperation("删除公司信息维护")
     @ApiImplicitParam(name = "id", value = "编号", required = true, dataTypeClass = Long.class)
@@ -59,6 +77,11 @@ public class CompanyController {
         return success(true);
     }
 
+    /**
+     * 获得公司信息维护
+     * @param id
+     * @return
+     */
     @GetMapping("/get")
     @ApiOperation("获得公司信息维护")
     @ApiImplicitParam(name = "id", value = "编号", required = true, example = "1024", dataTypeClass = Long.class)
@@ -68,6 +91,11 @@ public class CompanyController {
         return success(CompanyConvert.INSTANCE.convert(company));
     }
 
+    /**
+     * 获得公司信息维护列表
+     * @param ids
+     * @return
+     */
     @GetMapping("/list")
     @ApiOperation("获得公司信息维护列表")
     @ApiImplicitParam(name = "ids", value = "编号列表", required = true, example = "1024,2048", dataTypeClass = List.class)
@@ -77,6 +105,11 @@ public class CompanyController {
         return success(CompanyConvert.INSTANCE.convertList(list));
     }
 
+    /**
+     * 获得公司信息维护分页
+     * @param pageVO
+     * @return
+     */
     @GetMapping("/page")
     @ApiOperation("获得公司信息维护分页")
     @PreAuthorize("@ss.hasPermission('pro:company:query')")
@@ -85,6 +118,12 @@ public class CompanyController {
         return success(CompanyConvert.INSTANCE.convertPage(pageResult));
     }
 
+    /**
+     * 导出公司信息维护 Excel
+     * @param exportReqVO
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("/export-excel")
     @ApiOperation("导出公司信息维护 Excel")
     @PreAuthorize("@ss.hasPermission('pro:company:export')")

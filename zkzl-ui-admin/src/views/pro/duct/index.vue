@@ -3,10 +3,10 @@
 
     <!-- 搜索工作栏 -->
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <!-- <el-form-item label="产品id" prop="productId">
-        <el-input v-model="queryParams.productId" placeholder="请输入产品id" clearable @keyup.enter.native="handleQuery"/>
+      <el-form-item label="唯一编号" prop="productId">
+        <el-input v-model="queryParams.productId" placeholder="请输入产品唯一编号" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item>
-      <el-form-item label="产品类别id" prop="typeId">
+      <!-- <el-form-item label="产品类别id" prop="typeId">
         <el-input v-model="queryParams.typeId" placeholder="请输入产品类别id" clearable @keyup.enter.native="handleQuery"/>
       </el-form-item> -->
       <el-form-item label="产品名称" prop="productName">
@@ -37,7 +37,7 @@
 
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list" border>
-      <el-table-column label="序号" align="center" prop="id" />
+      <el-table-column label="唯一编号" align="center" prop="productId" />
       <el-table-column label="产品名称" align="center" prop="productNameCn" />
       <el-table-column label="产品图片" align="center" prop="ductImgs" >
         <template  slot-scope="scope">
@@ -56,6 +56,7 @@
           <dict-tag :type="DICT_TYPE.SHIPPED" :value="scope.row.shipped"/>
         </template>
       </el-table-column>
+      <el-table-column label="备注" align="center" prop="remark" />
 
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
@@ -161,6 +162,9 @@
           <el-button type="danger" @click="deleteDynamic(index)">删除</el-button>
 
          </div>
+        </el-form-item>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model="form.remark" placeholder="请输入备注" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
