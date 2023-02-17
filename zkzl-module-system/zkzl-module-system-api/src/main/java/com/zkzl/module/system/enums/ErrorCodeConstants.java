@@ -173,4 +173,7 @@ public interface ErrorCodeConstants {
     ErrorCode SLIDES_SHOW_NOT_EXISTS = new ErrorCode(1002023021, "轮播图不存在");
     ErrorCode COMPANY_NOT_EXISTS = new ErrorCode(1002023022, "公司信息维护不存在");
     ErrorCode NEWS_NOT_EXISTS = new ErrorCode(1002023023, "新闻不存在");
+    ErrorCode ORDER_COST_NOT_EXISTS = new ErrorCode(1002023024, "订单成本不存在");
+
+
 }

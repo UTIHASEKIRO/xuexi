@@ -3,3 +3,34 @@
 2.添加 产品表 pro_product.remark 字段
 3.用户端产品详情\管理后台序号列\ 添加 product_id 用于方便区分唯一产品
 
+2023-02-27
+4.要一个列表 能看进价
+新加表 订单成本表 (order_cost)
+                产品名称   /单价         /数量/供应商         /成本价        /询价时间    /开始时间/结束时间/操作
+id order_cost_id product_id/unit_price/mount/supply_info_id/cost_price/price_date/start_time/end_time/
+
+
+CREATE TABLE `pro_order_cost` (
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `order_cost_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '订单成本表业务id',
+  `product_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '产品id',
+  `unit_price` decimal(12,2) DEFAULT '0.00' COMMENT '单价',
+  `mount` int DEFAULT NULL COMMENT '数量',
+  `supply_info_id` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '供货商id',
+  `cost_price` decimal(12,2) DEFAULT '0.00' COMMENT '成本价',
+  `price_date` date DEFAULT NULL COMMENT '询价时间',
+  `start_time` datetime DEFAULT NULL COMMENT '开始时间(订单生成时间)',
+  `end_time` datetime DEFAULT NULL COMMENT '结束时间',
+  `creator` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '创建者',
+  `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updater` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '' COMMENT '更新者',
+  `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除',
+  `tenant_id` bigint NOT NULL DEFAULT '0' COMMENT '租户编号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='订单成本表';
+
+
+
+
+

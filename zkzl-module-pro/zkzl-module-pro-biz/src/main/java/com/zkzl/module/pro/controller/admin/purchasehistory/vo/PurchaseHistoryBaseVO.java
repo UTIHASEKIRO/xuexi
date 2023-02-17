@@ -53,10 +53,10 @@ public class PurchaseHistoryBaseVO {
     private BigDecimal unitPrice;
 
     @ApiModelProperty(value = "毛重")
-    private BigDecimal grossWeight;
+    private String grossWeight;
 
     @ApiModelProperty(value = "净重")
-    private BigDecimal netWeight;
+    private String netWeight;
 
     @ApiModelProperty(value = "备注")
     private String remark;

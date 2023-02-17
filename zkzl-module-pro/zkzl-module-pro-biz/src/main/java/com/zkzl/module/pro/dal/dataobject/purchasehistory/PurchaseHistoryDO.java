@@ -80,11 +80,11 @@ public class PurchaseHistoryDO extends BaseDO {
     /**
      * 毛重
      */
-    private BigDecimal grossWeight;
+    private String grossWeight;
     /**
      * 净重
      */
-    private BigDecimal netWeight;
+    private String netWeight;
     /**
      * "备注"
      */
