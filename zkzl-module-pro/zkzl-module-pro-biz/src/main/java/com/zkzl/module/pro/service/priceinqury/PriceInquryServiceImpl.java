@@ -16,6 +16,7 @@ import com.zkzl.module.pro.controller.app.priceinqury.vo.PriceInquryHistoryVO;
 import com.zkzl.module.pro.controller.app.product.vo.ProductDescVO;
 import com.zkzl.module.pro.convert.priceinqurychild.PriceInquryChildConvert;
 import com.zkzl.module.pro.dal.dataobject.order.OrderDO;
+import com.zkzl.module.pro.dal.dataobject.ordercost.OrderCostDO;
 import com.zkzl.module.pro.dal.dataobject.ordergoods.OrderGoodsDO;
 import com.zkzl.module.pro.dal.dataobject.ordersummary.OrderSummaryDO;
 import com.zkzl.module.pro.dal.dataobject.priceinqurychild.PriceInquryChildDO;
@@ -23,6 +24,7 @@ import com.zkzl.module.pro.dal.dataobject.procurementsummary.ProcurementSummaryD
 import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
 import com.zkzl.module.pro.dal.dataobject.supplyinfo.SupplyInfoDO;
 import com.zkzl.module.pro.dal.mysql.order.ProOrderMapper;
+import com.zkzl.module.pro.dal.mysql.ordercost.OrderCostMapper;
 import com.zkzl.module.pro.dal.mysql.ordergoods.OrderGoodsMapper;
 import com.zkzl.module.pro.dal.mysql.ordersummary.OrderSummaryMapper;
 import com.zkzl.module.pro.dal.mysql.priceinqurychild.PriceInquryChildMapper;
@@ -83,7 +85,7 @@ public class PriceInquryServiceImpl implements PriceInquryService {
     @Resource
     private ProcurementSummaryMapper procurementSummaryMapper;
     @Resource
-    private AdminUserMapper userMapper;
+    private OrderCostMapper orderCostMapper;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -120,7 +122,7 @@ public class PriceInquryServiceImpl implements PriceInquryService {
                 priceInquryChildMapper.updateById(PriceInquryChildConvert.INSTANCE.convert(updateVO));
             }
         }
-        //status=3 询价单成交 同时1创建订单 2创建订单汇总 3创建采购汇总
+        //status=3 询价单成交 同时1创建订单 2创建订单汇总 3创建采购汇总 4创建订单成本
         if ("3".equals(updateReqVO.getStatus())){
             PriceInquryDO currentInqury = priceInquryMapper.selectById(updateReqVO.getId());
             if(StringUtils.isEmpty(currentInqury.getSellerContact())
@@ -164,6 +166,20 @@ public class PriceInquryServiceImpl implements PriceInquryService {
                         .setOrderId(insertGood.getOrderId())
                         .setOrderChildId(insertGood.getOrderChildId());
                 procurementSummaryMapper.insert(insertProcurement);
+            }
+
+            //4创建订单成本
+            OrderCostDO insertOrderCost;
+            for (PriceInquryChildDO child : childs) {
+                insertOrderCost = new OrderCostDO();
+                insertOrderCost.setOrderCostId(IdUtil.getSnowflakeNextIdStr())
+                        .setProductId(child.getProductId())
+                        .setUnitPrice(child.getUnitPrice())
+                        .setMount(child.getMount())
+                        .setSupplyInfoId(child.getSupplyInfoId())
+                        .setPriceDate(currentInqury.getPriceDate())
+                        .setStartTime(new Date());
+                orderCostMapper.insert(insertOrderCost);
             }
 
         }

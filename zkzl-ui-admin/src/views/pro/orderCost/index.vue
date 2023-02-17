@@ -46,8 +46,8 @@
     <!-- 操作工具栏 -->
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
-                   v-hasPermi="['pro:order-cost:create']">新增</el-button>
+        <!-- <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd"
+                   v-hasPermi="['pro:order-cost:create']">新增</el-button> -->
       </el-col>
       <!-- <el-col :span="1.5">
         <el-button type="warning" plain icon="el-icon-download" size="mini" @click="handleExport" :loading="exportLoading"
@@ -59,11 +59,12 @@
     <!-- 列表 -->
     <el-table v-loading="loading" :data="list">
       <!-- <el-table-column label="id" align="center" prop="id" /> -->
-      <el-table-column label="序号" align="center" prop="orderCostId" />
-      <el-table-column label="产品" align="center" prop="productId" />
+      <!-- <el-table-column label="序号" align="center" prop="orderCostId" /> -->
+      <el-table-column label="产品ID" align="center" prop="productId" />
+      <el-table-column label="产品" align="center" prop="product" />
       <el-table-column label="单价" align="center" prop="unitPrice" />
       <el-table-column label="数量" align="center" prop="mount" />
-      <el-table-column label="供货商" align="center" prop="supplyInfoId" />
+      <el-table-column label="供货商" align="center" prop="supply" />
       <el-table-column label="成本价" align="center" prop="costPrice" />
       <el-table-column label="询价时间" align="center" prop="priceDate" width="180">
         <template slot-scope="scope">
@@ -101,11 +102,11 @@
     <!-- 对话框(添加 / 修改) -->
     <el-dialog :title="title" :visible.sync="open" width="500px" v-dialogDrag append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="订单成本表业务id" prop="orderCostId">
+        <!-- <el-form-item label="订单成本表业务id" prop="orderCostId">
           <el-input v-model="form.orderCostId" placeholder="请输入订单成本表业务id" />
         </el-form-item>
         <el-form-item label="产品id" prop="productId">
-          <el-input v-model="form.productId" placeholder="请输入产品id" />
+          <el-input v-model="form.productId" placeholder="请输入产品id" readonly />
         </el-form-item>
         <el-form-item label="单价" prop="unitPrice">
           <el-input v-model="form.unitPrice" placeholder="请输入单价" />
@@ -113,18 +114,18 @@
         <el-form-item label="数量" prop="mount">
           <el-input v-model="form.mount" placeholder="请输入数量" />
         </el-form-item>
-        <el-form-item label="供货商id" prop="supplyInfoId">
-          <el-input v-model="form.supplyInfoId" placeholder="请输入供货商id" />
-        </el-form-item>
+        <el-form-item label="供货商" prop="supply">
+          <el-input v-model="form.supply" readonly />
+        </el-form-item> -->
         <el-form-item label="成本价" prop="costPrice">
           <el-input v-model="form.costPrice" placeholder="请输入成本价" />
         </el-form-item>
-        <el-form-item label="询价时间" prop="priceDate">
+        <!-- <el-form-item label="询价时间" prop="priceDate">
           <el-date-picker clearable v-model="form.priceDate" type="date" value-format="timestamp" placeholder="选择询价时间" />
         </el-form-item>
         <el-form-item label="开始时间(订单生成时间)" prop="startTime">
           <el-date-picker clearable v-model="form.startTime" type="date" value-format="timestamp" placeholder="选择开始时间(订单生成时间)" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="结束时间" prop="endTime">
           <el-date-picker clearable v-model="form.endTime" type="date" value-format="timestamp" placeholder="选择结束时间" />
         </el-form-item>

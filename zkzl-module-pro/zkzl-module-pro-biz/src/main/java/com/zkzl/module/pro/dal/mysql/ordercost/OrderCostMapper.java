@@ -6,6 +6,7 @@ import com.zkzl.framework.common.pojo.PageResult;
 import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
 import com.zkzl.framework.mybatis.core.mapper.BaseMapperX;
 import com.zkzl.module.pro.dal.dataobject.ordercost.OrderCostDO;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.annotations.Mapper;
 import com.zkzl.module.pro.controller.admin.ordercost.vo.*;
 
@@ -20,7 +21,7 @@ public interface OrderCostMapper extends BaseMapperX<OrderCostDO> {
     default PageResult<OrderCostDO> selectPage(OrderCostPageReqVO reqVO) {
         return selectPage(reqVO, new LambdaQueryWrapperX<OrderCostDO>()
                 .eqIfPresent(OrderCostDO::getOrderCostId, reqVO.getOrderCostId())
-                .eqIfPresent(OrderCostDO::getProductId, reqVO.getProductId())
+                .eq(StringUtils.isNotEmpty(reqVO.getProductId()),OrderCostDO::getProductId, reqVO.getProductId())
                 .eqIfPresent(OrderCostDO::getUnitPrice, reqVO.getUnitPrice())
                 .eqIfPresent(OrderCostDO::getMount, reqVO.getMount())
                 .eqIfPresent(OrderCostDO::getSupplyInfoId, reqVO.getSupplyInfoId())

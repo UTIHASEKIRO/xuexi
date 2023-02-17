@@ -1,10 +1,18 @@
 package com.zkzl.module.pro.service.ordercost;
 
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.zkzl.framework.mybatis.core.query.LambdaQueryWrapperX;
+import com.zkzl.module.pro.dal.dataobject.product.ProductDO;
+import com.zkzl.module.pro.dal.dataobject.supplyinfo.SupplyInfoDO;
+import com.zkzl.module.pro.dal.mysql.product.ProductMapper;
+import com.zkzl.module.pro.dal.mysql.supplyinfo.SupplyInfoMapper;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.*;
+import java.util.stream.Collectors;
+
 import com.zkzl.module.pro.controller.admin.ordercost.vo.*;
 import com.zkzl.module.pro.dal.dataobject.ordercost.OrderCostDO;
 import com.zkzl.framework.common.pojo.PageResult;
@@ -26,6 +34,10 @@ public class OrderCostServiceImpl implements OrderCostService {
 
     @Resource
     private OrderCostMapper orderCostMapper;
+    @Resource
+    private SupplyInfoMapper supplyInfoMapper;
+    @Resource
+    private ProductMapper productMapper;
 
     @Override
     public Long createOrderCost(OrderCostCreateReqVO createReqVO) {
@@ -71,7 +83,13 @@ public class OrderCostServiceImpl implements OrderCostService {
 
     @Override
     public PageResult<OrderCostDO> getOrderCostPage(OrderCostPageReqVO pageReqVO) {
-        return orderCostMapper.selectPage(pageReqVO);
+        PageResult<OrderCostDO> result = orderCostMapper.selectPage(pageReqVO);
+        result.getList().forEach(orderCost -> orderCost.setSupply(
+                    supplyInfoMapper.selectOne(new LambdaQueryWrapperX<SupplyInfoDO>().eq(SupplyInfoDO::getSupplyInfoId,orderCost.getSupplyInfoId())).getName())
+                .setProduct(
+                    productMapper.selectOne(new LambdaQueryWrapperX<ProductDO>().eq(ProductDO::getProductId,orderCost.getProductId())).getProductNameCn())
+            );
+        return result;
     }
 
     @Override

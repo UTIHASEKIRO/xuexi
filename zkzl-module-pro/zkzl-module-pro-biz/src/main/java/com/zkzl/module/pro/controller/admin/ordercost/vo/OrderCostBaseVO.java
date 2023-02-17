@@ -34,6 +34,11 @@ public class OrderCostBaseVO {
     @NotNull(message = "供货商id不能为空")
     private String supplyInfoId;
 
+    /*供应商*/
+    private String supply;
+    /*产品*/
+    private String product;
+
     @ApiModelProperty(value = "成本价")
     private BigDecimal costPrice;
 

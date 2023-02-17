@@ -63,4 +63,16 @@ public class OrderCostDO extends BaseDO {
      */
     private Date endTime;
 
+    /**
+     * 供应商名称
+     */
+    @TableField(exist = false)
+    private String supply;
+
+    /**
+     * 产品名称
+     */
+    @TableField(exist = false)
+    private String product;
+
 }
