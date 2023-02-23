@@ -32,5 +32,24 @@ CREATE TABLE `pro_order_cost` (
 
 
 
+2023-02-23
+变更minio地址
+update pro_product_pic set url = replace(url,'http://112.243.253.73:8094','http://47.104.148.120:8094')
+
+update pro_slides_show set pic_url = replace(pic_url,'http://112.243.253.73:8094','http://47.104.148.120:8094')
+
+update system_users set avatar = replace(avatar,'http://112.243.253.73:8094','http://47.104.148.120:8094')
+
+update pro_partners set pic_url =replace(pic_url,'http://112.243.253.73:8094','http://47.104.148.120:8094')
+
+update pro_evidence set deposit_pic = replace(deposit_pic,'http://112.243.253.73:8094','http://47.104.148.120:8094');
+update pro_evidence set balance_pic = replace(balance_pic,'http://112.243.253.73:8094','http://47.104.148.120:8094');
+
+update pro_product_type set type_pic = replace(type_pic,'http://112.243.253.73:8094','http://47.104.148.120:8094');
+
+update pro_company set pic_url = replace(pic_url,'http://112.243.253.73:8094','http://47.104.148.120:8094');
+
+
+
 
 
